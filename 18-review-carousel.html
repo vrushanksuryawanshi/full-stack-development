@@ -1,0 +1,50 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Testimonials</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;1,300&family=Work+Sans:wght@300;400;500&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f1923;font-family:'Work Sans',sans-serif;color:#f0f0f0;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:4rem 0}
+h2{font-family:'Fraunces',serif;font-size:2.5rem;font-weight:300;text-align:center;margin-bottom:3rem;color:#f0f0f0}
+h2 em{font-style:italic;color:#fbbf24}
+.carousel-wrap{overflow:hidden;position:relative}
+.carousel{
+  display:flex;
+  gap:1.5rem;
+  padding:1rem 4rem;
+  overflow-x:scroll;
+  scroll-snap-type:x mandatory;
+  scrollbar-width:none;
+  -ms-overflow-style:none
+}
+.carousel::-webkit-scrollbar{display:none}
+.card{
+  min-width:320px;max-width:320px;
+  scroll-snap-align:start;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:1.25rem;
+  padding:2rem;
+  transition:transform 0.2s,border-color 0.2s
+}
+.card:hover{transform:translateY(-4px);border-color:rgba(251,191,36,0.3)}
+.stars{color:#fbbf24;font-size:0.85rem;margin-bottom:1.25rem;letter-spacing:0.1em}
+.review{font-family:'Fraunces',serif;font-style:italic;font-size:1.05rem;color:rgba(240,240,240,0.85);line-height:1.7;margin-bottom:1.5rem}
+.reviewer{display:flex;align-items:center;gap:0.75rem}
+.rev-avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+.rev-name{font-size:0.9rem;font-weight:500}
+.rev-role{font-size:0.75rem;color:rgba(240,240,240,0.4);margin-top:1px}
+.dots{display:flex;justify-content:center;gap:0.5rem;margin-top:2rem}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.2)}
+.dot:first-child{background:#fbbf24;width:24px;border-radius:4px}
+</style></head><body>
+<h2>What our clients <em>say</em></h2>
+<div class="carousel-wrap">
+  <div class="carousel">
+    <div class="card"><div class="stars">★★★★★</div><p class="review">"Genuinely the most impactful product we've integrated this year. Our team's productivity jumped 40% in the first month alone."</p><div class="reviewer"><div class="rev-avatar" style="background:linear-gradient(135deg,#667eea,#764ba2)">P</div><div><div class="rev-name">Priya Sharma</div><div class="rev-role">CTO, InnovateTech</div></div></div></div>
+    <div class="card"><div class="stars">★★★★★</div><p class="review">"The support team is exceptional. Every question answered within the hour, every problem solved before it became a crisis."</p><div class="reviewer"><div class="rev-avatar" style="background:linear-gradient(135deg,#f093fb,#f5576c)">R</div><div><div class="rev-name">Rahul Joshi</div><div class="rev-role">Founder, BuildFast</div></div></div></div>
+    <div class="card"><div class="stars">★★★★★</div><p class="review">"I was skeptical at first — every SaaS promises the world. This one quietly delivers it. The analytics alone paid for the subscription."</p><div class="reviewer"><div class="rev-avatar" style="background:linear-gradient(135deg,#4facfe,#00f2fe)">A</div><div><div class="rev-name">Ananya Rao</div><div class="rev-role">Head of Data, Finserv</div></div></div></div>
+    <div class="card"><div class="stars">★★★★☆</div><p class="review">"Solid product with a clean UI. The onboarding could be smoother, but once you're in, it's intuitive and powerful."</p><div class="reviewer"><div class="rev-avatar" style="background:linear-gradient(135deg,#43e97b,#38f9d7)">D</div><div><div class="rev-name">Dev Verma</div><div class="rev-role">Engineer, CloudStack</div></div></div></div>
+    <div class="card"><div class="stars">★★★★★</div><p class="review">"Switched from the competitor and never looked back. The speed difference is night and day. Highly recommended."</p><div class="reviewer"><div class="rev-avatar" style="background:linear-gradient(135deg,#fa709a,#fee140)">M</div><div><div class="rev-name">Meera Kulkarni</div><div class="rev-role">Director, AgencyPlus</div></div></div></div>
+  </div>
+</div>
+<div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+</body></html>

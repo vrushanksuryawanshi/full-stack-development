@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>50 Projects — CSS Only</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;600&display=swap');
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111;
+    --border: #222;
+    --accent: #e8ff00;
+    --text: #f0f0f0;
+    --muted: #555;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+  header {
+    padding: 4rem 2rem 2rem;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+  header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 10vw, 9rem);
+    line-height: 0.9;
+    color: var(--accent);
+    letter-spacing: -2px;
+  }
+  header p { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--muted); max-width: 200px; text-align: right; }
+  .category-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 2rem 2rem 0.5rem;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    padding: 0 0 1px 0;
+    margin: 0;
+  }
+  .grid a {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem 1.5rem;
+    background: var(--bg);
+    text-decoration: none;
+    color: var(--text);
+    transition: background 0.2s, color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .grid a::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s cubic-bezier(0.4,0,0.2,1);
+    z-index: 0;
+  }
+  .grid a:hover::before { transform: scaleX(1); }
+  .grid a:hover { color: #000; }
+  .grid a > * { position: relative; z-index: 1; }
+  .num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    line-height: 1;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .grid a:hover .num { color: rgba(0,0,0,0.3); }
+  .title { font-size: 0.9rem; font-weight: 600; margin-top: 0.25rem; }
+  .desc { font-size: 0.75rem; color: var(--muted); margin-top: 0.3rem; transition: color 0.2s; line-height: 1.4; }
+  .grid a:hover .desc { color: rgba(0,0,0,0.6); }
+  footer { padding: 2rem; text-align: center; font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted); border-top: 1px solid var(--border); margin-top: 2rem; }
+</style>
+</head>
+<body>
+<header>
+  <h1>50<br>Pure<br>CSS</h1>
+  <p>50 web projects built with zero JavaScript — HTML &amp; CSS only.</p>
+</header>
+
+<div class="category-label">Navigation</div>
+<div class="grid">
+  <a href="01-index.html"><span class="num">01</span><span class="title">The Navigator</span><span class="desc">This index page — CSS Grid directory</span></a>
+</div>
+
+<div class="category-label">Landing Pages &amp; Portfolios</div>
+<div class="grid">
+  <a href="02-portfolio.html"><span class="num">02</span><span class="title">Developer Portfolio</span><span class="desc">Flexbox project grid with AI/DS focus</span></a>
+  <a href="03-book-launch.html"><span class="num">03</span><span class="title">Book Launch Page</span><span class="desc">3D CSS book cover &amp; subscription form</span></a>
+  <a href="04-historical-tribute.html"><span class="num">04</span><span class="title">Historical Tribute</span><span class="desc">Parallax scrolling — Shivaji Maharaj</span></a>
+  <a href="05-app-teaser.html"><span class="num">05</span><span class="title">App Teaser Page</span><span class="desc">Mobile-responsive child safety app landing</span></a>
+  <a href="06-tourism.html"><span class="num">06</span><span class="title">Local Tourism Guide</span><span class="desc">Chhatrapati Sambhajinagar sights</span></a>
+  <a href="07-product-page.html"><span class="num">07</span><span class="title">E-commerce Product</span><span class="desc">Product page with styled CTA button</span></a>
+  <a href="08-restaurant-menu.html"><span class="num">08</span><span class="title">Restaurant Menu</span><span class="desc">Two-column grid with dot leaders</span></a>
+  <a href="09-event-registration.html"><span class="num">09</span><span class="title">Event Registration</span><span class="desc">Hackathon page with animated gradient</span></a>
+  <a href="10-coming-soon.html"><span class="num">10</span><span class="title">Coming Soon</span><span class="desc">Minimalist layout with neon CSS button</span></a>
+</div>
+
+<div class="category-label">Grid &amp; Flexbox Layouts</div>
+<div class="grid">
+  <a href="11-masonry-gallery.html"><span class="num">11</span><span class="title">Masonry Photo Gallery</span><span class="desc">CSS column-count tightly packed photos</span></a>
+  <a href="12-pricing-tiers.html"><span class="num">12</span><span class="title">Pricing Tiers</span><span class="desc">Subscription cards with scale transform</span></a>
+  <a href="13-periodic-table-ml.html"><span class="num">13</span><span class="title">Periodic Table of ML</span><span class="desc">CSS Grid of ML algorithms by category</span></a>
+  <a href="14-game-roster.html"><span class="num">14</span><span class="title">Video Game Roster</span><span class="desc">Flexbox character cards with stat bars</span></a>
+  <a href="15-blog-article.html"><span class="num">15</span><span class="title">Blog Article Layout</span><span class="desc">Typography with drop caps &amp; blockquotes</span></a>
+  <a href="16-team-roster.html"><span class="num">16</span><span class="title">Team Roster</span><span class="desc">Circular photos with hover slide-up info</span></a>
+  <a href="17-dashboard-skeleton.html"><span class="num">17</span><span class="title">Dashboard Skeleton</span><span class="desc">Fixed sidebar + topnav + content area</span></a>
+  <a href="18-review-carousel.html"><span class="num">18</span><span class="title">Review Carousel</span><span class="desc">Scroll-snap horizontal testimonials</span></a>
+  <a href="19-video-platform.html"><span class="num">19</span><span class="title">Video Platform Homepage</span><span class="desc">YouTube-style grid with duration badges</span></a>
+  <a href="20-footer-sitemap.html"><span class="num">20</span><span class="title">Footer Sitemap</span><span class="desc">Multi-column footer with social icons</span></a>
+</div>
+
+<div class="category-label">Forms &amp; Data Display</div>
+<div class="grid">
+  <a href="21-glassmorphism-login.html"><span class="num">21</span><span class="title">Glassmorphism Login</span><span class="desc">Frosted glass with backdrop-filter blur</span></a>
+  <a href="22-checkout.html"><span class="num">22</span><span class="title">Multi-column Checkout</span><span class="desc">Billing form with order summary sidebar</span></a>
+  <a href="23-contact-page.html"><span class="num">23</span><span class="title">Contact Page</span><span class="desc">Split-screen map + styled message form</span></a>
+  <a href="24-sql-schema.html"><span class="num">24</span><span class="title">SQL Schema Table</span><span class="desc">Zebra-striped table of DB relationships</span></a>
+  <a href="25-survey.html"><span class="num">25</span><span class="title">Survey Questionnaire</span><span class="desc">Custom radio buttons &amp; checkboxes via label</span></a>
+  <a href="26-search-bar.html"><span class="num">26</span><span class="title">Expanding Search Bar</span><span class="desc">Icon expands to input on focus</span></a>
+  <a href="27-leaderboard.html"><span class="num">27</span><span class="title">Leaderboard Ranking</span><span class="desc">Gold, silver, bronze top-3 styling</span></a>
+  <a href="28-file-upload.html"><span class="num">28</span><span class="title">Custom File Upload</span><span class="desc">Sleek upload button hiding default input</span></a>
+  <a href="29-progress-tracker.html"><span class="num">29</span><span class="title">Progress Tracker</span><span class="desc">Learning timeline with connected nodes</span></a>
+  <a href="30-gantt-chart.html"><span class="num">30</span><span class="title">Gantt Chart</span><span class="desc">CSS Grid project timeline with color blocks</span></a>
+</div>
+
+<div class="category-label">UI Components &amp; Navigation</div>
+<div class="grid">
+  <a href="31-mega-menu.html"><span class="num">31</span><span class="title">Mega Menu Dropdown</span><span class="desc">Multi-column nav on hover</span></a>
+  <a href="32-accordion.html"><span class="num">32</span><span class="title">CSS-Only Accordion</span><span class="desc">FAQ using details &amp; summary tags</span></a>
+  <a href="33-hamburger.html"><span class="num">33</span><span class="title">Hamburger Icon</span><span class="desc">Three lines rotate into X on hover</span></a>
+  <a href="34-breadcrumb.html"><span class="num">34</span><span class="title">Breadcrumb Trail</span><span class="desc">CSS arrow separators between links</span></a>
+  <a href="35-tooltip.html"><span class="num">35</span><span class="title">Tooltip on Hover</span><span class="desc">Info box appears above icon on hover</span></a>
+  <a href="36-modal.html"><span class="num">36</span><span class="title">CSS Modal Window</span><span class="desc">Popup via :target pseudo-class</span></a>
+  <a href="37-sticky-header.html"><span class="num">37</span><span class="title">Sticky Header</span><span class="desc">Nav fixed to top as you scroll</span></a>
+  <a href="38-pagination.html"><span class="num">38</span><span class="title">Pagination UI</span><span class="desc">Numbered buttons with active state</span></a>
+  <a href="39-fab.html"><span class="num">39</span><span class="title">Floating Action Button</span><span class="desc">Persistent circular button, bottom-right</span></a>
+  <a href="40-skeleton-loading.html"><span class="num">40</span><span class="title">Skeleton Loading State</span><span class="desc">Pulsing gray placeholders via @keyframes</span></a>
+</div>
+
+<div class="category-label">Pure CSS Art &amp; Faked Interactivity</div>
+<div class="grid">
+  <a href="41-image-slider.html"><span class="num">41</span><span class="title">Pure CSS Image Slider</span><span class="desc">Radio button + sibling selector carousel</span></a>
+  <a href="42-tabs.html"><span class="num">42</span><span class="title">CSS-Only Tabs</span><span class="desc">Tabbed content with radio button hack</span></a>
+  <a href="43-day-night-toggle.html"><span class="num">43</span><span class="title">Day/Night Toggle</span><span class="desc">Sky transitions from bright to starry night</span></a>
+  <a href="44-typing-effect.html"><span class="num">44</span><span class="title">CSS Typing Effect</span><span class="desc">Typewriter headline with steps() animation</span></a>
+  <a href="45-flip-card.html"><span class="num">45</span><span class="title">Flip Card</span><span class="desc">180° Y-axis flip reveals text on back</span></a>
+  <a href="46-neon-sign.html"><span class="num">46</span><span class="title">Glowing Neon Sign</span><span class="desc">Flickering text with layered text-shadow</span></a>
+  <a href="47-spinner.html"><span class="num">47</span><span class="title">Animated Spinner</span><span class="desc">Pure CSS spinning border circle</span></a>
+  <a href="48-3d-cube.html"><span class="num">48</span><span class="title">Floating 3D Cube</span><span class="desc">Six divs in 3D space, slowly rotating</span></a>
+  <a href="49-hover-reveal.html"><span class="num">49</span><span class="title">Hover Reveal Image</span><span class="desc">Grayscale to full color on hover</span></a>
+  <a href="50-css-drawing.html"><span class="num">50</span><span class="title">CSS Drawing</span><span class="desc">Coffee cup from border-radius &amp; box-shadow</span></a>
+</div>
+
+<footer>50 Projects · Pure HTML &amp; CSS · No JavaScript</footer>
+</body>
+</html>

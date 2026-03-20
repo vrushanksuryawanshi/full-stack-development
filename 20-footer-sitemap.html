@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Footer Sitemap</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f0f0f0;display:flex;align-items:flex-end;min-height:100vh}
+/* main page filler */
+.page-content{flex:1;padding:4rem 4rem 2rem;color:#999;font-size:0.9rem;text-align:center;width:100%;padding-bottom:0}
+.page-content p{margin-bottom:1rem}
+footer{width:100%;background:#0d0d0d;color:#a1a1aa}
+.footer-main{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:3rem;padding:4rem;border-bottom:1px solid #1a1a1a;max-width:100%}
+.brand-col .brand-logo{font-size:1.4rem;font-weight:700;color:#fff;margin-bottom:1rem}
+.brand-col p{font-size:0.82rem;line-height:1.7;color:#71717a;margin-bottom:1.5rem;max-width:280px}
+.social-row{display:flex;gap:0.75rem}
+.social-btn{width:36px;height:36px;border-radius:0.5rem;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:background 0.2s;cursor:pointer}
+.social-btn:hover{background:#27272a}
+.col-title{font-size:0.7rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#e4e4e7;margin-bottom:1.25rem}
+.col-links{list-style:none;display:flex;flex-direction:column;gap:0.6rem}
+.col-links a{text-decoration:none;color:#71717a;font-size:0.82rem;transition:color 0.15s;display:flex;align-items:center;gap:0.4rem}
+.col-links a:hover{color:#e4e4e7}
+.col-links a .badge{font-size:0.6rem;background:#3b82f6;color:#fff;padding:0.1rem 0.4rem;border-radius:2rem;font-weight:600}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 4rem;flex-wrap:wrap;gap:1rem}
+.copyright{font-size:0.78rem;color:#52525b}
+.footer-bottom-links{display:flex;gap:2rem}
+.footer-bottom-links a{text-decoration:none;color:#52525b;font-size:0.78rem;transition:color 0.15s}
+.footer-bottom-links a:hover{color:#e4e4e7}
+.newsletter{padding:2rem 4rem;background:#111;border-bottom:1px solid #1a1a1a;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.nl-text h3{font-size:1rem;font-weight:600;color:#e4e4e7;margin-bottom:0.25rem}
+.nl-text p{font-size:0.82rem;color:#71717a}
+.nl-form{display:flex;gap:0}
+.nl-form input{padding:0.7rem 1.25rem;background:#1a1a1a;border:1px solid #2a2a2a;border-right:none;color:#e4e4e7;font-family:'Inter',sans-serif;font-size:0.85rem;border-radius:0.5rem 0 0 0.5rem;outline:none;width:260px}
+.nl-form input::placeholder{color:#52525b}
+.nl-form button{padding:0.7rem 1.5rem;background:#3b82f6;color:#fff;border:none;border-radius:0 0.5rem 0.5rem 0;font-family:'Inter',sans-serif;font-weight:500;font-size:0.85rem;cursor:pointer}
+</style></head>
+<body>
+<div class="page-content"><p>[ Page content above footer ]</p></div>
+<footer>
+  <div class="newsletter">
+    <div class="nl-text"><h3>Stay in the loop</h3><p>Get the latest updates, articles, and resources delivered to your inbox.</p></div>
+    <div class="nl-form"><input type="email" placeholder="you@company.com"><button>Subscribe</button></div>
+  </div>
+  <div class="footer-main">
+    <div class="brand-col">
+      <div class="brand-logo">⬡ NeuralCo</div>
+      <p>Building intelligent software tools for the modern era. Used by 50,000+ developers and businesses worldwide.</p>
+      <div class="social-row">
+        <div class="social-btn">𝕏</div>
+        <div class="social-btn">in</div>
+        <div class="social-btn">gh</div>
+        <div class="social-btn">yt</div>
+      </div>
+    </div>
+    <div>
+      <div class="col-title">Product</div>
+      <ul class="col-links">
+        <li><a href="#">Features</a></li>
+        <li><a href="#">Pricing</a></li>
+        <li><a href="#">Changelog <span class="badge">New</span></a></li>
+        <li><a href="#">Roadmap</a></li>
+        <li><a href="#">Integrations</a></li>
+        <li><a href="#">API</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="col-title">Resources</div>
+      <ul class="col-links">
+        <li><a href="#">Documentation</a></li>
+        <li><a href="#">Tutorials</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Case Studies</a></li>
+        <li><a href="#">Status Page</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="col-title">Company</div>
+      <ul class="col-links">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Careers <span class="badge">3 open</span></a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Investors</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="col-title">Legal</div>
+      <ul class="col-links">
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Use</a></li>
+        <li><a href="#">Cookie Policy</a></li>
+        <li><a href="#">GDPR</a></li>
+        <li><a href="#">Security</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="copyright">© 2024 NeuralCo, Inc. · Made with ♥ in India</div>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a><a href="#">Sitemap</a>
+    </div>
+  </div>
+</footer>
+</body></html>

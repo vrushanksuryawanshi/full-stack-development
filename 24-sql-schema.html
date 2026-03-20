@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SQL Schema Viewer</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --border: #2e3347;
+    --accent: #7c6af7;
+    --accent2: #4fd1c5;
+    --text: #e2e8f0;
+    --muted: #8892aa;
+    --pk: #f6ad55;
+    --fk: #68d391;
+    --type: #63b3ed;
+    --null: #fc8181;
+    --row-alt: #1e2233;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; padding: 2rem; min-height: 100vh; }
+  h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem; background: linear-gradient(90deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .subtitle { color: var(--muted); margin-bottom: 2.5rem; font-size: 0.9rem; }
+  .schema-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(560px, 1fr)); gap: 2rem; }
+  .table-block { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .table-header { background: linear-gradient(135deg, #2a2f45, #1e2233); padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; border-bottom: 1px solid var(--border); }
+  .table-icon { width: 32px; height: 32px; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+  .table-name { font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 1.05rem; color: var(--text); }
+  .table-desc { font-size: 0.78rem; color: var(--muted); margin-left: auto; }
+  table { width: 100%; border-collapse: collapse; font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem; }
+  thead th { background: #141720; color: var(--muted); text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.08em; padding: 0.65rem 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+  tbody tr { border-bottom: 1px solid rgba(46,51,71,0.5); transition: background 0.15s; }
+  tbody tr:nth-child(even) { background: var(--row-alt); }
+  tbody tr:hover { background: rgba(124,106,247,0.08); }
+  td { padding: 0.65rem 1rem; vertical-align: middle; }
+  .col-name { color: var(--text); font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+  .badge { display: inline-flex; align-items: center; padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.05em; }
+  .pk { background: rgba(246,173,85,0.15); color: var(--pk); border: 1px solid rgba(246,173,85,0.3); }
+  .fk { background: rgba(104,211,145,0.12); color: var(--fk); border: 1px solid rgba(104,211,145,0.3); }
+  .type-cell { color: var(--type); }
+  .null-yes { color: var(--null); }
+  .null-no { color: var(--muted); }
+  .default-cell { color: #a0aec0; }
+  .rel-section { padding: 1rem 1.5rem; background: #13151e; border-top: 1px solid var(--border); }
+  .rel-title { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+  .rel-item { display: flex; align-items: center; gap: 0.5rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--muted); margin-bottom: 0.25rem; }
+  .rel-item span { color: var(--fk); }
+  .legend { display: flex; gap: 1.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .leg { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<h1>Database Schema</h1>
+<p class="subtitle">E-Commerce Platform — Entity Relationship Overview</p>
+<div class="legend">
+  <div class="leg"><span class="badge pk">PK</span> Primary Key</div>
+  <div class="leg"><span class="badge fk">FK</span> Foreign Key</div>
+  <div class="leg" style="color:var(--type)">● INT / VARCHAR / TIMESTAMP</div>
+  <div class="leg" style="color:var(--null)">● NULL allowed</div>
+</div>
+<div class="schema-grid">
+
+  <div class="table-block">
+    <div class="table-header"><div class="table-icon">👤</div><div class="table-name">users</div><div class="table-desc">4.2M rows</div></div>
+    <table>
+      <thead><tr><th>Column</th><th>Type</th><th>Null</th><th>Default</th></tr></thead>
+      <tbody>
+        <tr><td><div class="col-name"><span class="badge pk">PK</span>user_id</div></td><td class="type-cell">BIGINT</td><td class="null-no">NO</td><td class="default-cell">AUTO_INCREMENT</td></tr>
+        <tr><td><div class="col-name">username</div></td><td class="type-cell">VARCHAR(50)</td><td class="null-no">NO</td><td class="default-cell">—</td></tr>
+        <tr><td><div class="col-name">email</div></td><td class="type-cell">VARCHAR(120)</td><td class="null-no">NO</td><td class="default-cell">—</td></tr>
+        <tr><td><div class="col-name">password_hash</div></td><td class="type-cell">CHAR(60)</td><td class="null-no">NO</td><td class="default-cell">—</td></tr>
+        <tr><td><div class="col-name">avatar_url</div></td><td class="type-cell">TEXT</td><td class="null-yes">YES</td><td class="default-cell">NULL</td></tr>
+        <tr><td><div class="col-name">created_at</div></td><td class="type-cell">TIMESTAMP</td><td class="null-no">NO</td><td class="default-cell">CURRENT_TIMESTAMP</td></tr>
+        <tr><td><div class="col-name">is_verified</div></td><td class="type-cell">TINYINT(1)</td><td class="null-no">NO</td><td class="default-cell">0</td></tr>
+        <tr><td><div class="col-name">last_login</div></td><td class="type-cell">TIMESTAMP</td><td class="null-yes">YES</td><td class="default-cell">NULL</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table-block">
+    <div class="table-header"><div class="table-icon">📦</div><div class="table-name">products</div><div class="table-desc">18K rows</div></div>
+    <table>
+      <thead><tr><th>Column</th><th>Type</th><th>Null</th><th>Default</th></tr></thead>
+      <tbody>
+        <tr><td><div class="col-name"><span class="badge pk">PK</span>product_id</div></td><td class="type-cell">INT</td><td class="null-no">NO</td><td class="default-cell">AUTO_INCREMENT</td></tr>
+        <tr><td><div class="col-name"><span class="badge fk">FK</span>category_id</div></td><td class="type-cell">INT</td><td class="null-no">NO</td><td class="default-cell">—</td></tr>
+        <tr><td><div class="col-name">name</div></td><td class="type-cell">VARCHAR(200)</td><td class="null-no">NO</td><td class="default-cell">—</td></tr>
+        <tr><td><div class="col-name">slug</div></td><td class="type-cell">VARCHAR(220)</td><td class="null-no">NO</td><td class="default-cell">—</td></tr>
+        <tr><td><div class="col-name">price</div></td><td class="type-cell">DECIMAL(10,2)</td><td class="null-no">NO</td><td class="default-cell">—</td></tr>
+        <tr><td><div class="col-name">stock_qty</div></td><td class="type-cell">INT</td><td class="null-no">NO</td><td class="default-cell">0</td></tr>
+        <tr><td><div class="col-name">description</div></td><td class="type-cell">TEXT</td><td class="null-yes">YES</td><td class="default-cell">NULL</td></tr>
+        <tr><td><div class="col-name">image_url</div></td><td class="type-cell">TEXT</td><td class="null-yes">YES</td><td class="default-cell">NULL</td></tr>
+      </tbody>
+    </table>
+    <div class="rel-section">
+      <div class="rel-title">Relations</div>
+      <div class="rel-item">→ <span>categories.category_id</span> via category_id</div>
+    </div>
+  </div>
+
+  <div class="table-block">
+    <div class="table-header"><div class="table-icon">🛒</div><div class="table-name">orders</div><div class="table-desc">920K rows</div></div>
+    <table>
+      <thead><tr><th>Column</th><th>Type</th><th>Null</th><th>Default</th></tr></thead>
+      <tbody>
+        <tr><td><div class="col-name"><span class="badge pk">PK</span>order_id</div></td><td class="type-cell">BIGINT</td><td class="null-no">NO</td><td class="default-cell">AUTO_INCREMENT</td></tr>
+        <tr><td><div class="col-name"><span class="badge fk">FK</span>user_id</div></td><td class="type-cell">BIGINT</td><td class="null-no">NO</td><td class="default-cell">—</td></tr>
+        <tr><td><div class="col-name">status</div></td><td class="type-cell">ENUM</td><td class="null-no">NO</td><td class="default-cell">'pending'</td></tr>
+        <tr><td><div class="col-name">total_amount</div></td><td class="type-cell">DECIMAL(12,2)</td><td class="null-no">NO</td><td class="default-cell">—</td></tr>
+        <tr><td><div class="col-name">shipping_address</div></td><td class="type-cell">TEXT</td><td class="null-no">NO</td><td class="default-cell">—</td></tr>
+        <tr><td><div class="col-name">placed_at</div></td><td class="type-cell">TIMESTAMP</td><td class="null-no">NO</td><td class="default-cell">CURRENT_TIMESTAMP</td></tr>
+        <tr><td><div class="col-name">shipped_at</div></td><td class="type-cell">TIMESTAMP</td><td class="null-yes">YES</td><td class="default-cell">NULL</td></tr>
+      </tbody>
+    </table>
+    <div class="rel-section">
+      <div class="rel-title">Relations</div>
+      <div class="rel-item">→ <span>users.user_id</span> via user_id</div>
+    </div>
+  </div>
+
+  <div class="table-block">
+    <div class="table-header"><div class="table-icon">📋</div><div class="table-name">order_items</div><div class="table-desc">2.1M rows</div></div>
+    <table>
+      <thead><tr><th>Column</th><th>Type</th><th>Null</th><th>Default</th></tr></thead>
+      <tbody>
+        <tr><td><div class="col-name"><span class="badge pk">PK</span>item_id</div></td><td class="type-cell">BIGINT</td><td class="null-no">NO</td><td class="default-cell">AUTO_INCREMENT</td></tr>
+        <tr><td><div class="col-name"><span class="badge fk">FK</span>order_id</div></td><td class="type-cell">BIGINT</td><td class="null-no">NO</td><td class="default-cell">—</td></tr>
+        <tr><td><div class="col-name"><span class="badge fk">FK</span>product_id</div></td><td class="type-cell">INT</td><td class="null-no">NO</td><td class="default-cell">—</td></tr>
+        <tr><td><div class="col-name">quantity</div></td><td class="type-cell">SMALLINT</td><td class="null-no">NO</td><td class="default-cell">1</td></tr>
+        <tr><td><div class="col-name">unit_price</div></td><td class="type-cell">DECIMAL(10,2)</td><td class="null-no">NO</td><td class="default-cell">—</td></tr>
+        <tr><td><div class="col-name">discount_pct</div></td><td class="type-cell">DECIMAL(5,2)</td><td class="null-yes">YES</td><td class="default-cell">0.00</td></tr>
+      </tbody>
+    </table>
+    <div class="rel-section">
+      <div class="rel-title">Relations</div>
+      <div class="rel-item">→ <span>orders.order_id</span> via order_id</div>
+      <div class="rel-item">→ <span>products.product_id</span> via product_id</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

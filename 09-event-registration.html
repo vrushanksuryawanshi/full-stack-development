@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>HackDeccan 2025</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;color:#f0f0f0;min-height:100vh}
+.bg{min-height:100vh;background:linear-gradient(-45deg,#0f0c29,#302b63,#24243e,#1a1a2e,#16213e,#0f3460);background-size:400% 400%;animation:gradientShift 8s ease infinite}
+@keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+header{padding:1.5rem 4rem;display:flex;justify-content:space-between;align-items:center}
+.hlogo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:-0.02em}
+.hlogo span{color:#7c3aed}
+nav a{color:rgba(240,240,240,0.6);text-decoration:none;font-size:0.85rem;margin-left:2rem}
+.hero{text-align:center;padding:4rem 2rem 3rem}
+.event-tag{display:inline-block;background:rgba(124,58,237,0.3);border:1px solid rgba(124,58,237,0.5);color:#c4b5fd;padding:0.4rem 1.2rem;border-radius:2rem;font-size:0.75rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.5rem}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(3rem,8vw,7rem);font-weight:800;letter-spacing:-0.04em;line-height:0.95}
+.hero h1 .accent{color:#7c3aed}
+.hero-sub{margin-top:1.5rem;color:rgba(240,240,240,0.6);font-size:1.05rem;font-weight:300;max-width:500px;margin-left:auto;margin-right:auto}
+.countdown{display:flex;justify-content:center;gap:2rem;margin:2.5rem auto}
+.cd-item{text-align:center;background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);border-radius:1rem;padding:1.5rem 2rem}
+.cd-num{font-family:'Syne',sans-serif;font-size:3rem;font-weight:800;color:#a78bfa;line-height:1}
+.cd-label{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(240,240,240,0.4);margin-top:0.5rem}
+.stats{display:flex;justify-content:center;gap:4rem;margin:2rem 0}
+.stat-item{text-align:center}
+.stat-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:700;color:#a78bfa}
+.stat-lbl{font-size:0.8rem;color:rgba(240,240,240,0.5);margin-top:0.25rem}
+.form-section{background:rgba(255,255,255,0.04);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.08);border-radius:1.5rem;max-width:600px;margin:0 auto 4rem;padding:2.5rem;box-shadow:0 25px 50px rgba(0,0,0,0.3)}
+.form-section h2{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:700;margin-bottom:0.5rem}
+.form-section p{color:rgba(240,240,240,0.5);font-size:0.85rem;margin-bottom:2rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-group{margin-bottom:1.25rem}
+label{display:block;font-size:0.75rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:rgba(240,240,240,0.5);margin-bottom:0.5rem}
+input,select{width:100%;padding:0.85rem 1rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:0.5rem;color:#f0f0f0;font-family:'Inter',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s}
+input::placeholder{color:rgba(240,240,240,0.3)}
+input:focus,select:focus{border-color:#7c3aed;background:rgba(124,58,237,0.1)}
+select option{background:#1a1a2e;color:#f0f0f0}
+.submit-btn{width:100%;padding:1rem;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;border:none;border-radius:0.75rem;font-size:1rem;font-weight:700;font-family:'Syne',sans-serif;cursor:pointer;letter-spacing:0.05em;transition:transform 0.2s,box-shadow 0.2s;margin-top:0.5rem}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(124,58,237,0.5)}
+.form-note{text-align:center;font-size:0.75rem;color:rgba(240,240,240,0.3);margin-top:1rem}
+</style></head><body>
+<div class="bg">
+<header>
+  <div class="hlogo">Hack<span>Deccan</span></div>
+  <nav><a href="#">Schedule</a><a href="#">Prizes</a><a href="#">Sponsors</a><a href="#">FAQ</a></nav>
+</header>
+<div class="hero">
+  <div class="event-tag">📅 March 28–30, 2025 · Sambhajinagar</div>
+  <h1>Hack<br><span class="accent">Deccan</span><br>2025</h1>
+  <p class="hero-sub">48 hours. 500 hackers. Unlimited ideas. Build the future at Maharashtra's biggest student hackathon.</p>
+</div>
+<div class="countdown">
+  <div class="cd-item"><div class="cd-num">42</div><div class="cd-label">Days</div></div>
+  <div class="cd-item"><div class="cd-num">18</div><div class="cd-label">Hours</div></div>
+  <div class="cd-item"><div class="cd-num">35</div><div class="cd-label">Minutes</div></div>
+  <div class="cd-item"><div class="cd-num">12</div><div class="cd-label">Seconds</div></div>
+</div>
+<div class="stats">
+  <div class="stat-item"><div class="stat-num">₹5L+</div><div class="stat-lbl">Prize Pool</div></div>
+  <div class="stat-item"><div class="stat-num">500+</div><div class="stat-lbl">Hackers</div></div>
+  <div class="stat-item"><div class="stat-num">48h</div><div class="stat-lbl">Duration</div></div>
+  <div class="stat-item"><div class="stat-num">20+</div><div class="stat-lbl">Sponsors</div></div>
+</div>
+<div class="form-section">
+  <h2>Register Now</h2>
+  <p>Spots are filling fast. Secure your place at HackDeccan 2025.</p>
+  <div class="form-row">
+    <div class="form-group"><label>First Name</label><input type="text" placeholder="Arjun"></div>
+    <div class="form-group"><label>Last Name</label><input type="text" placeholder="Patil"></div>
+  </div>
+  <div class="form-group"><label>Email</label><input type="email" placeholder="arjun@college.edu"></div>
+  <div class="form-row">
+    <div class="form-group"><label>College / University</label><input type="text" placeholder="MIT AOE"></div>
+    <div class="form-group"><label>Track</label><select><option>AI & Machine Learning</option><option>Web3 & Blockchain</option><option>HealthTech</option><option>EdTech</option><option>Open Innovation</option></select></div>
+  </div>
+  <div class="form-group"><label>Team Size</label><select><option>Solo (1 person)</option><option>Duo (2 people)</option><option>Team (3–4 people)</option></select></div>
+  <button type="button" class="submit-btn">🚀 Secure My Spot</button>
+  <p class="form-note">Free registration · Meals &amp; accommodation included · T&amp;C apply</p>
+</div>
+</div>
+</body></html>

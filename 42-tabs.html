@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS-Only Tabs</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { min-height: 100vh; background: #f0f4ff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4rem; font-family: 'Inter', sans-serif; padding: 3rem 1.5rem; }
+  h2 { font-size: 0.72rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 500; margin-bottom: 1.25rem; text-align: center; }
+  input[type="radio"] { display: none; }
+
+  /* ===== STYLE 1: Underline Tabs ===== */
+  .tabs1-wrap { width: 100%; max-width: 640px; }
+  .tabs1 { display: flex; border-bottom: 2px solid #e2e8f0; margin-bottom: 0; }
+  .tab1-label {
+    padding: 0.75rem 1.25rem; font-size: 0.88rem; font-weight: 500; color: #64748b;
+    cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .tab1-label:hover { color: #1e293b; }
+  #t1a:checked ~ .tabs1-wrap .tabs1 label[for="t1a"],
+  #t1b:checked ~ .tabs1-wrap .tabs1 label[for="t1b"],
+  #t1c:checked ~ .tabs1-wrap .tabs1 label[for="t1c"] {
+    color: #6366f1; border-bottom-color: #6366f1; font-weight: 600;
+  }
+  .tab1-content { display: none; background: #fff; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 14px 14px; padding: 1.5rem; }
+  #t1a:checked ~ .tabs1-wrap #tc1a,
+  #t1b:checked ~ .tabs1-wrap #tc1b,
+  #t1c:checked ~ .tabs1-wrap #tc1c { display: block; animation: fadein 0.25s ease; }
+  @keyframes fadein { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
+  .tab-body h3 { font-size: 1rem; font-weight: 700; color: #1e293b; margin-bottom: 0.5rem; }
+  .tab-body p { font-size: 0.875rem; color: #64748b; line-height: 1.7; }
+
+  /* ===== STYLE 2: Pill Tabs ===== */
+  .tabs2-wrap { width: 100%; max-width: 640px; }
+  .tabs2 { display: flex; background: #e8edf8; border-radius: 12px; padding: 4px; gap: 2px; margin-bottom: 0; }
+  .tab2-label {
+    flex: 1; text-align: center; padding: 0.55rem 0.75rem; font-size: 0.85rem; font-weight: 500;
+    color: #64748b; cursor: pointer; border-radius: 9px; transition: all 0.2s;
+  }
+  .tab2-label:hover { color: #1e293b; background: rgba(255,255,255,0.5); }
+  #t2a:checked ~ .tabs2-wrap .tabs2 label[for="t2a"],
+  #t2b:checked ~ .tabs2-wrap .tabs2 label[for="t2b"],
+  #t2c:checked ~ .tabs2-wrap .tabs2 label[for="t2c"],
+  #t2d:checked ~ .tabs2-wrap .tabs2 label[for="t2d"] {
+    background: #fff; color: #6366f1; font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .tab2-content { display: none; background: #fff; border: 1px solid #e2e8f0; border-radius: 0 0 14px 14px; padding: 1.5rem; border-top: none; }
+  .tabs2 { border-radius: 14px 14px 0 0; }
+  #t2a:checked ~ .tabs2-wrap #tc2a,
+  #t2b:checked ~ .tabs2-wrap #tc2b,
+  #t2c:checked ~ .tabs2-wrap #tc2c,
+  #t2d:checked ~ .tabs2-wrap #tc2d { display: block; animation: fadein 0.25s ease; }
+
+  /* ===== STYLE 3: Dark Vertical Tabs ===== */
+  .tabs3-wrap { width: 100%; max-width: 640px; }
+  .tabs3-layout { display: grid; grid-template-columns: 160px 1fr; border: 1px solid #1e2235; border-radius: 16px; overflow: hidden; }
+  .tabs3 { background: #0f1117; display: flex; flex-direction: column; padding: 0.5rem; gap: 2px; }
+  .tab3-label {
+    padding: 0.65rem 0.9rem; font-size: 0.83rem; font-weight: 500; color: #475569;
+    cursor: pointer; border-radius: 8px; transition: all 0.15s; display: flex; align-items: center; gap: 0.5rem;
+  }
+  .tab3-label:hover { background: #1a1d27; color: #94a3b8; }
+  #t3a:checked ~ .tabs3-wrap .tabs3 label[for="t3a"],
+  #t3b:checked ~ .tabs3-wrap .tabs3 label[for="t3b"],
+  #t3c:checked ~ .tabs3-wrap .tabs3 label[for="t3c"] {
+    background: #1e2235; color: #e2e8f0; font-weight: 600;
+  }
+  .tab3-content { display: none; background: #111420; padding: 1.5rem; color: #cbd5e1; }
+  #t3a:checked ~ .tabs3-wrap #tc3a,
+  #t3b:checked ~ .tabs3-wrap #tc3b,
+  #t3c:checked ~ .tabs3-wrap #tc3c { display: block; animation: fadein 0.25s ease; }
+  .tab3-content h3 { color: #e2e8f0; font-size: 0.97rem; margin-bottom: 0.5rem; }
+  .tab3-content p { font-size: 0.84rem; color: #64748b; line-height: 1.7; }
+  .code-block { background: #0a0c12; border: 1px solid #1e2235; border-radius: 8px; padding: 0.75rem 1rem; font-family: monospace; font-size: 0.8rem; color: #a5b4fc; margin-top: 0.75rem; }
+</style>
+</head>
+<body>
+
+<!-- RADIO INPUTS FOR STYLE 1 -->
+<input type="radio" id="t1a" name="tabs1" checked>
+<input type="radio" id="t1b" name="tabs1">
+<input type="radio" id="t1c" name="tabs1">
+
+<div>
+  <h2>Style 1 — Underline Tabs</h2>
+  <div class="tabs1-wrap">
+    <div class="tabs1">
+      <label class="tab1-label" for="t1a">Overview</label>
+      <label class="tab1-label" for="t1b">Analytics</label>
+      <label class="tab1-label" for="t1c">Settings</label>
+    </div>
+    <div class="tab1-content" id="tc1a"><div class="tab-body"><h3>Project Overview</h3><p>Welcome to your project dashboard. Here you'll find a summary of all active tasks, team members, and recent activity. Use the other tabs to dig deeper into analytics and settings.</p></div></div>
+    <div class="tab1-content" id="tc1b"><div class="tab-body"><h3>Analytics</h3><p>Your project has seen a 34% increase in activity this week. Page views are up to 12,450 and conversion rate improved from 2.1% to 2.8% after the last deployment.</p></div></div>
+    <div class="tab1-content" id="tc1c"><div class="tab-body"><h3>Project Settings</h3><p>Configure your project's name, visibility, team access permissions, and integrations. Changes are saved automatically and take effect immediately across all connected services.</p></div></div>
+  </div>
+</div>
+
+<!-- RADIO INPUTS FOR STYLE 2 -->
+<input type="radio" id="t2a" name="tabs2" checked>
+<input type="radio" id="t2b" name="tabs2">
+<input type="radio" id="t2c" name="tabs2">
+<input type="radio" id="t2d" name="tabs2">
+
+<div>
+  <h2>Style 2 — Pill / Segmented Tabs</h2>
+  <div class="tabs2-wrap">
+    <div class="tabs2">
+      <label class="tab2-label" for="t2a">All</label>
+      <label class="tab2-label" for="t2b">Frontend</label>
+      <label class="tab2-label" for="t2c">Backend</label>
+      <label class="tab2-label" for="t2d">DevOps</label>
+    </div>
+    <div class="tab2-content" id="tc2a"><div class="tab-body"><h3>All Posts</h3><p>Showing 124 articles across all categories. Filter by tag, author, or date using the controls above. Most popular this week: "Mastering CSS Grid" with 4,200 reads.</p></div></div>
+    <div class="tab2-content" id="tc2b"><div class="tab-body"><h3>Frontend</h3><p>42 articles on React, Vue, CSS, and JavaScript. Latest: "CSS Container Queries in 2025" — a deep dive into responsive components without media queries.</p></div></div>
+    <div class="tab2-content" id="tc2c"><div class="tab-body"><h3>Backend</h3><p>38 articles covering Node.js, Python, Rust, and database design. Most read: "PostgreSQL indexing strategies for high-traffic apps."</p></div></div>
+    <div class="tab2-content" id="tc2d"><div class="tab-body"><h3>DevOps</h3><p>27 articles on Docker, Kubernetes, CI/CD, and infrastructure as code. Latest series: "Zero-downtime deployments with GitHub Actions."</p></div></div>
+  </div>
+</div>
+
+<!-- RADIO INPUTS FOR STYLE 3 -->
+<input type="radio" id="t3a" name="tabs3" checked>
+<input type="radio" id="t3b" name="tabs3">
+<input type="radio" id="t3c" name="tabs3">
+
+<div>
+  <h2>Style 3 — Dark Vertical Tabs</h2>
+  <div class="tabs3-wrap">
+    <div class="tabs3-layout">
+      <div class="tabs3">
+        <label class="tab3-label" for="t3a">📦 Install</label>
+        <label class="tab3-label" for="t3b">⚙ Config</label>
+        <label class="tab3-label" for="t3c">🚀 Deploy</label>
+      </div>
+      <div class="tab3-content" id="tc3a"><h3>Installation</h3><p>Install the CLI tool using npm or your preferred package manager.</p><div class="code-block">npm install -g nexus-cli</div></div>
+      <div class="tab3-content" id="tc3b"><h3>Configuration</h3><p>Initialize your project config file. This creates a <code>nexus.config.js</code> in your root directory.</p><div class="code-block">nexus init --template=ts</div></div>
+      <div class="tab3-content" id="tc3c"><h3>Deploy</h3><p>Push your project to production with a single command. Nexus handles builds, CDN invalidation, and health checks automatically.</p><div class="code-block">nexus deploy --env=production</div></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

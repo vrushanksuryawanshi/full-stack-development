@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Masonry Photo Gallery</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200;400;700&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#111;color:#fff;font-family:'Raleway',sans-serif}
+header{padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center}
+header h1{font-size:1.5rem;font-weight:700;letter-spacing:0.05em}
+header p{font-weight:200;font-size:0.85rem;opacity:0.5;letter-spacing:0.1em}
+.gallery{column-count:4;column-gap:8px;padding:0 8px 8px}
+.gallery-item{break-inside:avoid;margin-bottom:8px;position:relative;overflow:hidden;border-radius:4px;cursor:pointer}
+.gallery-item img{width:100%;display:block;transition:transform 0.4s ease}
+.gallery-item:hover img{transform:scale(1.05)}
+.overlay{position:absolute;inset:0;background:rgba(0,0,0,0);display:flex;align-items:flex-end;padding:1rem;transition:background 0.3s}
+.gallery-item:hover .overlay{background:rgba(0,0,0,0.5)}
+.overlay-text{transform:translateY(20px);opacity:0;transition:all 0.3s;font-size:0.8rem;font-weight:400}
+.gallery-item:hover .overlay-text{transform:translateY(0);opacity:1}
+/* Coloured placeholder images */
+.ph{display:block;width:100%}
+.h1{height:280px}.h2{height:200px}.h3{height:360px}.h4{height:180px}.h5{height:240px}.h6{height:320px}.h7{height:160px}.h8{height:280px}.h9{height:200px}.h10{height:340px}.h11{height:180px}.h12{height:260px}
+.c1{background:linear-gradient(135deg,#667eea,#764ba2)}
+.c2{background:linear-gradient(135deg,#f093fb,#f5576c)}
+.c3{background:linear-gradient(135deg,#4facfe,#00f2fe)}
+.c4{background:linear-gradient(135deg,#43e97b,#38f9d7)}
+.c5{background:linear-gradient(135deg,#fa709a,#fee140)}
+.c6{background:linear-gradient(135deg,#a18cd1,#fbc2eb)}
+.c7{background:linear-gradient(135deg,#ffecd2,#fcb69f)}
+.c8{background:linear-gradient(135deg,#ff9a9e,#fecfef)}
+.c9{background:linear-gradient(135deg,#a1c4fd,#c2e9fb)}
+.c10{background:linear-gradient(135deg,#fd7043,#ffd54f)}
+.c11{background:linear-gradient(135deg,#b2ebf2,#80deea)}
+.c12{background:linear-gradient(135deg,#ce93d8,#ba68c8)}
+.img-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:2rem}
+@media(max-width:900px){.gallery{column-count:3}}
+@media(max-width:600px){.gallery{column-count:2}}
+</style></head><body>
+<header><h1>GALLERY</h1><p>Pure CSS Masonry · No JavaScript</p></header>
+<div class="gallery">
+  <div class="gallery-item"><span class="ph h1 c1"></span><span class="img-label">🏔️</span><div class="overlay"><span class="overlay-text">Mountain Vista</span></div></div>
+  <div class="gallery-item"><span class="ph h2 c2"></span><span class="img-label">🌸</span><div class="overlay"><span class="overlay-text">Spring Bloom</span></div></div>
+  <div class="gallery-item"><span class="ph h3 c3"></span><span class="img-label">🌊</span><div class="overlay"><span class="overlay-text">Ocean Deep</span></div></div>
+  <div class="gallery-item"><span class="ph h4 c4"></span><span class="img-label">🌿</span><div class="overlay"><span class="overlay-text">Forest Light</span></div></div>
+  <div class="gallery-item"><span class="ph h5 c5"></span><span class="img-label">🌅</span><div class="overlay"><span class="overlay-text">Golden Hour</span></div></div>
+  <div class="gallery-item"><span class="ph h6 c6"></span><span class="img-label">🦋</span><div class="overlay"><span class="overlay-text">Pastel Dream</span></div></div>
+  <div class="gallery-item"><span class="ph h7 c7"></span><span class="img-label">☀️</span><div class="overlay"><span class="overlay-text">Warm Glow</span></div></div>
+  <div class="gallery-item"><span class="ph h8 c8"></span><span class="img-label">🌺</span><div class="overlay"><span class="overlay-text">Rose Garden</span></div></div>
+  <div class="gallery-item"><span class="ph h9 c9"></span><span class="img-label">💧</span><div class="overlay"><span class="overlay-text">Sky Reflection</span></div></div>
+  <div class="gallery-item"><span class="ph h10 c10"></span><span class="img-label">🔥</span><div class="overlay"><span class="overlay-text">Ember Glow</span></div></div>
+  <div class="gallery-item"><span class="ph h11 c11"></span><span class="img-label">❄️</span><div class="overlay"><span class="overlay-text">Arctic Chill</span></div></div>
+  <div class="gallery-item"><span class="ph h12 c12"></span><span class="img-label">🌙</span><div class="overlay"><span class="overlay-text">Twilight</span></div></div>
+</div>
+</body></html>

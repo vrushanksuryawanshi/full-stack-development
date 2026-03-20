@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skeleton Loading</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #f0f4ff; font-family: 'Inter', sans-serif; min-height: 100vh; padding: 3rem 2rem; }
+  h2 { font-size: 0.72rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 500; margin-bottom: 1.25rem; }
+  .page-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+  @media (max-width: 700px) { .page-grid { grid-template-columns: 1fr; } }
+
+  /* ===== SKELETON BASE ===== */
+  @keyframes shimmer {
+    0% { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+  }
+  .sk {
+    border-radius: 6px;
+    background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+    background-size: 800px 100%;
+    animation: shimmer 1.5s infinite linear;
+  }
+
+  /* ===== CARD SKELETON ===== */
+  .sk-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.5rem; }
+  .sk-card-row { display: grid; grid-template-columns: 44px 1fr; gap: 0.75rem; align-items: center; margin-bottom: 1.25rem; }
+  .sk-avatar { width: 44px; height: 44px; border-radius: 50%; }
+  .sk-line-sm { height: 10px; margin-bottom: 6px; }
+  .sk-line-xs { height: 8px; width: 60%; }
+  .sk-image { width: 100%; height: 160px; border-radius: 10px; margin-bottom: 1rem; }
+  .sk-line { height: 12px; margin-bottom: 8px; }
+  .sk-line-w80 { width: 80%; }
+  .sk-line-w60 { width: 60%; }
+  .sk-line-w90 { width: 90%; }
+  .sk-btn { height: 36px; width: 100px; border-radius: 8px; margin-top: 0.5rem; }
+
+  /* ===== ARTICLE SKELETON ===== */
+  .sk-article { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.5rem; }
+  .sk-badge { height: 20px; width: 70px; border-radius: 20px; margin-bottom: 0.75rem; }
+  .sk-title { height: 20px; margin-bottom: 8px; }
+  .sk-title2 { height: 20px; width: 70%; margin-bottom: 1rem; }
+  .sk-tags { display: flex; gap: 0.4rem; margin-bottom: 1rem; }
+  .sk-tag { height: 22px; width: 60px; border-radius: 8px; }
+
+  /* ===== PROFILE SKELETON ===== */
+  .sk-profile { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; }
+  .sk-cover { height: 100px; background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%); background-size: 800px 100%; animation: shimmer 1.5s infinite linear; }
+  .sk-profile-body { padding: 1rem 1.25rem 1.5rem; position: relative; }
+  .sk-avatar-lg { width: 60px; height: 60px; border-radius: 50%; border: 3px solid #fff; margin-top: -30px; margin-bottom: 0.75rem; }
+  .sk-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-top: 1rem; }
+  .sk-stat { display: flex; flex-direction: column; gap: 4px; }
+  .sk-stat-num { height: 18px; width: 40px; border-radius: 4px; }
+  .sk-stat-lbl { height: 10px; width: 50px; border-radius: 4px; }
+
+  /* ===== TABLE SKELETON ===== */
+  .sk-table { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; }
+  .sk-thead { background: #f8faff; padding: 0.9rem 1.25rem; display: grid; grid-template-columns: 40px 1fr 120px 80px; gap: 1rem; border-bottom: 1px solid #e2e8f0; }
+  .sk-th { height: 10px; border-radius: 4px; }
+  .sk-trow { padding: 0.85rem 1.25rem; display: grid; grid-template-columns: 40px 1fr 120px 80px; gap: 1rem; align-items: center; border-bottom: 1px solid #f1f5f9; }
+  .sk-trow:last-child { border-bottom: none; }
+  .sk-td { height: 12px; border-radius: 4px; }
+  .sk-dot { width: 28px; height: 28px; border-radius: 50%; }
+</style>
+</head>
+<body>
+<div class="page-grid">
+
+  <div>
+    <h2>Social Post Card</h2>
+    <div class="sk-card">
+      <div class="sk-card-row">
+        <div class="sk sk-avatar"></div>
+        <div>
+          <div class="sk sk-line-sm" style="width:45%"></div>
+          <div class="sk sk-line-xs"></div>
+        </div>
+      </div>
+      <div class="sk sk-image"></div>
+      <div class="sk sk-line sk-line-w90"></div>
+      <div class="sk sk-line sk-line-w80"></div>
+      <div class="sk sk-line sk-line-w60"></div>
+      <div class="sk sk-btn"></div>
+    </div>
+  </div>
+
+  <div>
+    <h2>Article Preview</h2>
+    <div class="sk-article">
+      <div class="sk sk-badge"></div>
+      <div class="sk sk-title"></div>
+      <div class="sk sk-title2"></div>
+      <div class="sk-tags">
+        <div class="sk sk-tag"></div>
+        <div class="sk sk-tag" style="width:80px"></div>
+        <div class="sk sk-tag" style="width:50px"></div>
+      </div>
+      <div class="sk sk-line sk-line-w90" style="margin-bottom:6px"></div>
+      <div class="sk sk-line sk-line-w80" style="margin-bottom:6px"></div>
+      <div class="sk sk-line sk-line-w60" style="margin-bottom:6px"></div>
+      <div class="sk sk-line sk-line-w90" style="margin-bottom:6px"></div>
+      <div class="sk sk-line sk-line-w80"></div>
+      <div style="display:flex;gap:0.75rem;margin-top:1.25rem;align-items:center">
+        <div class="sk sk-avatar" style="width:32px;height:32px"></div>
+        <div class="sk sk-line" style="width:100px;margin:0"></div>
+        <div class="sk sk-line" style="width:60px;margin:0;margin-left:auto"></div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h2>User Profile</h2>
+    <div class="sk-profile">
+      <div class="sk-cover"></div>
+      <div class="sk-profile-body">
+        <div class="sk sk-avatar-lg"></div>
+        <div class="sk sk-line" style="width:50%;margin-bottom:6px"></div>
+        <div class="sk sk-line" style="width:35%;height:10px"></div>
+        <div class="sk-stats">
+          <div class="sk-stat"><div class="sk sk-stat-num"></div><div class="sk sk-stat-lbl"></div></div>
+          <div class="sk-stat"><div class="sk sk-stat-num"></div><div class="sk sk-stat-lbl"></div></div>
+          <div class="sk-stat"><div class="sk sk-stat-num"></div><div class="sk sk-stat-lbl"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h2>Data Table</h2>
+    <div class="sk-table">
+      <div class="sk-thead">
+        <div class="sk sk-th" style="width:20px"></div>
+        <div class="sk sk-th"></div>
+        <div class="sk sk-th"></div>
+        <div class="sk sk-th"></div>
+      </div>
+      <div class="sk-trow"><div class="sk sk-dot"></div><div class="sk sk-td"></div><div class="sk sk-td"></div><div class="sk sk-td" style="width:50px"></div></div>
+      <div class="sk-trow"><div class="sk sk-dot"></div><div class="sk sk-td" style="width:70%"></div><div class="sk sk-td"></div><div class="sk sk-td" style="width:40px"></div></div>
+      <div class="sk-trow"><div class="sk sk-dot"></div><div class="sk sk-td" style="width:85%"></div><div class="sk sk-td" style="width:80%"></div><div class="sk sk-td" style="width:60px"></div></div>
+      <div class="sk-trow"><div class="sk sk-dot"></div><div class="sk sk-td" style="width:60%"></div><div class="sk sk-td"></div><div class="sk sk-td" style="width:45px"></div></div>
+      <div class="sk-trow"><div class="sk sk-dot"></div><div class="sk sk-td" style="width:75%"></div><div class="sk sk-td" style="width:90%"></div><div class="sk sk-td" style="width:55px"></div></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Periodic Table of ML</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;600&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d1117;color:#e6edf3;font-family:'IBM Plex Mono',monospace;padding:2rem;min-height:100vh}
+h1{text-align:center;font-size:1.8rem;font-weight:600;margin-bottom:0.5rem;letter-spacing:0.05em}
+.subtitle{text-align:center;font-size:0.75rem;color:#7d8590;margin-bottom:2rem;letter-spacing:0.1em}
+.legend{display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;margin-bottom:2rem}
+.leg-item{display:flex;align-items:center;gap:0.4rem;font-size:0.7rem;color:#7d8590}
+.leg-dot{width:12px;height:12px;border-radius:2px}
+.table{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;max-width:1000px;margin:0 auto}
+.cell{border-radius:4px;padding:6px 4px;text-align:center;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s;position:relative}
+.cell:hover{transform:scale(1.1);z-index:10;box-shadow:0 4px 20px rgba(0,0,0,0.5)}
+.cell .num{font-size:0.55rem;color:rgba(255,255,255,0.5);line-height:1}
+.cell .symbol{font-size:0.95rem;font-weight:600;line-height:1.1;margin:2px 0}
+.cell .name{font-size:0.45rem;line-height:1.2;color:rgba(255,255,255,0.7)}
+.cell.empty{background:transparent;pointer-events:none}
+.sup{background:#1e3a5f;border:1px solid #2d5986}
+.unsup{background:#3b1f1f;border:1px solid #6b3030}
+.rl{background:#1a3a1a;border:1px solid #2d5c2d}
+.nn{background:#2a1f3f;border:1px solid #4a3a6f}
+.ens{background:#3a2a1a;border:1px solid #6b4a2a}
+.clus{background:#1a3535;border:1px solid #2d5a5a}
+.dim{background:#352a1a;border:1px solid #6b5430}
+.stats{background:#1f1f3f;border:1px solid #35356b}
+.nlp{background:#1a2a35;border:1px solid #2d4a5a}
+.cv{background:#2a3520;border:1px solid #4a6b35}
+</style></head><body>
+<h1>Periodic Table of Machine Learning</h1>
+<div class="subtitle">A CSS Grid of ML Algorithms by Category</div>
+<div class="legend">
+  <div class="leg-item"><div class="leg-dot sup"></div>Supervised</div>
+  <div class="leg-item"><div class="leg-dot unsup"></div>Unsupervised</div>
+  <div class="leg-item"><div class="leg-dot rl"></div>Reinforcement</div>
+  <div class="leg-item"><div class="leg-dot nn"></div>Neural Nets</div>
+  <div class="leg-item"><div class="leg-dot ens"></div>Ensemble</div>
+  <div class="leg-item"><div class="leg-dot clus"></div>Clustering</div>
+  <div class="leg-item"><div class="leg-dot dim"></div>Dim Reduction</div>
+  <div class="leg-item"><div class="leg-dot nlp"></div>NLP</div>
+  <div class="leg-item"><div class="leg-dot cv"></div>Computer Vision</div>
+</div>
+<div class="table">
+  <div class="cell sup"><div class="num">1</div><div class="symbol">LR</div><div class="name">Linear Reg.</div></div>
+  <div class="cell sup"><div class="num">2</div><div class="symbol">LOG</div><div class="name">Logistic Reg.</div></div>
+  <div class="cell sup"><div class="num">3</div><div class="symbol">SVM</div><div class="name">Support Vec.</div></div>
+  <div class="cell sup"><div class="num">4</div><div class="symbol">KNN</div><div class="name">K-Nearest</div></div>
+  <div class="cell sup"><div class="num">5</div><div class="symbol">DT</div><div class="name">Dec. Tree</div></div>
+  <div class="cell ens"><div class="num">6</div><div class="symbol">RF</div><div class="name">Random Forest</div></div>
+  <div class="cell ens"><div class="num">7</div><div class="symbol">XGB</div><div class="name">XGBoost</div></div>
+  <div class="cell ens"><div class="num">8</div><div class="symbol">LGB</div><div class="name">LightGBM</div></div>
+  <div class="cell ens"><div class="num">9</div><div class="symbol">ADA</div><div class="name">AdaBoost</div></div>
+  <div class="cell ens"><div class="num">10</div><div class="symbol">BAG</div><div class="name">Bagging</div></div>
+  <div class="cell ens"><div class="num">11</div><div class="symbol">STK</div><div class="name">Stacking</div></div>
+  <div class="cell ens"><div class="num">12</div><div class="symbol">VOT</div><div class="name">Voting</div></div>
+  <div class="cell clus"><div class="num">13</div><div class="symbol">KM</div><div class="name">K-Means</div></div>
+  <div class="cell clus"><div class="num">14</div><div class="symbol">DB</div><div class="name">DBSCAN</div></div>
+  <div class="cell clus"><div class="num">15</div><div class="symbol">HAC</div><div class="name">Hierarchical</div></div>
+  <div class="cell clus"><div class="num">16</div><div class="symbol">GMM</div><div class="name">Gaussian Mix</div></div>
+  <div class="cell dim"><div class="num">17</div><div class="symbol">PCA</div><div class="name">PCA</div></div>
+  <div class="cell dim"><div class="num">18</div><div class="symbol">tSNE</div><div class="name">t-SNE</div></div>
+  <div class="cell dim"><div class="num">19</div><div class="symbol">UMAP</div><div class="name">UMAP</div></div>
+  <div class="cell dim"><div class="num">20</div><div class="symbol">LDA</div><div class="name">LDA</div></div>
+  <div class="cell nn"><div class="num">21</div><div class="symbol">MLP</div><div class="name">Multilayer P.</div></div>
+  <div class="cell nn"><div class="num">22</div><div class="symbol">CNN</div><div class="name">Conv. Net</div></div>
+  <div class="cell nn"><div class="num">23</div><div class="symbol">RNN</div><div class="name">Recurrent NN</div></div>
+  <div class="cell nn"><div class="num">24</div><div class="symbol">LSTM</div><div class="name">Long Short-TM</div></div>
+  <div class="cell nn"><div class="num">25</div><div class="symbol">GRU</div><div class="name">Gated Rec.</div></div>
+  <div class="cell nn"><div class="num">26</div><div class="symbol">TRF</div><div class="name">Transformer</div></div>
+  <div class="cell nn"><div class="num">27</div><div class="symbol">GAN</div><div class="name">Gen. Adv. N.</div></div>
+  <div class="cell nn"><div class="num">28</div><div class="symbol">VAE</div><div class="name">Var. Autoenc.</div></div>
+  <div class="cell nn"><div class="num">29</div><div class="symbol">AE</div><div class="name">Autoencoder</div></div>
+  <div class="cell nn"><div class="num">30</div><div class="symbol">DIF</div><div class="name">Diffusion</div></div>
+  <div class="cell nlp"><div class="num">31</div><div class="symbol">W2V</div><div class="name">Word2Vec</div></div>
+  <div class="cell nlp"><div class="num">32</div><div class="symbol">BERT</div><div class="name">BERT</div></div>
+  <div class="cell nlp"><div class="num">33</div><div class="symbol">GPT</div><div class="name">GPT</div></div>
+  <div class="cell nlp"><div class="num">34</div><div class="symbol">T5</div><div class="name">T5</div></div>
+  <div class="cell nlp"><div class="num">35</div><div class="symbol">NER</div><div class="name">NER</div></div>
+  <div class="cell cv"><div class="num">36</div><div class="symbol">YOLO</div><div class="name">You Only Look</div></div>
+  <div class="cell cv"><div class="num">37</div><div class="symbol">RCN</div><div class="name">R-CNN</div></div>
+  <div class="cell cv"><div class="num">38</div><div class="symbol">VGG</div><div class="name">VGGNet</div></div>
+  <div class="cell cv"><div class="num">39</div><div class="symbol">RES</div><div class="name">ResNet</div></div>
+  <div class="cell cv"><div class="num">40</div><div class="symbol">VIT</div><div class="name">Vision Tfmr</div></div>
+  <div class="cell rl"><div class="num">41</div><div class="symbol">QL</div><div class="name">Q-Learning</div></div>
+  <div class="cell rl"><div class="num">42</div><div class="symbol">DQN</div><div class="name">Deep Q-Net</div></div>
+  <div class="cell rl"><div class="num">43</div><div class="symbol">PPO</div><div class="name">PPO</div></div>
+  <div class="cell rl"><div class="num">44</div><div class="symbol">A3C</div><div class="name">A3C</div></div>
+  <div class="cell unsup"><div class="num">45</div><div class="symbol">NMF</div><div class="name">NMF</div></div>
+  <div class="cell unsup"><div class="num">46</div><div class="symbol">ICA</div><div class="name">ICA</div></div>
+  <div class="cell unsup"><div class="num">47</div><div class="symbol">ISO</div><div class="name">Isomap</div></div>
+  <div class="cell stats"><div class="num">48</div><div class="symbol">NB</div><div class="name">Naïve Bayes</div></div>
+</div>
+</body></html>

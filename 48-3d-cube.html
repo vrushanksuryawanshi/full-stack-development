@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D CSS Cube</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh; background: #050608;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 5rem; font-family: 'Inter', sans-serif; padding: 3rem;
+  }
+  h2 { color: #2a2f45; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 500; margin-bottom: 1rem; text-align: center; }
+  .row { display: flex; flex-wrap: wrap; gap: 5rem; justify-content: center; align-items: center; }
+
+  /* ===== CUBE 1: Classic rotating ===== */
+  @keyframes rotate-cube { 0% { transform: rotateX(-20deg) rotateY(0deg); } 100% { transform: rotateX(-20deg) rotateY(360deg); } }
+  .scene1 { width: 120px; height: 120px; perspective: 400px; }
+  .cube1 { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; animation: rotate-cube 6s linear infinite; }
+  .face {
+    position: absolute; width: 120px; height: 120px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', cursive; font-size: 2rem; letter-spacing: 0.1em;
+    border: 1px solid rgba(255,255,255,0.15); backface-visibility: visible;
+  }
+  .f-front  { background: rgba(99,102,241,0.7);  transform: translateZ(60px); }
+  .f-back   { background: rgba(168,85,247,0.7);  transform: rotateY(180deg) translateZ(60px); }
+  .f-right  { background: rgba(236,72,153,0.7);  transform: rotateY(90deg)  translateZ(60px); }
+  .f-left   { background: rgba(16,185,129,0.7);  transform: rotateY(-90deg) translateZ(60px); }
+  .f-top    { background: rgba(245,158,11,0.7);  transform: rotateX(90deg)  translateZ(60px); }
+  .f-bottom { background: rgba(239,68,68,0.7);   transform: rotateX(-90deg) translateZ(60px); }
+  .face span { color: rgba(255,255,255,0.9); text-shadow: 0 1px 4px rgba(0,0,0,0.3); }
+
+  /* ===== CUBE 2: Wireframe ===== */
+  @keyframes rotate-cube2 { 0% { transform: rotateX(-25deg) rotateY(0deg) rotateZ(5deg); } 100% { transform: rotateX(-25deg) rotateY(360deg) rotateZ(5deg); } }
+  .scene2 { width: 100px; height: 100px; perspective: 350px; }
+  .cube2 { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; animation: rotate-cube2 8s linear infinite; }
+  .wf {
+    position: absolute; width: 100px; height: 100px;
+    border: 2px solid #22d3ee; background: transparent;
+  }
+  .wf-front  { transform: translateZ(50px); box-shadow: 0 0 12px #22d3ee, inset 0 0 12px rgba(34,211,238,0.1); }
+  .wf-back   { transform: rotateY(180deg) translateZ(50px); box-shadow: 0 0 8px #22d3ee; }
+  .wf-right  { transform: rotateY(90deg)  translateZ(50px); box-shadow: 0 0 8px #22d3ee; }
+  .wf-left   { transform: rotateY(-90deg) translateZ(50px); box-shadow: 0 0 8px #22d3ee; }
+  .wf-top    { transform: rotateX(90deg)  translateZ(50px); box-shadow: 0 0 8px #22d3ee; }
+  .wf-bottom { transform: rotateX(-90deg) translateZ(50px); box-shadow: 0 0 8px #22d3ee; }
+
+  /* ===== CUBE 3: Dice ===== */
+  @keyframes rotate-cube3 { 0%{transform:rotateX(0deg)rotateY(0deg)} 25%{transform:rotateX(90deg)rotateY(90deg)} 50%{transform:rotateX(180deg)rotateY(180deg)} 75%{transform:rotateX(270deg)rotateY(90deg)} 100%{transform:rotateX(360deg)rotateY(360deg)} }
+  .scene3 { width: 110px; height: 110px; perspective: 400px; }
+  .cube3 { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; animation: rotate-cube3 4s ease-in-out infinite; }
+  .die { position: absolute; width: 110px; height: 110px; background: #fff; border-radius: 18px; display: grid; align-items: center; justify-items: center; border: 1px solid rgba(0,0,0,0.1); }
+  .df { transform: translateZ(55px); }
+  .db { transform: rotateY(180deg) translateZ(55px); }
+  .dr { transform: rotateY(90deg)  translateZ(55px); }
+  .dl { transform: rotateY(-90deg) translateZ(55px); }
+  .dt { transform: rotateX(90deg)  translateZ(55px); }
+  .dbo{ transform: rotateX(-90deg) translateZ(55px); }
+  .pip { width: 14px; height: 14px; border-radius: 50%; background: #1e293b; }
+  .pips { display: grid; gap: 8px; padding: 14px; width: 100%; height: 100%; }
+  .p3 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; }
+  .p3 .pip:nth-child(1){grid-area:1/1} .p3 .pip:nth-child(2){grid-area:2/2} .p3 .pip:nth-child(3){grid-area:3/3}
+  .p1 { place-content: center; }
+  .p2 { grid-template-rows: 1fr 1fr; grid-template-columns: 1fr; place-items: center; }
+  .p2 .pip:nth-child(1){align-self:start;} .p2 .pip:nth-child(2){align-self:end;}
+  .p4 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+  .p5 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; }
+  .p5 .pip:nth-child(5){ grid-column: 1/3; justify-self: center; }
+  .p6 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; }
+
+  /* ===== CUBE 4: Text cube ===== */
+  @keyframes rotate-cube4 { 0%{transform:rotateX(-15deg)rotateY(0deg)} 100%{transform:rotateX(-15deg)rotateY(360deg)} }
+  .scene4 { width: 130px; height: 130px; perspective: 500px; }
+  .cube4 { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; animation: rotate-cube4 7s linear infinite; }
+  .tf { position: absolute; width: 130px; height: 130px; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', cursive; font-size: 2.5rem; color: #fff; border: 2px solid rgba(255,255,255,0.3); }
+  .tf1 { background: linear-gradient(135deg,rgba(99,102,241,0.8),rgba(168,85,247,0.8)); transform: translateZ(65px); }
+  .tf2 { background: linear-gradient(135deg,rgba(236,72,153,0.8),rgba(239,68,68,0.8)); transform: rotateY(180deg) translateZ(65px); }
+  .tf3 { background: linear-gradient(135deg,rgba(16,185,129,0.8),rgba(6,182,212,0.8)); transform: rotateY(90deg) translateZ(65px); }
+  .tf4 { background: linear-gradient(135deg,rgba(245,158,11,0.8),rgba(239,68,68,0.8)); transform: rotateY(-90deg) translateZ(65px); }
+  .tf5 { background: linear-gradient(135deg,rgba(99,102,241,0.5),rgba(168,85,247,0.5)); transform: rotateX(90deg) translateZ(65px); }
+  .tf6 { background: linear-gradient(135deg,rgba(15,23,42,0.8),rgba(30,41,59,0.8)); transform: rotateX(-90deg) translateZ(65px); }
+  .glow-floor { width: 180px; height: 30px; background: radial-gradient(ellipse, rgba(99,102,241,0.25) 0%, transparent 70%); margin-top: 8rem; border-radius: 50%; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div>
+      <h2>Gradient Cube</h2>
+      <div class="scene1">
+        <div class="cube1">
+          <div class="face f-front"><span>CSS</span></div>
+          <div class="face f-back"><span>3D</span></div>
+          <div class="face f-right"><span>WEB</span></div>
+          <div class="face f-left"><span>DEV</span></div>
+          <div class="face f-top"><span>HTML</span></div>
+          <div class="face f-bottom"><span>Art</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h2>Wireframe</h2>
+      <div class="scene2">
+        <div class="cube2">
+          <div class="wf wf-front"></div><div class="wf wf-back"></div>
+          <div class="wf wf-right"></div><div class="wf wf-left"></div>
+          <div class="wf wf-top"></div><div class="wf wf-bottom"></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h2>Dice</h2>
+      <div class="scene3">
+        <div class="cube3">
+          <div class="die df"><div class="pips p1"><div class="pip"></div></div></div>
+          <div class="die db"><div class="pips p6"><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div></div></div>
+          <div class="die dr"><div class="pips p3"><div class="pip"></div><div class="pip"></div><div class="pip"></div></div></div>
+          <div class="die dl"><div class="pips p4"><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div></div></div>
+          <div class="die dt"><div class="pips p2"><div class="pip"></div><div class="pip"></div></div></div>
+          <div class="die dbo"><div class="pips p5"><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;align-items:center">
+      <h2>Brand Cube</h2>
+      <div class="scene4">
+        <div class="cube4">
+          <div class="tf tf1">NEXT</div><div class="tf tf2">NODE</div>
+          <div class="tf tf3">REACT</div><div class="tf tf4">VUE</div>
+          <div class="tf tf5">CSS</div><div class="tf tf6">HTML</div>
+        </div>
+      </div>
+      <div class="glow-floor"></div>
+    </div>
+  </div>
+</body>
+</html>

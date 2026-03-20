@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beyond Imagination is Fun — Book Launch</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&family=Jost:wght@300;400;500&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #1b1226; color: #f5efd8; font-family: 'Jost', sans-serif; }
+  /* --- HERO --- */
+  .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; gap: 6rem; padding: 4rem 2rem; background: radial-gradient(ellipse at 30% 50%, #2d1b4e 0%, #1b1226 60%); }
+  /* 3D Book */
+  .book-wrap { perspective: 1000px; }
+  .book {
+    width: 220px; height: 300px;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateY(-25deg) rotateX(5deg);
+    animation: float 4s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%,100% { transform: rotateY(-25deg) rotateX(5deg) translateY(0); }
+    50% { transform: rotateY(-25deg) rotateX(5deg) translateY(-12px); }
+  }
+  .book-front {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9, #4c1d95);
+    border-radius: 2px 8px 8px 2px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 1.5rem;
+    box-shadow: inset -4px 0 8px rgba(0,0,0,0.3);
+  }
+  .book-title { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; text-align: center; color: #fff; line-height: 1.2; }
+  .book-subtitle { font-size: 0.65rem; letter-spacing: 0.15em; color: rgba(255,255,255,0.6); margin-top: 0.5rem; text-transform: uppercase; }
+  .book-author { position: absolute; bottom: 1rem; font-size: 0.7rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.7); text-transform: uppercase; }
+  .book-star { font-size: 2rem; margin-bottom: 0.5rem; }
+  .book-spine {
+    position: absolute; top: 0; left: -28px; width: 28px; height: 100%;
+    background: linear-gradient(to right, #3b0764, #6d28d9);
+    border-radius: 2px 0 0 2px;
+    transform: rotateY(-90deg);
+    transform-origin: right;
+  }
+  .book-back {
+    position: absolute; inset: 0;
+    background: #2e1065;
+    transform: translateZ(-28px);
+  }
+  /* shadow */
+  .book-shadow {
+    width: 220px; height: 30px;
+    background: radial-gradient(ellipse, rgba(0,0,0,0.6) 0%, transparent 70%);
+    margin-top: 1rem;
+    animation: shadow-float 4s ease-in-out infinite;
+  }
+  @keyframes shadow-float { 0%,100% { transform: scaleX(1); opacity:0.6; } 50% { transform: scaleX(0.8); opacity:0.3; } }
+  /* Hero text */
+  .hero-text { max-width: 480px; }
+  .badge { display: inline-block; background: rgba(139,92,246,0.2); border: 1px solid rgba(139,92,246,0.4); color: #c4b5fd; padding: 0.3rem 1rem; border-radius: 2rem; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.5rem; }
+  .hero-text h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300; line-height: 1.15; }
+  .hero-text h1 em { font-style: italic; color: #a78bfa; }
+  .synopsis { margin-top: 1.5rem; color: rgba(245,239,216,0.65); line-height: 1.8; font-size: 0.95rem; font-weight: 300; }
+  .quotes { margin-top: 2rem; border-left: 2px solid #7c3aed; padding-left: 1rem; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1rem; color: #c4b5fd; }
+  /* Subscribe Form */
+  .subscribe { margin-top: 2.5rem; }
+  .subscribe label { display: block; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(245,239,216,0.5); margin-bottom: 0.75rem; }
+  .input-row { display: flex; gap: 0; max-width: 420px; }
+  .input-row input { flex: 1; padding: 0.85rem 1.25rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(139,92,246,0.3); border-right: none; color: #f5efd8; border-radius: 4px 0 0 4px; font-family: 'Jost', sans-serif; outline: none; }
+  .input-row input::placeholder { color: rgba(245,239,216,0.3); }
+  .input-row input:focus { border-color: #7c3aed; background: rgba(255,255,255,0.08); }
+  .input-row button { padding: 0.85rem 1.75rem; background: #7c3aed; color: #fff; border: none; border-radius: 0 4px 4px 0; font-family: 'Jost', sans-serif; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+  .input-row button:hover { background: #6d28d9; }
+  /* Details strip */
+  .details { display: flex; gap: 2rem; margin-top: 1.5rem; }
+  .detail { display: flex; flex-direction: column; }
+  .detail .d-label { font-size: 0.7rem; color: rgba(245,239,216,0.4); text-transform: uppercase; letter-spacing: 0.1em; }
+  .detail .d-val { font-size: 0.9rem; font-weight: 500; margin-top: 0.2rem; }
+  /* Testimonials */
+  .testimonials { padding: 4rem 2rem; text-align: center; background: rgba(255,255,255,0.02); }
+  .testimonials h2 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 2rem; }
+  .t-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; max-width: 900px; margin: 0 auto; }
+  .t-card { background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.2); border-radius: 1rem; padding: 1.5rem; text-align: left; }
+  .t-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; line-height: 1.6; color: rgba(245,239,216,0.8); }
+  .t-author { margin-top: 1rem; font-size: 0.8rem; color: #a78bfa; font-weight: 500; }
+  .stars { color: #fbbf24; font-size: 0.85rem; margin-bottom: 0.5rem; }
+</style>
+</head>
+<body>
+<div class="hero">
+  <div>
+    <div class="book-wrap">
+      <div class="book">
+        <div class="book-spine"></div>
+        <div class="book-front">
+          <div class="book-star">✦</div>
+          <div class="book-title">Beyond Imagination<br>is Fun</div>
+          <div class="book-subtitle">A Creative Journey</div>
+          <div class="book-author">Vrushank Suryawanshi</div>
+        </div>
+        <div class="book-back"></div>
+      </div>
+    </div>
+    <div class="book-shadow"></div>
+  </div>
+  <div class="hero-text">
+    <span class="badge">Now Available</span>
+    <h1>Where <em>creativity</em> meets infinite possibility</h1>
+    <p class="synopsis">A transformative exploration of how imagination shapes reality. From daydreams to innovations, this book challenges you to rethink the boundaries of what you believe is possible — and discover the joy that lives beyond them.</p>
+    <div class="quotes">"A rare book that feels like a conversation with your most inspired self."</div>
+    <div class="subscribe">
+      <label>Get launch updates &amp; free chapters</label>
+      <div class="input-row">
+        <input type="email" placeholder="your@email.com">
+        <button type="button">Notify Me</button>
+      </div>
+    </div>
+    <div class="details">
+      <div class="detail"><span class="d-label">Pages</span><span class="d-val">312</span></div>
+      <div class="detail"><span class="d-label">Genre</span><span class="d-val">Self-Help</span></div>
+      <div class="detail"><span class="d-label">Launch</span><span class="d-val">Jan 2025</span></div>
+      <div class="detail"><span class="d-label">Rating</span><span class="d-val">4.9 / 5</span></div>
+    </div>
+  </div>
+</div>
+<div class="testimonials">
+  <h2>What Readers Are Saying</h2>
+  <div class="t-grid">
+    <div class="t-card"><div class="stars">★★★★★</div><p class="t-text">"This book completely rewired how I think about creative blocks. Essential reading."</p><div class="t-author">— Rohit K., Designer</div></div>
+    <div class="t-card"><div class="stars">★★★★★</div><p class="t-text">"I finished it in one sitting. Every chapter feels like unlocking a new part of your mind."</p><div class="t-author">— Ananya S., Educator</div></div>
+    <div class="t-card"><div class="stars">★★★★★</div><p class="t-text">"Practical, poetic, and profoundly inspiring. The best book I've read this year."</p><div class="t-author">— Dev M., Entrepreneur</div></div>
+  </div>
+</div>
+</body>
+</html>

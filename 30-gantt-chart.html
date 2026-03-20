@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Gantt Chart</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f8faff;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --muted: #94a3b8;
+    --row-alt: #f8faff;
+    --today: rgba(99,102,241,0.12);
+  }
+  body { background: var(--bg); font-family: 'Inter', sans-serif; color: var(--text); padding: 2rem; min-height: 100vh; }
+  h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; }
+  .legend { display: flex; gap: 1.25rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .leg { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: var(--muted); }
+  .leg-dot { width: 12px; height: 12px; border-radius: 3px; }
+
+  /* ===== GANTT ===== */
+  .gantt-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; overflow-x: auto; }
+  /* 14 columns: 1 label col + 13 week cols */
+  .gantt { display: grid; grid-template-columns: 200px repeat(13, minmax(60px,1fr)); min-width: 880px; }
+
+  /* header row */
+  .gh { background: #f1f5f9; border-bottom: 2px solid var(--border); font-size: 0.75rem; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.06em; display: flex; align-items: center; padding: 0.65rem 0.75rem; }
+  .gh.label-col { padding-left: 1.25rem; }
+  .gh.today-col { background: var(--today); color: #6366f1; }
+
+  /* month spans */
+  .month-header { background: #e8edf8; border-bottom: 1px solid var(--border); font-size: 0.7rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.08em; display: flex; align-items: center; padding: 0.4rem 0.75rem; grid-column: span 1; }
+
+  /* data rows */
+  .row-label { padding: 0.85rem 1rem 0.85rem 1.25rem; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); display: flex; flex-direction: column; justify-content: center; gap: 0.15rem; }
+  .row-label .task-name { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+  .row-label .task-owner { font-size: 0.72rem; color: var(--muted); }
+  .gantt-cell { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); position: relative; min-height: 52px; }
+  .gantt-cell.today-col { background: var(--today); }
+  .gantt-cell:last-child { border-right: none; }
+
+  /* bars */
+  .bar { position: absolute; top: 50%; transform: translateY(-50%); height: 22px; border-radius: 5px; display: flex; align-items: center; padding: 0 0.4rem; font-size: 0.68rem; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; z-index: 1; }
+  /* bar spans multiple columns using inline style via grid-column on a separate element */
+  /* We'll use a row approach: each task row uses a display:contents grid rows */
+
+  /* ROW WRAPPER using subgrid-like display */
+  .task-row { display: contents; }
+  .task-row:hover > * { background: #f8faff; }
+  .task-row:hover > .today-col { background: rgba(99,102,241,0.18) !important; }
+
+  /* SPAN CELLS: the bar cell spans multiple columns */
+  .bar-cell { border-bottom: 1px solid var(--border); position: relative; }
+  .bar-cell.span2 { grid-column: span 2; }
+  .bar-cell.span3 { grid-column: span 3; }
+  .bar-cell.span4 { grid-column: span 4; }
+  .bar-cell.span5 { grid-column: span 5; }
+
+  /* Bar colors */
+  .bar-blue { background: linear-gradient(90deg, #6366f1, #818cf8); }
+  .bar-green { background: linear-gradient(90deg, #22c55e, #4ade80); }
+  .bar-amber { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+  .bar-rose { background: linear-gradient(90deg, #f43f5e, #fb7185); }
+  .bar-cyan { background: linear-gradient(90deg, #06b6d4, #22d3ee); }
+  .bar-purple { background: linear-gradient(90deg, #a855f7, #c084fc); }
+
+  .empty-cell { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .empty-cell.today-col { background: var(--today); }
+
+  .status-badge { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.68rem; padding: 0.15rem 0.45rem; border-radius: 99px; font-weight: 600; }
+  .done-b { background: rgba(34,197,94,0.15); color: #16a34a; }
+  .prog-b { background: rgba(99,102,241,0.15); color: #6366f1; }
+  .todo-b { background: rgba(148,163,184,0.2); color: #64748b; }
+</style>
+</head>
+<body>
+<h1>Project Timeline — Q1 / Q2 2025</h1>
+<p class="meta">Sprint Planning · 13 Weeks · Updated March 2025</p>
+<div class="legend">
+  <div class="leg"><div class="leg-dot" style="background:#6366f1"></div>Design</div>
+  <div class="leg"><div class="leg-dot" style="background:#22c55e"></div>Development</div>
+  <div class="leg"><div class="leg-dot" style="background:#f59e0b"></div>Testing</div>
+  <div class="leg"><div class="leg-dot" style="background:#f43f5e"></div>Marketing</div>
+  <div class="leg"><div class="leg-dot" style="background:#06b6d4"></div>Infrastructure</div>
+  <div class="leg"><div class="leg-dot" style="background:#a855f7"></div>Research</div>
+</div>
+
+<div class="gantt-wrap">
+  <div class="gantt">
+    <!-- HEADER -->
+    <div class="gh label-col">Task</div>
+    <div class="gh">W1</div><div class="gh">W2</div><div class="gh">W3</div>
+    <div class="gh">W4</div><div class="gh">W5</div><div class="gh today-col">W6 ←</div>
+    <div class="gh">W7</div><div class="gh">W8</div><div class="gh">W9</div>
+    <div class="gh">W10</div><div class="gh">W11</div><div class="gh">W12</div><div class="gh">W13</div>
+
+    <!-- ROW 1: UX Research -->
+    <div class="row-label">
+      <span class="task-name">UX Research</span>
+      <span class="task-owner">Priya K.</span>
+      <span class="status-badge done-b">✓ Done</span>
+    </div>
+    <!-- W1-W3 filled bar via span trick: -->
+    <div class="bar-cell span3" style="border-bottom:1px solid var(--border); position:relative; display:flex; align-items:center; padding:0 8px;">
+      <div class="bar bar-purple" style="position:relative;transform:none;top:auto;left:auto;width:100%">UX Research</div>
+    </div>
+    <div class="empty-cell"></div><div class="empty-cell"></div><div class="empty-cell today-col"></div>
+    <div class="empty-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div>
+    <div class="empty-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div>
+
+    <!-- ROW 2: UI Design -->
+    <div class="row-label">
+      <span class="task-name">UI Design</span>
+      <span class="task-owner">Arya S.</span>
+      <span class="status-badge done-b">✓ Done</span>
+    </div>
+    <div class="empty-cell"></div>
+    <div class="bar-cell span4" style="border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 8px;">
+      <div class="bar bar-blue" style="position:relative;transform:none;top:auto;width:100%">UI Design System</div>
+    </div>
+    <div class="empty-cell"></div><div class="empty-cell today-col"></div>
+    <div class="empty-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div>
+    <div class="empty-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div>
+
+    <!-- ROW 3: Frontend Dev -->
+    <div class="row-label">
+      <span class="task-name">Frontend Dev</span>
+      <span class="task-owner">Rahul M.</span>
+      <span class="status-badge prog-b">⟳ In Progress</span>
+    </div>
+    <div class="empty-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div>
+    <div class="bar-cell span5" style="border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 8px;">
+      <div class="bar bar-green" style="position:relative;transform:none;top:auto;width:100%">Frontend Implementation</div>
+    </div>
+    <div class="empty-cell today-col"></div>
+    <div class="empty-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div>
+    <div class="empty-cell"></div><div class="empty-cell"></div>
+
+    <!-- ROW 4: Backend API -->
+    <div class="row-label">
+      <span class="task-name">Backend API</span>
+      <span class="task-owner">Neha V.</span>
+      <span class="status-badge prog-b">⟳ In Progress</span>
+    </div>
+    <div class="empty-cell"></div><div class="empty-cell"></div>
+    <div class="bar-cell span5" style="border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 8px;">
+      <div class="bar bar-cyan" style="position:relative;transform:none;top:auto;width:100%">REST API + Auth</div>
+    </div>
+    <div class="empty-cell today-col"></div>
+    <div class="empty-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div>
+    <div class="empty-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div>
+
+    <!-- ROW 5: QA Testing -->
+    <div class="row-label">
+      <span class="task-name">QA Testing</span>
+      <span class="task-owner">Vikram S.</span>
+      <span class="status-badge todo-b">Upcoming</span>
+    </div>
+    <div class="empty-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div>
+    <div class="empty-cell"></div><div class="empty-cell"></div><div class="empty-cell today-col"></div>
+    <div class="bar-cell span3" style="border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 8px;">
+      <div class="bar bar-amber" style="position:relative;transform:none;top:auto;width:100%">QA & Bug Fixes</div>
+    </div>
+    <div class="empty-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div>
+
+    <!-- ROW 6: Launch -->
+    <div class="row-label">
+      <span class="task-name">Product Launch</span>
+      <span class="task-owner">All Hands</span>
+      <span class="status-badge todo-b">Upcoming</span>
+    </div>
+    <div class="empty-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div>
+    <div class="empty-cell"></div><div class="empty-cell"></div><div class="empty-cell today-col"></div>
+    <div class="empty-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div>
+    <div class="bar-cell span4" style="border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 8px;">
+      <div class="bar bar-rose" style="position:relative;transform:none;top:auto;width:100%">🚀 Launch &amp; Marketing</div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

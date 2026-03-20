@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leaderboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #08090c;
+    --surface: #0f1117;
+    --border: #1e2230;
+    --gold: #f5c542;
+    --silver: #c0c8d8;
+    --bronze: #cd7f32;
+    --text: #e8eaf0;
+    --muted: #5a6070;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+  .lb-wrap { width: 100%; max-width: 600px; }
+  .lb-header { text-align: center; margin-bottom: 2.5rem; }
+  .lb-header h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2.2rem; letter-spacing: -0.03em; margin-bottom: 0.25rem; }
+  .lb-header p { color: var(--muted); font-size: 0.85rem; }
+  .season { color: var(--gold); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+
+  /* ===== TOP 3 PODIUM ===== */
+  .podium { display: flex; align-items: flex-end; justify-content: center; gap: 0.75rem; margin-bottom: 2rem; }
+  .podium-slot { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; }
+  .podium-avatar { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; border: 3px solid transparent; position: relative; }
+  .podium-avatar .crown { position: absolute; top: -16px; font-size: 1rem; }
+  .rank-1 .podium-avatar { border-color: var(--gold); background: rgba(245,197,66,0.1); }
+  .rank-2 .podium-avatar { border-color: var(--silver); background: rgba(192,200,216,0.1); }
+  .rank-3 .podium-avatar { border-color: var(--bronze); background: rgba(205,127,50,0.1); }
+  .podium-name { font-family: 'Syne', sans-serif; font-size: 0.88rem; font-weight: 700; }
+  .podium-pts { font-size: 0.78rem; color: var(--muted); }
+  .podium-base { border-radius: 10px 10px 0 0; width: 100px; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.6rem; }
+  .rank-1 .podium-base { height: 80px; background: linear-gradient(135deg, #f5c542, #e0a800); color: #1a1000; }
+  .rank-2 .podium-base { height: 60px; background: linear-gradient(135deg, #b0baca, #7c8494); color: #111; }
+  .rank-3 .podium-base { height: 44px; background: linear-gradient(135deg, #cd7f32, #9c5a22); color: #1a0f00; }
+
+  /* ===== REST OF LEADERBOARD ===== */
+  .lb-list { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .lb-row { display: grid; grid-template-columns: 48px 40px 1fr auto auto; align-items: center; gap: 0; padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  .lb-row:last-child { border-bottom: none; }
+  .lb-row:hover { background: rgba(255,255,255,0.03); }
+  .rank-num { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--muted); }
+  .user-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; background: #1a1d27; }
+  .user-info { padding: 0 0.75rem; }
+  .user-name { font-weight: 600; font-size: 0.9rem; }
+  .user-handle { font-size: 0.75rem; color: var(--muted); }
+  .badge-wrap { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .badge { font-size: 0.68rem; font-weight: 600; padding: 0.2rem 0.5rem; border-radius: 6px; }
+  .badge-fire { background: rgba(251,146,60,0.15); color: #fb923c; }
+  .badge-new { background: rgba(34,197,94,0.15); color: #22c55e; }
+  .badge-bot { background: rgba(99,102,241,0.15); color: #818cf8; }
+  .points { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; text-align: right; }
+  .points span { font-size: 0.7rem; font-weight: 500; color: var(--muted); display: block; }
+  .change-up { color: #22c55e; font-size: 0.75rem; font-weight: 600; }
+  .change-dn { color: #f87171; font-size: 0.75rem; font-weight: 600; }
+  .change-ne { color: var(--muted); font-size: 0.75rem; }
+</style>
+</head>
+<body>
+<div class="lb-wrap">
+  <div class="lb-header">
+    <div class="season">Season 4 · 2025</div>
+    <h1>🏆 Leaderboard</h1>
+    <p>Top 10 contributors this month</p>
+  </div>
+
+  <!-- PODIUM -->
+  <div class="podium">
+    <div class="podium-slot rank-2">
+      <div class="podium-avatar">🦊</div>
+      <div class="podium-name">Arya S.</div>
+      <div class="podium-pts">9,840 pts</div>
+      <div class="podium-base">2</div>
+    </div>
+    <div class="podium-slot rank-1">
+      <div class="podium-avatar"><span class="crown">👑</span>🧑‍🚀</div>
+      <div class="podium-name">Rahul M.</div>
+      <div class="podium-pts">12,450 pts</div>
+      <div class="podium-base">1</div>
+    </div>
+    <div class="podium-slot rank-3">
+      <div class="podium-avatar">🐉</div>
+      <div class="podium-name">Priya K.</div>
+      <div class="podium-pts">8,210 pts</div>
+      <div class="podium-base">3</div>
+    </div>
+  </div>
+
+  <!-- LIST -->
+  <div class="lb-list">
+    <div class="lb-row">
+      <div class="rank-num">4</div>
+      <div class="user-avatar">🤖</div>
+      <div class="user-info"><div class="user-name">Neha V.</div><div class="user-handle">@neha_v</div></div>
+      <div class="badge-wrap"><span class="badge badge-fire">🔥 Streak</span></div>
+      <div class="points">7,655<span><span class="change-up">▲ 12</span></span></div>
+    </div>
+    <div class="lb-row">
+      <div class="rank-num">5</div>
+      <div class="user-avatar">🦁</div>
+      <div class="user-info"><div class="user-name">Sameer B.</div><div class="user-handle">@sameerb</div></div>
+      <div class="badge-wrap"></div>
+      <div class="points">6,920<span><span class="change-dn">▼ 3</span></span></div>
+    </div>
+    <div class="lb-row">
+      <div class="rank-num">6</div>
+      <div class="user-avatar">🌙</div>
+      <div class="user-info"><div class="user-name">Tanvi R.</div><div class="user-handle">@tanvi_r</div></div>
+      <div class="badge-wrap"><span class="badge badge-new">✨ New</span></div>
+      <div class="points">5,780<span><span class="change-up">▲ 28</span></span></div>
+    </div>
+    <div class="lb-row">
+      <div class="rank-num">7</div>
+      <div class="user-avatar">⚡</div>
+      <div class="user-info"><div class="user-name">Kiran D.</div><div class="user-handle">@kirando</div></div>
+      <div class="badge-wrap"></div>
+      <div class="points">5,120<span><span class="change-ne">— 0</span></span></div>
+    </div>
+    <div class="lb-row">
+      <div class="rank-num">8</div>
+      <div class="user-avatar">🦋</div>
+      <div class="user-info"><div class="user-name">Amit J.</div><div class="user-handle">@amitj</div></div>
+      <div class="badge-wrap"><span class="badge badge-bot">🤖 Bot</span></div>
+      <div class="points">4,340<span><span class="change-up">▲ 7</span></span></div>
+    </div>
+    <div class="lb-row">
+      <div class="rank-num">9</div>
+      <div class="user-avatar">🐸</div>
+      <div class="user-info"><div class="user-name">Pooja N.</div><div class="user-handle">@poojan</div></div>
+      <div class="badge-wrap"></div>
+      <div class="points">3,890<span><span class="change-dn">▼ 5</span></span></div>
+    </div>
+    <div class="lb-row">
+      <div class="rank-num">10</div>
+      <div class="user-avatar">🌊</div>
+      <div class="user-info"><div class="user-name">Vikram S.</div><div class="user-handle">@vsinha</div></div>
+      <div class="badge-wrap"></div>
+      <div class="points">3,105<span><span class="change-ne">— 0</span></span></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hover Reveal Gallery</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0a0c12; font-family: 'Inter', sans-serif; min-height: 100vh; padding: 3rem 2rem; }
+  .header { text-align: center; margin-bottom: 3rem; }
+  .header h1 { font-size: 2rem; font-weight: 800; color: #e2e8f0; letter-spacing: -0.03em; margin-bottom: 0.4rem; }
+  .header p { color: #475569; font-size: 0.88rem; }
+  .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; max-width: 1100px; margin: 0 auto; }
+
+  /* ===== BASE CARD ===== */
+  .photo-card { border-radius: 16px; overflow: hidden; position: relative; cursor: pointer; aspect-ratio: 4/3; }
+  .photo-bg {
+    position: absolute; inset: 0;
+    transition: filter 0.5s ease, transform 0.5s ease;
+    transform-origin: center;
+  }
+  .photo-card:hover .photo-bg { filter: none !important; transform: scale(1.04); }
+
+  /* Grayscale by default */
+  .photo-card .photo-bg { filter: grayscale(100%) brightness(0.7); }
+
+  /* Gradient placeholder "photos" */
+  .p1 { background: linear-gradient(135deg, #6366f1 0%, #a855f7 40%, #ec4899 100%); }
+  .p2 { background: linear-gradient(135deg, #059669 0%, #10b981 40%, #34d399 100%); }
+  .p3 { background: linear-gradient(135deg, #d97706 0%, #f59e0b 40%, #fbbf24 100%); }
+  .p4 { background: linear-gradient(135deg, #0891b2 0%, #06b6d4 40%, #22d3ee 100%); }
+  .p5 { background: linear-gradient(135deg, #dc2626 0%, #ef4444 40%, #f87171 100%); }
+  .p6 { background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 40%, #a78bfa 100%); }
+
+  /* Decorative shapes inside cards */
+  .photo-bg::before, .photo-bg::after { content: ''; position: absolute; border-radius: 50%; }
+  .p1::before { width: 180px; height: 180px; background: rgba(255,255,255,0.1); top: -40px; right: -40px; }
+  .p1::after  { width: 100px; height: 100px; background: rgba(255,255,255,0.07); bottom: 20px; left: 20px; }
+  .p2::before { width: 200px; height: 200px; background: rgba(255,255,255,0.08); top: -60px; left: -40px; }
+  .p3::before { width: 150px; height: 150px; background: rgba(255,255,255,0.1); bottom: -30px; right: -30px; }
+  .p4::before { width: 220px; height: 220px; background: rgba(255,255,255,0.06); top: -80px; right: -60px; }
+  .p5::before { width: 160px; height: 160px; background: rgba(255,255,255,0.08); bottom: -40px; left: -30px; }
+  .p6::before { width: 190px; height: 190px; background: rgba(255,255,255,0.07); top: -50px; left: -50px; }
+
+  /* Emoji / icon center */
+  .photo-emoji { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 4rem; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3)); z-index: 1; }
+
+  /* Overlay text */
+  .photo-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0; padding: 1.25rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+    transform: translateY(20px); opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    z-index: 2;
+  }
+  .photo-card:hover .photo-overlay { transform: translateY(0); opacity: 1; }
+  .photo-title { color: #fff; font-weight: 700; font-size: 0.95rem; margin-bottom: 0.2rem; }
+  .photo-sub { color: rgba(255,255,255,0.7); font-size: 0.78rem; }
+
+  /* Color indicator pill */
+  .color-pill {
+    position: absolute; top: 0.75rem; right: 0.75rem;
+    background: rgba(0,0,0,0.4); backdrop-filter: blur(8px);
+    color: rgba(255,255,255,0.5); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em;
+    padding: 0.2rem 0.6rem; border-radius: 20px; text-transform: uppercase;
+    transition: all 0.4s ease; z-index: 3;
+  }
+  .photo-card:hover .color-pill { background: rgba(255,255,255,0.2); color: #fff; }
+
+  /* Hint bar */
+  .hint-bar { text-align: center; margin-top: 2rem; color: #2a2f45; font-size: 0.82rem; }
+  .hint-bar span { color: #6366f1; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Hover to Reveal Colour</h1>
+  <p>All images are grayscale at rest — hover to see the colour beneath.</p>
+</div>
+
+<div class="gallery">
+
+  <div class="photo-card">
+    <div class="photo-bg p1"></div>
+    <div class="photo-emoji">🌌</div>
+    <div class="color-pill">Hover me</div>
+    <div class="photo-overlay">
+      <div class="photo-title">Cosmic Purple</div>
+      <div class="photo-sub">Indigo → Violet gradient</div>
+    </div>
+  </div>
+
+  <div class="photo-card">
+    <div class="photo-bg p2"></div>
+    <div class="photo-emoji">🌿</div>
+    <div class="color-pill">Hover me</div>
+    <div class="photo-overlay">
+      <div class="photo-title">Forest Green</div>
+      <div class="photo-sub">Emerald palette</div>
+    </div>
+  </div>
+
+  <div class="photo-card">
+    <div class="photo-bg p3"></div>
+    <div class="photo-emoji">☀️</div>
+    <div class="color-pill">Hover me</div>
+    <div class="photo-overlay">
+      <div class="photo-title">Golden Hour</div>
+      <div class="photo-sub">Amber → Yellow</div>
+    </div>
+  </div>
+
+  <div class="photo-card">
+    <div class="photo-bg p4"></div>
+    <div class="photo-emoji">🌊</div>
+    <div class="color-pill">Hover me</div>
+    <div class="photo-overlay">
+      <div class="photo-title">Ocean Depths</div>
+      <div class="photo-sub">Teal → Cyan blend</div>
+    </div>
+  </div>
+
+  <div class="photo-card">
+    <div class="photo-bg p5"></div>
+    <div class="photo-emoji">🔥</div>
+    <div class="color-pill">Hover me</div>
+    <div class="photo-overlay">
+      <div class="photo-title">Scarlet Flame</div>
+      <div class="photo-sub">Red → Crimson</div>
+    </div>
+  </div>
+
+  <div class="photo-card">
+    <div class="photo-bg p6"></div>
+    <div class="photo-emoji">💜</div>
+    <div class="color-pill">Hover me</div>
+    <div class="photo-overlay">
+      <div class="photo-title">Velvet Dream</div>
+      <div class="photo-sub">Deep Violet</div>
+    </div>
+  </div>
+
+</div>
+
+<p class="hint-bar">CSS <span>filter: grayscale()</span> + <span>transition</span> — no JavaScript</p>
+</body>
+</html>

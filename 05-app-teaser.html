@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SafeKid — Child Safety App</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #f0f7ff; font-family: 'Nunito', sans-serif; }
+  header { background: #fff; padding: 1rem 3rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 12px rgba(0,0,0,0.06); }
+  .logo { font-weight: 800; font-size: 1.3rem; color: #1e40af; }
+  .logo span { color: #f59e0b; }
+  nav a { margin-left: 2rem; text-decoration: none; color: #555; font-weight: 600; font-size: 0.9rem; }
+  .hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 90vh; align-items: center; padding: 4rem 5rem; gap: 4rem; }
+  .hero-text h1 { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 800; color: #1e3a5f; line-height: 1.2; }
+  .hero-text h1 span { color: #3b82f6; }
+  .hero-text p { margin-top: 1.25rem; color: #64748b; line-height: 1.8; font-size: 1rem; }
+  .cta-row { display: flex; gap: 1rem; margin-top: 2rem; }
+  .cta { padding: 0.85rem 2rem; border-radius: 3rem; font-weight: 700; font-size: 0.9rem; text-decoration: none; }
+  .cta-main { background: #3b82f6; color: #fff; box-shadow: 0 4px 14px rgba(59,130,246,0.4); }
+  .cta-secondary { background: #fff; color: #3b82f6; border: 2px solid #3b82f6; }
+  .badges { display: flex; gap: 0.75rem; margin-top: 2rem; }
+  .badge { background: #fff; border-radius: 0.75rem; padding: 0.5rem 1rem; font-size: 0.78rem; font-weight: 600; color: #374151; box-shadow: 0 2px 8px rgba(0,0,0,0.06); display: flex; align-items: center; gap: 0.4rem; }
+  /* Phone Mockup */
+  .phone-wrap { display: flex; justify-content: center; align-items: center; gap: 2rem; }
+  .phone {
+    width: 200px; height: 400px;
+    background: #1e293b;
+    border-radius: 30px;
+    padding: 10px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.1) inset;
+    position: relative;
+  }
+  .phone::before {
+    content: ''; position: absolute;
+    top: 12px; left: 50%; transform: translateX(-50%);
+    width: 60px; height: 5px;
+    background: #334155; border-radius: 5px;
+  }
+  .phone-screen { background: #f0f9ff; border-radius: 22px; height: 100%; display: flex; flex-direction: column; overflow: hidden; }
+  .phone-topbar { background: #3b82f6; padding: 0.75rem 1rem 0.5rem; }
+  .phone-topbar .ph-title { color: #fff; font-weight: 800; font-size: 0.85rem; }
+  .phone-topbar .ph-sub { color: rgba(255,255,255,0.7); font-size: 0.65rem; }
+  .map-placeholder { flex: 1; background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); position: relative; overflow: hidden; }
+  .map-placeholder::before { content: ''; position: absolute; top: 40%; left: 50%; transform: translate(-50%,-50%); width: 80%; height: 80%; background: repeating-linear-gradient(0deg, rgba(59,130,246,0.1) 0, rgba(59,130,246,0.1) 1px, transparent 1px, transparent 30px), repeating-linear-gradient(90deg, rgba(59,130,246,0.1) 0, rgba(59,130,246,0.1) 1px, transparent 1px, transparent 30px); }
+  .map-pin { position: absolute; top: 35%; left: 45%; font-size: 1.5rem; }
+  .phone-bottom { padding: 0.75rem; background: #fff; display: flex; gap: 0.5rem; }
+  .ph-btn { flex: 1; background: #3b82f6; color: #fff; border: none; border-radius: 0.5rem; padding: 0.5rem; font-size: 0.65rem; font-weight: 700; font-family: 'Nunito', sans-serif; }
+  .ph-btn.secondary { background: #f0f9ff; color: #3b82f6; }
+  .phone-small { width: 150px; height: 300px; transform: translateY(30px) rotate(5deg); opacity: 0.8; }
+  /* Features */
+  .features { padding: 4rem 5rem; background: #fff; }
+  .features h2 { font-size: 2rem; font-weight: 800; text-align: center; color: #1e3a5f; margin-bottom: 2.5rem; }
+  .feat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; }
+  .feat { background: #f8fafc; border-radius: 1.25rem; padding: 1.5rem; text-align: center; }
+  .feat .icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .feat h3 { font-size: 1rem; font-weight: 700; color: #1e3a5f; }
+  .feat p { font-size: 0.8rem; color: #64748b; margin-top: 0.5rem; line-height: 1.6; }
+  @media (max-width: 768px) { .hero { grid-template-columns: 1fr; padding: 3rem 2rem; } .features { padding: 3rem 2rem; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Safe<span>Kid</span> 🛡️</div>
+  <nav><a href="#">Features</a><a href="#">Pricing</a><a href="#">Download</a></nav>
+</header>
+<div class="hero">
+  <div class="hero-text">
+    <h1>Keep Your Child <span>Safe</span>, Always Connected</h1>
+    <p>Real-time location tracking, SOS alerts, and safe-zone notifications. Because peace of mind for parents is priceless.</p>
+    <div class="cta-row">
+      <a href="#" class="cta cta-main">📱 Download Free</a>
+      <a href="#" class="cta cta-secondary">Watch Demo</a>
+    </div>
+    <div class="badges">
+      <div class="badge">🔒 End-to-end encrypted</div>
+      <div class="badge">⚡ Real-time updates</div>
+      <div class="badge">🌏 Works offline</div>
+    </div>
+  </div>
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="phone-screen">
+        <div class="phone-topbar"><div class="ph-title">SafeKid</div><div class="ph-sub">Aarav is Safe ✓</div></div>
+        <div class="map-placeholder"><div class="map-pin">📍</div></div>
+        <div class="phone-bottom">
+          <button class="ph-btn">📍 Track</button>
+          <button class="ph-btn secondary">🚨 SOS</button>
+        </div>
+      </div>
+    </div>
+    <div class="phone phone-small">
+      <div class="phone-screen">
+        <div class="phone-topbar" style="background:#10b981"><div class="ph-title">✅ Safe Zone</div><div class="ph-sub">School — 2:30 PM</div></div>
+        <div class="map-placeholder" style="background: linear-gradient(135deg,#d1fae5,#a7f3d0)"></div>
+        <div class="phone-bottom"><button class="ph-btn" style="background:#10b981">Alerts</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="features">
+  <h2>Everything You Need to Stay Connected</h2>
+  <div class="feat-grid">
+    <div class="feat"><div class="icon">📍</div><h3>Live Location</h3><p>See your child's exact location updated every 30 seconds on an interactive map.</p></div>
+    <div class="feat"><div class="icon">🚨</div><h3>SOS Alerts</h3><p>One tap sends an emergency signal with location to all family members instantly.</p></div>
+    <div class="feat"><div class="icon">🔔</div><h3>Safe Zones</h3><p>Set geofenced areas like home and school. Get notified when your child enters or leaves.</p></div>
+    <div class="feat"><div class="icon">📱</div><h3>Screen Time</h3><p>Monitor and manage your child's device usage with easy time-limit controls.</p></div>
+  </div>
+</div>
+</body>
+</html>

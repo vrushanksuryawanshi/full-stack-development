@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>StreamHub</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f0f0f;color:#f1f1f1;font-family:'Roboto',sans-serif}
+header{background:#212121;padding:0.75rem 2rem;display:flex;align-items:center;gap:2rem;position:sticky;top:0;z-index:100}
+.logo{font-size:1.2rem;font-weight:500;color:#f1f1f1;white-space:nowrap}.logo span{color:#ff0000}
+.search-bar{flex:1;max-width:600px;display:flex}
+.search-bar input{flex:1;padding:0.5rem 1rem;background:#121212;border:1px solid #303030;border-right:none;color:#f1f1f1;font-family:'Roboto',sans-serif;font-size:0.9rem;border-radius:2rem 0 0 2rem;outline:none}
+.search-bar button{padding:0.5rem 1.25rem;background:#303030;border:1px solid #303030;color:#f1f1f1;border-radius:0 2rem 2rem 0;cursor:pointer;font-size:0.9rem}
+.header-actions{margin-left:auto;display:flex;gap:1.25rem;font-size:1.2rem;cursor:pointer}
+.layout{display:flex}
+.sidebar{width:220px;background:#212121;height:calc(100vh - 54px);position:sticky;top:54px;overflow-y:auto;flex-shrink:0}
+.s-item{display:flex;align-items:center;gap:1rem;padding:0.65rem 1.5rem;font-size:0.85rem;cursor:pointer;transition:background 0.15s}
+.s-item:hover{background:rgba(255,255,255,0.08)}
+.s-item.active{background:rgba(255,255,255,0.1);font-weight:500}
+.s-divider{border:none;border-top:1px solid #303030;margin:0.75rem 0}
+.s-section-label{padding:0.5rem 1.5rem;font-size:0.75rem;font-weight:500;color:#aaa;text-transform:uppercase;letter-spacing:0.08em}
+.main{flex:1;padding:2rem;overflow-y:auto}
+.section-title{font-size:1.1rem;font-weight:500;margin-bottom:1.25rem}
+.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-bottom:3rem}
+.video-card{cursor:pointer}
+.thumbnail{position:relative;background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:0.5rem;overflow:hidden;padding-top:56.25%;transition:transform 0.2s}
+.thumbnail:hover{transform:scale(1.02)}
+.thumb-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:3rem}
+.duration{position:absolute;bottom:6px;right:8px;background:rgba(0,0,0,0.8);color:#fff;font-size:0.7rem;padding:0.15rem 0.35rem;border-radius:2px;font-weight:500}
+.video-info{display:flex;gap:0.75rem;padding:0.75rem 0}
+.channel-icon{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1rem}
+.v-title{font-size:0.9rem;font-weight:500;line-height:1.35;margin-bottom:0.3rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.v-meta{font-size:0.78rem;color:#aaa}
+.thumb-colors{--c1:linear-gradient(135deg,#667eea,#764ba2);--c2:linear-gradient(135deg,#f093fb,#f5576c);--c3:linear-gradient(135deg,#4facfe,#00f2fe);--c4:linear-gradient(135deg,#43e97b,#38f9d7);--c5:linear-gradient(135deg,#fa709a,#fee140);--c6:linear-gradient(135deg,#a18cd1,#fbc2eb)}
+.t1{background:var(--c1,#333)}.t2{background:var(--c2,#333)}.t3{background:var(--c3,#333)}.t4{background:var(--c4,#333)}.t5{background:var(--c5,#333)}.t6{background:var(--c6,#333)}
+</style></head><body>
+<header>
+  <div class="logo">Stream<span>Hub</span></div>
+  <div class="search-bar"><input type="text" placeholder="Search"><button>🔍</button></div>
+  <div class="header-actions"><span>🔔</span><span>👤</span></div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="s-item active">🏠 Home</div>
+    <div class="s-item">🔍 Explore</div>
+    <div class="s-item">📺 Subscriptions</div>
+    <hr class="s-divider">
+    <div class="s-item">📚 Library</div>
+    <div class="s-item">🕐 History</div>
+    <div class="s-item">❤️ Liked Videos</div>
+    <hr class="s-divider">
+    <div class="s-section-label">Subscriptions</div>
+    <div class="s-item">🤖 TechWithAryan</div>
+    <div class="s-item">🎨 DesignLab</div>
+    <div class="s-item">📊 DataStoriesIN</div>
+    <div class="s-item">🎵 LoFiBeats</div>
+    <hr class="s-divider">
+    <div class="s-item">⚙️ Settings</div>
+  </aside>
+  <div class="main thumb-colors">
+    <div class="section-title">Recommended for you</div>
+    <div class="video-grid">
+      <div class="video-card"><div class="thumbnail t1"><div class="thumb-inner">🤖</div><div class="duration">18:32</div></div><div class="video-info"><div class="channel-icon" style="background:#764ba2">🤖</div><div><div class="v-title">Building a Production RAG System from Scratch in 2024</div><div class="v-meta">TechWithAryan · 284K views · 3 days ago</div></div></div></div>
+      <div class="video-card"><div class="thumbnail t2"><div class="thumb-inner">🎨</div><div class="duration">24:10</div></div><div class="video-info"><div class="channel-icon" style="background:#f5576c">🎨</div><div><div class="v-title">CSS Grid is More Powerful Than You Think</div><div class="v-meta">DesignLab · 182K views · 1 week ago</div></div></div></div>
+      <div class="video-card"><div class="thumbnail t3"><div class="thumb-inner">📊</div><div class="duration">31:47</div></div><div class="video-info"><div class="channel-icon" style="background:#00f2fe">📊</div><div><div class="v-title">Exploratory Data Analysis in Python: The Full Workflow</div><div class="v-meta">DataStoriesIN · 510K views · 2 weeks ago</div></div></div></div>
+      <div class="video-card"><div class="thumbnail t4"><div class="thumb-inner">⚡</div><div class="duration">11:22</div></div><div class="video-info"><div class="channel-icon" style="background:#38f9d7">⚡</div><div><div class="v-title">Why Rust is Eating Python's Lunch (And Why That's Good)</div><div class="v-meta">ByteSize · 320K views · 5 days ago</div></div></div></div>
+      <div class="video-card"><div class="thumbnail t5"><div class="thumb-inner">🧠</div><div class="duration">45:08</div></div><div class="video-info"><div class="channel-icon" style="background:#fa709a">🧠</div><div><div class="v-title">Understanding Transformer Architecture: Deep Dive for Engineers</div><div class="v-meta">DeepLearnIN · 98K views · 1 month ago</div></div></div></div>
+      <div class="video-card"><div class="thumbnail t6"><div class="thumb-inner">🚀</div><div class="duration">22:15</div></div><div class="video-info"><div class="channel-icon" style="background:#fbc2eb">🚀</div><div><div class="v-title">Ship Your SaaS in 7 Days — Full Stack Tutorial</div><div class="v-meta">BuildWithPriya · 467K views · 3 weeks ago</div></div></div></div>
+    </div>
+  </div>
+</div>
+</body></html>

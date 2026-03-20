@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mega Menu</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #f1f5f9; min-height: 100vh; }
+
+  /* ===== NAV ===== */
+  nav { background: #ffffff; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; }
+  .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; height: 64px; gap: 0; }
+  .logo { font-weight: 800; font-size: 1.2rem; color: #1e293b; margin-right: 2.5rem; letter-spacing: -0.03em; }
+  .logo span { color: #6366f1; }
+
+  .nav-items { display: flex; align-items: stretch; height: 100%; }
+  .nav-item { position: relative; }
+  .nav-link {
+    display: flex; align-items: center; gap: 0.3rem; padding: 0 1rem;
+    color: #475569; font-size: 0.88rem; font-weight: 500; height: 100%;
+    cursor: pointer; white-space: nowrap; transition: color 0.2s;
+    text-decoration: none; border: none; background: none; font-family: inherit;
+  }
+  .nav-link:hover, .nav-item:hover > .nav-link { color: #6366f1; }
+  .nav-link .chevron { font-size: 0.65rem; transition: transform 0.25s; margin-top: 1px; }
+  .nav-item:hover > .nav-link .chevron { transform: rotate(180deg); }
+
+  /* ACTIVE INDICATOR */
+  .nav-item::after { content: ''; position: absolute; bottom: 0; left: 1rem; right: 1rem; height: 2px; background: #6366f1; transform: scaleX(0); transition: transform 0.2s; border-radius: 2px 2px 0 0; }
+  .nav-item:hover::after { transform: scaleX(1); }
+
+  /* ===== MEGA DROPDOWN ===== */
+  .mega-menu {
+    position: absolute; top: calc(100% + 1px); left: 50%; transform: translateX(-50%);
+    background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.06);
+    padding: 1.5rem; min-width: 680px;
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transform: translateX(-50%) translateY(8px);
+    transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+  }
+  .nav-item:hover > .mega-menu { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+
+  .mega-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.25rem; }
+  .mega-col-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #94a3b8; padding: 0 0.75rem 0.6rem; border-bottom: 1px solid #f1f5f9; margin-bottom: 0.5rem; }
+  .mega-link { display: flex; align-items: flex-start; gap: 0.65rem; padding: 0.55rem 0.75rem; border-radius: 9px; text-decoration: none; transition: background 0.15s; }
+  .mega-link:hover { background: #f5f3ff; }
+  .mega-link:hover .ml-title { color: #6366f1; }
+  .ml-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+  .ml-title { font-size: 0.84rem; font-weight: 600; color: #1e293b; }
+  .ml-desc { font-size: 0.75rem; color: #94a3b8; margin-top: 0.1rem; }
+
+  /* narrow single column dropdown */
+  .simple-menu {
+    position: absolute; top: calc(100% + 1px); left: 0;
+    background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.1); padding: 0.5rem; min-width: 180px;
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transform: translateY(8px);
+    transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+  }
+  .nav-item:hover > .simple-menu { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
+  .sim-link { display: block; padding: 0.5rem 0.8rem; border-radius: 8px; text-decoration: none; color: #475569; font-size: 0.84rem; font-weight: 500; transition: background 0.15s, color 0.15s; }
+  .sim-link:hover { background: #f5f3ff; color: #6366f1; }
+
+  /* nav right */
+  .nav-right { margin-left: auto; display: flex; gap: 0.75rem; align-items: center; }
+  .btn-ghost { padding: 0.45rem 1rem; border-radius: 8px; font-size: 0.84rem; font-weight: 500; color: #475569; text-decoration: none; transition: background 0.15s; }
+  .btn-ghost:hover { background: #f1f5f9; color: #1e293b; }
+  .btn-solid { padding: 0.45rem 1.1rem; border-radius: 8px; font-size: 0.84rem; font-weight: 600; background: #6366f1; color: #fff; text-decoration: none; transition: background 0.15s; }
+  .btn-solid:hover { background: #5153cc; }
+
+  /* HERO under nav */
+  .hero { max-width: 1200px; margin: 6rem auto; padding: 0 2rem; text-align: center; }
+  .hero h1 { font-size: 3rem; font-weight: 800; color: #1e293b; letter-spacing: -0.04em; margin-bottom: 1rem; }
+  .hero p { color: #64748b; font-size: 1.05rem; max-width: 500px; margin: 0 auto; }
+  .hint { display: inline-flex; align-items: center; gap: 0.5rem; background: #fff; border: 1px solid #e2e8f0; border-radius: 99px; padding: 0.5rem 1.2rem; font-size: 0.82rem; color: #64748b; margin-top: 2rem; }
+  .hint span { color: #6366f1; font-weight: 600; }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <div class="logo">nexus<span>.</span></div>
+    <div class="nav-items">
+
+      <!-- PRODUCTS mega -->
+      <div class="nav-item">
+        <button class="nav-link">Products <span class="chevron">▾</span></button>
+        <div class="mega-menu">
+          <div class="mega-grid">
+            <div>
+              <div class="mega-col-title">Platform</div>
+              <a class="mega-link" href="#"><div class="ml-icon" style="background:#eef2ff">🚀</div><div><div class="ml-title">Launchpad</div><div class="ml-desc">Deploy in seconds</div></div></a>
+              <a class="mega-link" href="#"><div class="ml-icon" style="background:#f0fdf4">🗄</div><div><div class="ml-title">Database</div><div class="ml-desc">Managed PostgreSQL</div></div></a>
+              <a class="mega-link" href="#"><div class="ml-icon" style="background:#fef9c3">⚡</div><div><div class="ml-title">Edge Functions</div><div class="ml-desc">Run at the edge</div></div></a>
+            </div>
+            <div>
+              <div class="mega-col-title">AI Tools</div>
+              <a class="mega-link" href="#"><div class="ml-icon" style="background:#fdf4ff">🤖</div><div><div class="ml-title">AI Studio</div><div class="ml-desc">Build with LLMs</div></div></a>
+              <a class="mega-link" href="#"><div class="ml-icon" style="background:#fff7ed">🧠</div><div><div class="ml-title">Vector Store</div><div class="ml-desc">Semantic search</div></div></a>
+              <a class="mega-link" href="#"><div class="ml-icon" style="background:#f0f9ff">🔍</div><div><div class="ml-title">Embeddings</div><div class="ml-desc">Text & image</div></div></a>
+            </div>
+            <div>
+              <div class="mega-col-title">Integrations</div>
+              <a class="mega-link" href="#"><div class="ml-icon" style="background:#fff1f2">📊</div><div><div class="ml-title">Analytics</div><div class="ml-desc">Real-time dashboards</div></div></a>
+              <a class="mega-link" href="#"><div class="ml-icon" style="background:#ecfdf5">🔗</div><div><div class="ml-title">Webhooks</div><div class="ml-desc">Connect anything</div></div></a>
+              <a class="mega-link" href="#"><div class="ml-icon" style="background:#eef2ff">🛡</div><div><div class="ml-title">Auth & SSO</div><div class="ml-desc">Enterprise ready</div></div></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SOLUTIONS mega -->
+      <div class="nav-item">
+        <button class="nav-link">Solutions <span class="chevron">▾</span></button>
+        <div class="mega-menu">
+          <div class="mega-grid">
+            <div>
+              <div class="mega-col-title">By Team</div>
+              <a class="mega-link" href="#"><div class="ml-icon" style="background:#eef2ff">👩‍💻</div><div><div class="ml-title">Developers</div><div class="ml-desc">APIs & SDKs</div></div></a>
+              <a class="mega-link" href="#"><div class="ml-icon" style="background:#f0fdf4">📈</div><div><div class="ml-title">Growth Teams</div><div class="ml-desc">Experiments & A/B</div></div></a>
+              <a class="mega-link" href="#"><div class="ml-icon" style="background:#fdf4ff">🏢</div><div><div class="ml-title">Enterprise</div><div class="ml-desc">Compliance & SLA</div></div></a>
+            </div>
+            <div>
+              <div class="mega-col-title">By Industry</div>
+              <a class="mega-link" href="#"><div class="ml-icon" style="background:#fff7ed">🏥</div><div><div class="ml-title">Healthcare</div><div class="ml-desc">HIPAA compliant</div></div></a>
+              <a class="mega-link" href="#"><div class="ml-icon" style="background:#fef9c3">💰</div><div><div class="ml-title">Fintech</div><div class="ml-desc">SOC2 certified</div></div></a>
+              <a class="mega-link" href="#"><div class="ml-icon" style="background:#f0f9ff">🎓</div><div><div class="ml-title">Education</div><div class="ml-desc">Discounted plans</div></div></a>
+            </div>
+            <div>
+              <div class="mega-col-title">Use Cases</div>
+              <a class="mega-link" href="#"><div class="ml-icon" style="background:#fff1f2">🛒</div><div><div class="ml-title">E-Commerce</div></div></a>
+              <a class="mega-link" href="#"><div class="ml-icon" style="background:#ecfdf5">🎮</div><div><div class="ml-title">Gaming</div></div></a>
+              <a class="mega-link" href="#"><div class="ml-icon" style="background:#eef2ff">📱</div><div><div class="ml-title">Mobile Apps</div></div></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESOURCES simple -->
+      <div class="nav-item">
+        <button class="nav-link">Resources <span class="chevron">▾</span></button>
+        <div class="simple-menu">
+          <a class="sim-link" href="#">📖 Documentation</a>
+          <a class="sim-link" href="#">🎬 Video Tutorials</a>
+          <a class="sim-link" href="#">📝 Blog</a>
+          <a class="sim-link" href="#">💬 Community</a>
+          <a class="sim-link" href="#">🗺 Roadmap</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a class="nav-link" href="#">Pricing</a>
+      </div>
+
+    </div>
+    <div class="nav-right">
+      <a class="btn-ghost" href="#">Sign In</a>
+      <a class="btn-solid" href="#">Get Started →</a>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>Hover over the nav links</h1>
+  <p>Products and Solutions have mega menus. Resources has a simple dropdown.</p>
+  <div class="hint">🖱 Hover <span>Products</span> or <span>Solutions</span> to see the mega menu</div>
+</div>
+</body>
+</html>

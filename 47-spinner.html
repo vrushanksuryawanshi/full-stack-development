@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Spinners</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { min-height: 100vh; background: #0a0c12; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; padding: 3rem 2rem; gap: 3rem; }
+  h1 { color: #e2e8f0; font-size: 1.5rem; font-weight: 700; }
+  .grid { display: flex; flex-wrap: wrap; gap: 2.5rem; justify-content: center; align-items: flex-end; }
+  .spinner-item { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+  .lbl { color: #475569; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* 1. Classic border spinner */
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .s1 {
+    width: 48px; height: 48px; border-radius: 50%;
+    border: 4px solid rgba(99,102,241,0.2);
+    border-top-color: #6366f1;
+    animation: spin 0.8s linear infinite;
+  }
+
+  /* 2. Dual ring */
+  .s2 {
+    width: 48px; height: 48px; position: relative;
+  }
+  .s2::before, .s2::after {
+    content: ''; position: absolute; inset: 0; border-radius: 50%;
+    border: 4px solid transparent;
+    animation: spin 1s linear infinite;
+  }
+  .s2::before { border-top-color: #a855f7; }
+  .s2::after { border-bottom-color: #ec4899; animation-direction: reverse; animation-duration: 0.6s; }
+
+  /* 3. Dotted ring */
+  @keyframes spin-dot { to { transform: rotate(360deg); } }
+  .s3 {
+    width: 48px; height: 48px; border-radius: 50%;
+    border: 4px dotted #22c55e;
+    animation: spin-dot 1.2s linear infinite;
+  }
+
+  /* 4. Pulse dot */
+  @keyframes pulse-grow { 0%,100% { transform: scale(0.2); opacity:0.3; } 50% { transform: scale(1); opacity:1; } }
+  .s4 { width: 48px; height: 48px; border-radius: 50%; background: #f59e0b; animation: pulse-grow 1s ease-in-out infinite; }
+
+  /* 5. Bouncing dots */
+  @keyframes bounce { 0%,80%,100% { transform: scale(0); } 40% { transform: scale(1); } }
+  .s5 { display: flex; gap: 6px; align-items: center; height: 48px; }
+  .s5 span { width: 12px; height: 12px; border-radius: 50%; background: #06b6d4; animation: bounce 1.4s ease-in-out infinite; }
+  .s5 span:nth-child(1) { animation-delay: -0.32s; }
+  .s5 span:nth-child(2) { animation-delay: -0.16s; }
+
+  /* 6. Loading bar */
+  @keyframes bar-slide { 0% { left:-40%; } 100% { left:110%; } }
+  .s6 { width: 80px; height: 6px; background: rgba(255,255,255,0.08); border-radius: 99px; overflow: hidden; position: relative; }
+  .s6::after { content:''; position:absolute; top:0; height:100%; width:40%; background: linear-gradient(90deg, transparent, #ef4444, transparent); border-radius:99px; animation: bar-slide 1.2s ease-in-out infinite; }
+
+  /* 7. Spinning squares */
+  @keyframes spin-sq { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  .s7 { width: 36px; height: 36px; border: 4px solid #818cf8; animation: spin-sq 1s ease-in-out infinite; }
+
+  /* 8. Ring fade */
+  .s8 { width: 48px; height: 48px; position: relative; }
+  @keyframes ring-fade { 0% { transform: rotate(0deg); opacity: 1; } 100% { transform: rotate(360deg); opacity: 0.1; } }
+  .s8-inner { width: 100%; height: 100%; border-radius: 50%; border: 4px solid transparent; border-top-color: #10b981; animation: ring-fade 1s linear infinite; position: absolute; inset: 0; }
+  .s8-inner:nth-child(2) { animation-delay: -0.33s; border-top-color: rgba(16,185,129,0.5); }
+  .s8-inner:nth-child(3) { animation-delay: -0.66s; border-top-color: rgba(16,185,129,0.2); }
+
+  /* 9. Morphing blob */
+  @keyframes morph { 0%,100% { border-radius: 50%; } 33% { border-radius: 20% 80% 30% 70%; } 66% { border-radius: 80% 20% 70% 30%; } }
+  .s9 { width: 48px; height: 48px; background: linear-gradient(135deg, #f43f5e, #ec4899); animation: morph 2s ease-in-out infinite, spin 4s linear infinite; }
+
+  /* 10. Stacked arcs */
+  .s10 { width: 54px; height: 54px; position: relative; }
+  .arc { position: absolute; inset: 0; border-radius: 50%; border: 3px solid transparent; }
+  .arc1 { border-top-color: #6366f1; animation: spin 1s linear infinite; }
+  .arc2 { inset: 8px; border-top-color: #a855f7; animation: spin 0.75s linear infinite reverse; }
+  .arc3 { inset: 16px; border-top-color: #ec4899; animation: spin 0.5s linear infinite; }
+
+  /* 11. Skeleton bar */
+  @keyframes shimmer-bar { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+  .s11 { display: flex; flex-direction: column; gap: 6px; width: 120px; }
+  .sk-bar { height: 10px; border-radius: 5px; background: linear-gradient(90deg, #1e2235 25%, #2a3050 50%, #1e2235 75%); background-size: 200% 100%; animation: shimmer-bar 1.5s linear infinite; }
+  .sk-bar:nth-child(2) { width: 80%; }
+  .sk-bar:nth-child(3) { width: 60%; }
+
+  /* 12. Radar ping */
+  @keyframes radar { 0% { transform: scale(0); opacity: 0.8; } 100% { transform: scale(2.5); opacity: 0; } }
+  .s12 { width: 48px; height: 48px; position: relative; display: flex; align-items: center; justify-content: center; }
+  .radar-dot { width: 14px; height: 14px; border-radius: 50%; background: #22c55e; position: relative; z-index: 1; }
+  .radar-ring { position: absolute; inset: 0; margin: auto; width: 48px; height: 48px; border-radius: 50%; border: 2px solid #22c55e; animation: radar 1.5s ease-out infinite; }
+  .radar-ring:nth-child(2) { animation-delay: 0.5s; }
+</style>
+</head>
+<body>
+<h1>CSS Spinners & Loaders</h1>
+<div class="grid">
+  <div class="spinner-item"><div class="s1"></div><div class="lbl">Border</div></div>
+  <div class="spinner-item"><div class="s2"></div><div class="lbl">Dual Ring</div></div>
+  <div class="spinner-item"><div class="s3"></div><div class="lbl">Dotted</div></div>
+  <div class="spinner-item"><div class="s4"></div><div class="lbl">Pulse</div></div>
+  <div class="spinner-item"><div class="s5"><span></span><span></span><span></span></div><div class="lbl">Bounce</div></div>
+  <div class="spinner-item"><div class="s6"></div><div class="lbl">Progress</div></div>
+  <div class="spinner-item"><div class="s7"></div><div class="lbl">Square</div></div>
+  <div class="spinner-item"><div class="s8"><div class="s8-inner"></div><div class="s8-inner"></div><div class="s8-inner"></div></div><div class="lbl">Ring Fade</div></div>
+  <div class="spinner-item"><div class="s9"></div><div class="lbl">Morph</div></div>
+  <div class="spinner-item"><div class="s10"><div class="arc arc1"></div><div class="arc arc2"></div><div class="arc arc3"></div></div><div class="lbl">Arcs</div></div>
+  <div class="spinner-item"><div class="s11"><div class="sk-bar"></div><div class="sk-bar"></div><div class="sk-bar"></div></div><div class="lbl">Shimmer</div></div>
+  <div class="spinner-item"><div class="s12"><div class="radar-dot"></div><div class="radar-ring"></div><div class="radar-ring"></div></div><div class="lbl">Radar</div></div>
+</div>
+</body>
+</html>

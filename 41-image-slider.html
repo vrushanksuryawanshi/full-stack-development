@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pure CSS Image Slider</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { min-height: 100vh; background: #0a0c12; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; padding: 2rem; }
+
+  /* ===== HIDE RADIO INPUTS ===== */
+  input[type="radio"] { display: none; }
+
+  .slider-wrap { width: 700px; max-width: 100%; position: relative; }
+
+  /* ===== SLIDE CONTAINER ===== */
+  .slides { display: flex; width: 100%; border-radius: 20px; overflow: hidden; position: relative; }
+  .slide {
+    min-width: 100%; height: 400px;
+    display: flex; align-items: flex-end;
+    padding: 2rem;
+    background-size: cover; background-position: center;
+    position: relative;
+    transform: translateX(-0%);
+    transition: none;
+    flex-shrink: 0;
+  }
+  /* Stack slides using absolute + sibling selectors */
+  .slide-container {
+    position: relative; width: 100%; border-radius: 20px; overflow: hidden; height: 400px;
+  }
+  .slide {
+    position: absolute; inset: 0;
+    opacity: 0; transition: opacity 0.5s ease;
+  }
+  #s1:checked ~ .slider-wrap .slide-container .slide:nth-child(1),
+  #s2:checked ~ .slider-wrap .slide-container .slide:nth-child(2),
+  #s3:checked ~ .slider-wrap .slide-container .slide:nth-child(3),
+  #s4:checked ~ .slider-wrap .slide-container .slide:nth-child(4) {
+    opacity: 1;
+  }
+
+  /* Slide backgrounds */
+  .slide-1 { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); }
+  .slide-2 { background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%); }
+  .slide-3 { background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%); }
+  .slide-4 { background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%); }
+
+  .slide-content { position: relative; z-index: 2; }
+  .slide-tag { background: rgba(255,255,255,0.2); color: #fff; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.25rem 0.65rem; border-radius: 20px; display: inline-block; margin-bottom: 0.5rem; backdrop-filter: blur(8px); }
+  .slide-title { color: #fff; font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.3rem; }
+  .slide-sub { color: rgba(255,255,255,0.75); font-size: 0.88rem; }
+
+  /* decorative shape */
+  .slide::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 250px; height: 250px; border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+  .slide::after {
+    content: '';
+    position: absolute; bottom: -40px; right: 80px;
+    width: 160px; height: 160px; border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+
+  /* ===== DOTS / NAV LABELS ===== */
+  .nav-dots { display: flex; justify-content: center; gap: 0.6rem; margin-top: 1.25rem; }
+  .nav-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #2a2f45; cursor: pointer; transition: all 0.3s; display: block;
+  }
+  #s1:checked ~ .slider-wrap .nav-dots label[for="s1"],
+  #s2:checked ~ .slider-wrap .nav-dots label[for="s2"],
+  #s3:checked ~ .slider-wrap .nav-dots label[for="s3"],
+  #s4:checked ~ .slider-wrap .nav-dots label[for="s4"] {
+    width: 24px; border-radius: 4px; background: #6366f1;
+  }
+
+  /* ===== PREV/NEXT ARROW LABELS ===== */
+  .arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(255,255,255,0.15); backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 1.1rem; cursor: pointer;
+    transition: background 0.2s; z-index: 10;
+  }
+  .arrow:hover { background: rgba(255,255,255,0.25); }
+  .arrow-left { left: 0.75rem; }
+  .arrow-right { right: 0.75rem; }
+
+  /* Arrow connections to each slide */
+  /* Left (prev) arrows */
+  #s1:checked ~ .slider-wrap label.arr-left { display: none; }
+  #s1:checked ~ .slider-wrap label[for="s4"].arr-left { display: flex; }
+  #s2:checked ~ .slider-wrap label[for="s1"].arr-left { display: flex; }
+  #s3:checked ~ .slider-wrap label[for="s2"].arr-left { display: flex; }
+  #s4:checked ~ .slider-wrap label[for="s3"].arr-left { display: flex; }
+
+  /* Right (next) arrows */
+  #s1:checked ~ .slider-wrap label[for="s2"].arr-right { display: flex; }
+  #s2:checked ~ .slider-wrap label[for="s3"].arr-right { display: flex; }
+  #s3:checked ~ .slider-wrap label[for="s4"].arr-right { display: flex; }
+  #s4:checked ~ .slider-wrap label[for="s1"].arr-right { display: flex; }
+
+  /* Hide all arrows by default */
+  .arr-left, .arr-right { display: none; }
+
+  .slide-num { position: absolute; top: 1rem; right: 1rem; color: rgba(255,255,255,0.5); font-size: 0.8rem; font-weight: 600; z-index: 3; }
+
+  /* slide counter display */
+  .counter { text-align: center; color: #444; font-size: 0.78rem; margin-top: 0.5rem; }
+  #s1:checked ~ .counter::before { content: "1 / 4"; }
+  #s2:checked ~ .counter::before { content: "2 / 4"; }
+  #s3:checked ~ .counter::before { content: "3 / 4"; }
+  #s4:checked ~ .counter::before { content: "4 / 4"; }
+</style>
+</head>
+<body>
+
+<!-- RADIO INPUTS -->
+<input type="radio" id="s1" name="slides" checked>
+<input type="radio" id="s2" name="slides">
+<input type="radio" id="s3" name="slides">
+<input type="radio" id="s4" name="slides">
+
+<div class="slider-wrap">
+  <div class="slide-container">
+    <!-- PREV arrows -->
+    <label class="arrow arrow-left arr-left" for="s4">‹</label>
+    <label class="arrow arrow-left arr-left" for="s1">‹</label>
+    <label class="arrow arrow-left arr-left" for="s2">‹</label>
+    <label class="arrow arrow-left arr-left" for="s3">‹</label>
+
+    <!-- NEXT arrows -->
+    <label class="arrow arrow-right arr-right" for="s2">›</label>
+    <label class="arrow arrow-right arr-right" for="s3">›</label>
+    <label class="arrow arrow-right arr-right" for="s4">›</label>
+    <label class="arrow arrow-right arr-right" for="s1">›</label>
+
+    <div class="slide slide-1">
+      <div class="slide-num">01</div>
+      <div class="slide-content">
+        <div class="slide-tag">Featured</div>
+        <div class="slide-title">Build With Purpose</div>
+        <div class="slide-sub">Pure CSS slider — no JavaScript</div>
+      </div>
+    </div>
+    <div class="slide slide-2">
+      <div class="slide-num">02</div>
+      <div class="slide-content">
+        <div class="slide-tag">Design</div>
+        <div class="slide-title">Warm & Bold</div>
+        <div class="slide-sub">Amber into Crimson gradient</div>
+      </div>
+    </div>
+    <div class="slide slide-3">
+      <div class="slide-num">03</div>
+      <div class="slide-content">
+        <div class="slide-tag">Nature</div>
+        <div class="slide-title">Fresh & Alive</div>
+        <div class="slide-sub">Emerald into Cyan gradient</div>
+      </div>
+    </div>
+    <div class="slide slide-4">
+      <div class="slide-num">04</div>
+      <div class="slide-content">
+        <div class="slide-tag">Creative</div>
+        <div class="slide-title">Vivid & Playful</div>
+        <div class="slide-sub">Pink into Violet gradient</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-dots">
+    <label class="nav-dot" for="s1"></label>
+    <label class="nav-dot" for="s2"></label>
+    <label class="nav-dot" for="s3"></label>
+    <label class="nav-dot" for="s4"></label>
+  </div>
+</div>
+<div class="counter"></div>
+
+</body>
+</html>

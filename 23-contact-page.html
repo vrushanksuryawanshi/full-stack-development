@@ -1,0 +1,66 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Contact Us</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800&family=Satoshi:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Outfit:wght@300;400;500&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Outfit',sans-serif;background:#0a0a0a;color:#f0f0f0;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+header{padding:1.25rem 3rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem}
+nav a{color:rgba(240,240,240,0.4);text-decoration:none;font-size:0.82rem;margin-left:1.5rem}
+.split{display:grid;grid-template-columns:1fr 1fr;flex:1;overflow:hidden}
+/* Map side */
+.map-side{background:#111;position:relative;overflow:hidden}
+.map-bg{position:absolute;inset:0;background:#1a1a1a;
+  background-image:repeating-linear-gradient(0deg,rgba(255,255,255,0.04) 0,rgba(255,255,255,0.04) 1px,transparent 1px,transparent 60px),
+  repeating-linear-gradient(90deg,rgba(255,255,255,0.04) 0,rgba(255,255,255,0.04) 1px,transparent 1px,transparent 60px)}
+.map-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem}
+.map-pin{font-size:3.5rem;margin-bottom:1rem}
+.map-address{text-align:center}
+.map-address h3{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:0.5rem}
+.map-address p{font-size:0.82rem;color:rgba(240,240,240,0.5);line-height:1.7}
+.contact-cards{display:flex;flex-direction:column;gap:1rem;margin-top:2rem;width:100%;max-width:280px}
+.contact-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:0.75rem;padding:1rem;display:flex;align-items:center;gap:0.75rem}
+.cc-icon{font-size:1.3rem}
+.cc-label{font-size:0.7rem;color:rgba(240,240,240,0.4);text-transform:uppercase;letter-spacing:0.1em}
+.cc-val{font-size:0.85rem;margin-top:0.15rem}
+/* Form side */
+.form-side{padding:3rem;display:flex;flex-direction:column;justify-content:center;overflow-y:auto;border-left:1px solid rgba(255,255,255,0.06)}
+.form-side h2{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;margin-bottom:0.5rem}
+.form-side p{font-size:0.85rem;color:rgba(240,240,240,0.4);margin-bottom:2rem;line-height:1.6}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.fg{margin-bottom:1.25rem}
+label{display:block;font-size:0.7rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:rgba(240,240,240,0.4);margin-bottom:0.5rem}
+input,textarea,select{width:100%;padding:0.8rem 1rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:0.5rem;color:#f0f0f0;font-family:'Outfit',sans-serif;font-size:0.85rem;outline:none;transition:border-color 0.2s}
+input::placeholder,textarea::placeholder{color:rgba(240,240,240,0.2)}
+input:focus,textarea:focus{border-color:rgba(255,255,255,0.3)}
+textarea{resize:vertical;min-height:120px}
+.send-btn{width:100%;padding:1rem;background:#f0f0f0;color:#0a0a0a;border:none;border-radius:0.5rem;font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;letter-spacing:0.05em;transition:background 0.2s;margin-top:0.5rem}
+.send-btn:hover{background:#e0e0e0}
+</style></head><body>
+<header><div class="logo">STUDIO.CO</div><nav><a href="#">Work</a><a href="#">About</a><a href="#">Journal</a></nav></header>
+<div class="split">
+  <div class="map-side">
+    <div class="map-bg"></div>
+    <div class="map-overlay">
+      <div class="map-pin">📍</div>
+      <div class="map-address"><h3>Find Us Here</h3><p>Nirala Bazar, Chhatrapati Sambhajinagar<br>Maharashtra, India 431001</p></div>
+      <div class="contact-cards">
+        <div class="contact-card"><div class="cc-icon">📞</div><div><div class="cc-label">Phone</div><div class="cc-val">+91 98765 43210</div></div></div>
+        <div class="contact-card"><div class="cc-icon">✉️</div><div><div class="cc-label">Email</div><div class="cc-val">hello@studio.co</div></div></div>
+        <div class="contact-card"><div class="cc-icon">⏰</div><div><div class="cc-label">Hours</div><div class="cc-val">Mon–Fri, 9am–6pm IST</div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="form-side">
+    <h2>Let's Talk</h2>
+    <p>Have a project in mind? We'd love to hear about it. Drop us a message and we'll get back within 24 hours.</p>
+    <div class="form-row">
+      <div class="fg"><label>Your Name</label><input type="text" placeholder="Arjun Patil"></div>
+      <div class="fg"><label>Your Email</label><input type="email" placeholder="arjun@email.com"></div>
+    </div>
+    <div class="fg"><label>Subject</label><select><option>General Inquiry</option><option>Project Discussion</option><option>Partnership</option><option>Support</option></select></div>
+    <div class="fg"><label>Message</label><textarea placeholder="Tell us about your project, goals, or questions..."></textarea></div>
+    <button class="send-btn">Send Message →</button>
+  </div>
+</div>
+</body></html>

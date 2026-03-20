@@ -1,0 +1,36 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Our Team</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#f9f5ef;font-family:'DM Sans',sans-serif;color:#1a1208;padding:4rem 2rem}
+header{text-align:center;margin-bottom:4rem}
+header h1{font-family:'DM Serif Display',serif;font-size:3.5rem;color:#1a1208}
+header p{color:#8c7b60;margin-top:0.75rem;font-style:italic}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:2rem;max-width:960px;margin:0 auto}
+.member{text-align:center}
+.avatar-wrap{position:relative;width:120px;height:120px;margin:0 auto 1rem;overflow:hidden;border-radius:50%}
+.avatar{width:120px;height:120px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:3rem;transition:transform 0.3s}
+.a1{background:linear-gradient(135deg,#f6d365,#fda085)}
+.a2{background:linear-gradient(135deg,#a1c4fd,#c2e9fb)}
+.a3{background:linear-gradient(135deg,#d4fc79,#96e6a1)}
+.a4{background:linear-gradient(135deg,#fbc2eb,#a6c1ee)}
+.a5{background:linear-gradient(135deg,#ffecd2,#fcb69f)}
+.a6{background:linear-gradient(135deg,#cfd9df,#e2ebf0)}
+.hover-overlay{position:absolute;inset:0;border-radius:50%;background:rgba(26,18,8,0.85);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transform:translateY(10px);transition:opacity 0.3s,transform 0.3s}
+.member:hover .hover-overlay{opacity:1;transform:translateY(0)}
+.member:hover .avatar{transform:scale(1.05)}
+.hover-overlay .dept{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.5)}
+.hover-overlay .linkedin{font-size:0.75rem;color:#60a5fa;margin-top:0.4rem}
+.name{font-weight:500;font-size:1rem;margin-bottom:0.2rem}
+.title{font-size:0.8rem;color:#8c7b60}
+</style></head><body>
+<header><h1>Meet the Team</h1><p>The brilliant minds behind our work</p></header>
+<div class="team-grid">
+  <div class="member"><div class="avatar-wrap"><div class="avatar a1">👩‍💼</div><div class="hover-overlay"><div class="dept">Leadership</div><div class="linkedin">in/priya-sharma</div></div></div><div class="name">Priya Sharma</div><div class="title">CEO & Co-founder</div></div>
+  <div class="member"><div class="avatar-wrap"><div class="avatar a2">👨‍💻</div><div class="hover-overlay"><div class="dept">Engineering</div><div class="linkedin">in/aryan-mehta</div></div></div><div class="name">Aryan Mehta</div><div class="title">Lead Engineer</div></div>
+  <div class="member"><div class="avatar-wrap"><div class="avatar a3">👩‍🎨</div><div class="hover-overlay"><div class="dept">Design</div><div class="linkedin">in/nisha-patel</div></div></div><div class="name">Nisha Patel</div><div class="title">Head of Design</div></div>
+  <div class="member"><div class="avatar-wrap"><div class="avatar a4">👩‍🔬</div><div class="hover-overlay"><div class="dept">Data Science</div><div class="linkedin">in/ananya-rao</div></div></div><div class="name">Ananya Rao</div><div class="title">Data Scientist</div></div>
+  <div class="member"><div class="avatar-wrap"><div class="avatar a5">👨‍📊</div><div class="hover-overlay"><div class="dept">Product</div><div class="linkedin">in/rahul-joshi</div></div></div><div class="name">Rahul Joshi</div><div class="title">Product Manager</div></div>
+  <div class="member"><div class="avatar-wrap"><div class="avatar a6">👨‍🎓</div><div class="hover-overlay"><div class="dept">Research</div><div class="linkedin">in/dev-verma</div></div></div><div class="name">Dev Verma</div><div class="title">AI Researcher</div></div>
+</div>
+</body></html>

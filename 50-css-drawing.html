@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Art — Coffee Shop</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    background: #1a1008;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-family: 'Inter', sans-serif;
+    padding: 3rem 2rem;
+    gap: 2rem;
+  }
+  .scene-title { font-family: 'Pacifico', cursive; font-size: 2rem; color: #c8860a; letter-spacing: 0.02em; text-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+  .scene-sub { color: #5a4020; font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* ===== TABLE ===== */
+  .table-scene { position: relative; width: 480px; height: 420px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
+  .table-top { position: absolute; bottom: 60px; width: 100%; height: 20px; background: linear-gradient(to bottom, #8B5E3C, #6b4226); border-radius: 8px 8px 0 0; }
+  .table-leg-l { position: absolute; bottom: 0; left: 60px; width: 16px; height: 62px; background: linear-gradient(to bottom, #6b4226, #4a2e15); border-radius: 0 0 4px 4px; }
+  .table-leg-r { position: absolute; bottom: 0; right: 60px; width: 16px; height: 62px; background: linear-gradient(to bottom, #6b4226, #4a2e15); border-radius: 0 0 4px 4px; }
+
+  /* ===== COFFEE CUP ===== */
+  .cup-group { position: absolute; bottom: 78px; left: 50%; transform: translateX(-80px); }
+
+  /* Saucer */
+  .saucer {
+    width: 110px; height: 16px;
+    background: linear-gradient(to bottom, #e8d5b0, #c8a870);
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+  .saucer::after {
+    content: ''; position: absolute;
+    width: 45px; height: 8px;
+    background: rgba(0,0,0,0.08); border-radius: 50%;
+    top: 50%; left: 50%; transform: translate(-50%,-50%);
+  }
+
+  /* Cup body */
+  .cup {
+    width: 86px; height: 72px;
+    background: linear-gradient(135deg, #e8d5b0 0%, #d4b87a 50%, #c8a870 100%);
+    border-radius: 8px 8px 20px 20px;
+    position: absolute;
+    bottom: 10px; left: 50%; transform: translateX(-50%);
+    box-shadow: inset -6px 0 12px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.2);
+    overflow: hidden;
+  }
+  .cup::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+  }
+
+  /* Coffee liquid */
+  .coffee-liquid {
+    position: absolute;
+    top: 10px; left: 6px; right: 6px;
+    height: 30px;
+    background: linear-gradient(to bottom, #4a2500, #6b3800);
+    border-radius: 4px 4px 0 0;
+  }
+  .coffee-liquid::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #8b5e1a, #c8860a, #8b5e1a);
+    border-radius: 4px 4px 0 0;
+  }
+
+  /* Handle */
+  .handle {
+    position: absolute;
+    right: -18px; top: 14px;
+    width: 20px; height: 32px;
+    border: 7px solid #c8a870;
+    border-left: none;
+    border-radius: 0 16px 16px 0;
+  }
+
+  /* Steam */
+  @keyframes steam1 { 0%,100%{transform:translateY(0) scaleX(1);opacity:0.7} 50%{transform:translateY(-18px) scaleX(1.4);opacity:0} }
+  @keyframes steam2 { 0%,100%{transform:translateY(0) scaleX(1);opacity:0.6} 50%{transform:translateY(-22px) scaleX(0.8);opacity:0} }
+  @keyframes steam3 { 0%,100%{transform:translateY(0) scaleX(1);opacity:0.5} 50%{transform:translateY(-16px) scaleX(1.2);opacity:0} }
+  .steam { position: absolute; bottom: 82px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; }
+  .steam-wisp {
+    width: 6px; height: 24px;
+    background: linear-gradient(to top, rgba(255,255,255,0.4), transparent);
+    border-radius: 3px;
+    animation: steam1 2s ease-in-out infinite;
+  }
+  .steam-wisp:nth-child(2) { animation: steam2 2.4s ease-in-out 0.4s infinite; }
+  .steam-wisp:nth-child(3) { animation: steam3 2.1s ease-in-out 0.8s infinite; }
+
+  /* ===== BOOK ===== */
+  .book-group { position: absolute; bottom: 80px; right: 50px; }
+  .book {
+    width: 70px; height: 90px;
+    background: linear-gradient(135deg, #3b5bdb, #364fc7);
+    border-radius: 3px 8px 8px 3px;
+    position: relative;
+    box-shadow: -4px 4px 12px rgba(0,0,0,0.4), inset 2px 0 4px rgba(255,255,255,0.1);
+  }
+  .book-spine {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 10px; background: #2c46b5; border-radius: 3px 0 0 3px;
+  }
+  .book-title { color: rgba(255,255,255,0.7); font-size: 0.55rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; padding: 0.6rem 0.5rem 0 1rem; line-height: 1.3; }
+  .book-lines { padding: 0.4rem 0.5rem 0 1rem; display: flex; flex-direction: column; gap: 3px; }
+  .book-line { height: 2px; border-radius: 1px; background: rgba(255,255,255,0.2); }
+
+  /* ===== PLANT ===== */
+  .plant-group { position: absolute; bottom: 80px; left: 50px; }
+  .pot {
+    width: 50px; height: 44px;
+    background: linear-gradient(135deg, #c0392b, #96281b);
+    border-radius: 4px 4px 12px 12px;
+    position: relative;
+  }
+  .pot::before { content:''; position: absolute; top: -5px; left: -4px; right: -4px; height: 10px; background: #c0392b; border-radius: 4px; }
+  .soil { position: absolute; top: 4px; left: 4px; right: 4px; height: 14px; background: #4a2e10; border-radius: 2px; }
+  .stem { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); width: 4px; height: 48px; background: #2d6a4f; border-radius: 2px; }
+  .leaf { position: absolute; border-radius: 50% 50% 50% 0; }
+  .leaf1 { width: 32px; height: 20px; background: linear-gradient(135deg, #40916c, #2d6a4f); top: -8px; left: 2px; transform: rotate(-30deg); }
+  .leaf2 { width: 28px; height: 18px; background: linear-gradient(135deg, #52b788, #40916c); top: 8px; left: -24px; transform: rotate(150deg); }
+  .leaf3 { width: 24px; height: 16px; background: linear-gradient(135deg, #40916c, #1b4332); top: 18px; left: 4px; transform: rotate(-45deg); }
+
+  /* ===== LAMP ===== */
+  .lamp { position: absolute; top: 20px; right: 60px; }
+  .lamp-shade { width: 0; height: 0; border-left: 28px solid transparent; border-right: 28px solid transparent; border-bottom: 50px solid #e8b44a; position: relative; }
+  .lamp-shade::after { content:''; position:absolute; bottom:-50px; left:-12px; width:24px; height:50px; background:#c8860a; clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%); }
+  .lamp-pole { width: 6px; height: 80px; background: #8B5E3C; position: absolute; top: 50px; left: 50%; transform: translateX(-50%); }
+  .lamp-base { width: 40px; height: 10px; background: #6b4226; border-radius: 4px; position: absolute; top: 130px; left: 50%; transform: translateX(-50%); }
+  @keyframes lamp-glow { 0%,100%{box-shadow:0 20px 60px rgba(232,180,74,0.3)} 50%{box-shadow:0 20px 80px rgba(232,180,74,0.5)} }
+  .lamp-light { position: absolute; top: 50px; left: 50%; transform: translateX(-50%); width: 100px; height: 60px; background: radial-gradient(ellipse at top, rgba(232,180,74,0.25) 0%, transparent 70%); animation: lamp-glow 3s ease-in-out infinite; }
+
+  /* LABEL */
+  .art-label { color: #3a2a10; font-size: 0.78rem; letter-spacing: 0.06em; }
+</style>
+</head>
+<body>
+  <div class="scene-title">The Cozy Corner</div>
+  <p class="scene-sub">Pure CSS Art · No Images · No JavaScript</p>
+
+  <div class="table-scene">
+    <!-- Lamp -->
+    <div class="lamp">
+      <div class="lamp-shade"></div>
+      <div class="lamp-pole"></div>
+      <div class="lamp-base"></div>
+      <div class="lamp-light"></div>
+    </div>
+
+    <!-- Steam -->
+    <div class="steam">
+      <div class="steam-wisp"></div>
+      <div class="steam-wisp"></div>
+      <div class="steam-wisp"></div>
+    </div>
+
+    <!-- Coffee Cup -->
+    <div class="cup-group">
+      <div class="cup">
+        <div class="coffee-liquid"></div>
+        <div class="handle"></div>
+      </div>
+      <div class="saucer"></div>
+    </div>
+
+    <!-- Book -->
+    <div class="book-group">
+      <div class="book">
+        <div class="book-spine"></div>
+        <div class="book-title">Design<br>Systems</div>
+        <div class="book-lines">
+          <div class="book-line"></div>
+          <div class="book-line" style="width:80%"></div>
+          <div class="book-line" style="width:90%"></div>
+          <div class="book-line" style="width:70%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Plant -->
+    <div class="plant-group">
+      <div class="stem">
+        <div class="leaf leaf1"></div>
+        <div class="leaf leaf2"></div>
+        <div class="leaf leaf3"></div>
+      </div>
+      <div class="pot"><div class="soil"></div></div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-top"></div>
+    <div class="table-leg-l"></div>
+    <div class="table-leg-r"></div>
+  </div>
+
+  <p class="art-label">100% CSS — built from &lt;div&gt; elements and pure styling</p>
+</body>
+</html>

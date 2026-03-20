@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom File Upload</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    background: #f8faff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+    padding: 2rem;
+  }
+  .upload-page { max-width: 560px; width: 100%; }
+  h1 { font-size: 1.6rem; font-weight: 700; color: #1e293b; margin-bottom: 0.25rem; }
+  .subtitle { color: #64748b; font-size: 0.88rem; margin-bottom: 2rem; }
+
+  /* ===== DRAG DROP AREA ===== */
+  .drop-zone {
+    border: 2px dashed #c7d2fe;
+    border-radius: 16px;
+    background: #fff;
+    padding: 3rem 2rem;
+    text-align: center;
+    position: relative;
+    transition: all 0.25s;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+  }
+  .drop-zone:hover { border-color: #6366f1; background: #f5f3ff; }
+  /* Hide native input */
+  .drop-zone input[type="file"] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+  }
+  .upload-icon {
+    width: 64px; height: 64px; background: #eef2ff; border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; margin: 0 auto 1rem; border: 1px solid #e0e7ff;
+  }
+  .drop-title { font-weight: 700; font-size: 1rem; color: #1e293b; margin-bottom: 0.4rem; }
+  .drop-sub { font-size: 0.82rem; color: #94a3b8; }
+  .drop-sub span { color: #6366f1; font-weight: 600; }
+
+  /* ===== STYLE BUTTON ONLY (VARIANT) ===== */
+  .btn-section { margin-bottom: 1.5rem; }
+  .btn-label { font-size: 0.8rem; font-weight: 600; color: #475569; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+  .file-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .file-btn-wrap { position: relative; display: inline-flex; }
+  .file-btn-wrap input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+  .styled-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.65rem 1.25rem; border-radius: 10px;
+    font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 600;
+    cursor: pointer; border: none; transition: all 0.2s;
+  }
+  .btn-primary { background: #6366f1; color: #fff; }
+  .btn-primary:hover { background: #5153cc; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(99,102,241,0.3); }
+  .btn-outline { background: #fff; color: #1e293b; border: 2px solid #e2e8f0; }
+  .btn-outline:hover { border-color: #6366f1; color: #6366f1; }
+  .btn-dark { background: #1e293b; color: #fff; }
+  .btn-dark:hover { background: #0f172a; transform: translateY(-1px); }
+
+  /* ===== FORMAT CHIPS ===== */
+  .formats { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .fmt { background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 6px; padding: 0.25rem 0.65rem; font-size: 0.75rem; font-weight: 600; color: #475569; }
+
+  /* ===== QUEUE MOCKUP ===== */
+  .queue-label { font-size: 0.8rem; font-weight: 600; color: #475569; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+  .file-queue { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; }
+  .file-item { display: grid; grid-template-columns: 40px 1fr auto; align-items: center; gap: 0.75rem; padding: 0.85rem 1rem; border-bottom: 1px solid #f1f5f9; }
+  .file-item:last-child { border-bottom: none; }
+  .file-ico { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+  .ico-pdf { background: #fee2e2; }
+  .ico-img { background: #dcfce7; }
+  .ico-zip { background: #fef9c3; }
+  .file-meta .file-name { font-size: 0.85rem; font-weight: 600; color: #1e293b; }
+  .file-meta .file-size { font-size: 0.75rem; color: #94a3b8; }
+  .progress-wrap { width: 100%; background: #f1f5f9; border-radius: 99px; height: 4px; margin-top: 4px; }
+  .progress-bar { height: 4px; border-radius: 99px; }
+  .bar-done { background: #22c55e; width: 100%; }
+  .bar-half { background: #6366f1; width: 60%; animation: pulse-bar 1.5s ease-in-out infinite; }
+  .bar-wait { background: #e2e8f0; width: 0%; }
+  @keyframes pulse-bar { 0%,100%{opacity:1} 50%{opacity:0.5} }
+  .status-done { color: #22c55e; font-size: 0.8rem; font-weight: 600; }
+  .status-up { color: #6366f1; font-size: 0.8rem; font-weight: 600; }
+  .status-wait { color: #94a3b8; font-size: 0.8rem; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="upload-page">
+  <h1>Upload Files</h1>
+  <p class="subtitle">Drag, drop, or click to select files from your device</p>
+
+  <div class="drop-zone">
+    <input type="file" multiple>
+    <div class="upload-icon">📂</div>
+    <div class="drop-title">Drop files here or <span style="color:#6366f1">browse</span></div>
+    <div class="drop-sub">Supports <span>PDF, PNG, JPG, ZIP</span> up to 25 MB each</div>
+  </div>
+
+  <div class="btn-section">
+    <div class="btn-label">Button Styles</div>
+    <div class="file-buttons">
+      <div class="file-btn-wrap"><input type="file"><button class="styled-btn btn-primary">⬆ Upload File</button></div>
+      <div class="file-btn-wrap"><input type="file"><button class="styled-btn btn-outline">📎 Attach</button></div>
+      <div class="file-btn-wrap"><input type="file"><button class="styled-btn btn-dark">🗂 Choose File</button></div>
+    </div>
+  </div>
+
+  <div class="formats">
+    <span class="fmt">PDF</span><span class="fmt">PNG</span><span class="fmt">JPG</span>
+    <span class="fmt">SVG</span><span class="fmt">ZIP</span><span class="fmt">CSV</span><span class="fmt">XLSX</span>
+  </div>
+
+  <div class="queue-label">Upload Queue</div>
+  <div class="file-queue">
+    <div class="file-item">
+      <div class="file-ico ico-pdf">📄</div>
+      <div class="file-meta">
+        <div class="file-name">report_q3.pdf</div>
+        <div class="file-size">2.4 MB</div>
+        <div class="progress-wrap"><div class="progress-bar bar-done"></div></div>
+      </div>
+      <div class="status-done">✓ Done</div>
+    </div>
+    <div class="file-item">
+      <div class="file-ico ico-img">🖼</div>
+      <div class="file-meta">
+        <div class="file-name">banner_hero.png</div>
+        <div class="file-size">1.8 MB</div>
+        <div class="progress-wrap"><div class="progress-bar bar-half"></div></div>
+      </div>
+      <div class="status-up">60%</div>
+    </div>
+    <div class="file-item">
+      <div class="file-ico ico-zip">🗜</div>
+      <div class="file-meta">
+        <div class="file-name">assets_pack.zip</div>
+        <div class="file-size">14.2 MB</div>
+        <div class="progress-wrap"><div class="progress-bar bar-wait"></div></div>
+      </div>
+      <div class="status-wait">Waiting</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

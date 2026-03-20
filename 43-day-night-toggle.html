@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day / Night Toggle</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* The checkbox controls everything */
+  #theme-toggle { display: none; }
+
+  /* ===== DAY MODE (default) ===== */
+  body {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #87ceeb 0%, #e0f0ff 50%, #fffbe8 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.6s ease, color 0.4s;
+    color: #1e293b;
+    padding: 3rem 1.5rem;
+  }
+  #theme-toggle:checked ~ body {
+    background: linear-gradient(160deg, #0a0c1a 0%, #111428 50%, #0d1124 100%);
+    color: #e2e8f0;
+  }
+
+  /* workaround: toggle and body must be siblings */
+  /* So we wrap everything AFTER the input inside a label-controlled div */
+  .page { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 3rem; }
+
+  /* ===== TOGGLE SWITCH ===== */
+  .toggle-label {
+    display: flex; align-items: center; gap: 1rem;
+    cursor: pointer; user-select: none;
+  }
+  .toggle-track {
+    width: 80px; height: 40px; border-radius: 99px;
+    background: linear-gradient(135deg, #87ceeb, #60a5fa);
+    position: relative; transition: background 0.5s;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.15);
+  }
+  #theme-toggle:checked ~ .page .toggle-track {
+    background: linear-gradient(135deg, #1e2a5e, #2d3a8c);
+  }
+  .toggle-thumb {
+    position: absolute; top: 4px; left: 4px;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  #theme-toggle:checked ~ .page .toggle-thumb {
+    transform: translateX(40px);
+  }
+  .toggle-label span { font-size: 0.9rem; font-weight: 600; color: #475569; transition: color 0.4s; }
+  #theme-toggle:checked ~ .page .toggle-label span { color: #94a3b8; }
+
+  /* ===== CELESTIAL OBJECTS ===== */
+  .sky { position: relative; width: 100%; max-width: 500px; height: 200px; border-radius: 20px; overflow: hidden; }
+  .sky-day { position: absolute; inset: 0; background: linear-gradient(to bottom, #87ceeb, #b0d8f5); transition: opacity 0.6s; }
+  .sky-night { position: absolute; inset: 0; background: linear-gradient(to bottom, #0a0c1a, #1a1e40); opacity: 0; transition: opacity 0.6s; }
+  #theme-toggle:checked ~ .page .sky-day { opacity: 0; }
+  #theme-toggle:checked ~ .page .sky-night { opacity: 1; }
+
+  /* Sun */
+  .sun {
+    position: absolute; top: 30px; left: 50%; transform: translateX(-50%);
+    width: 70px; height: 70px; border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #ffe066, #ffb300);
+    box-shadow: 0 0 30px #ffdc00, 0 0 60px rgba(255,200,0,0.4);
+    transition: transform 0.6s ease, opacity 0.5s;
+  }
+  #theme-toggle:checked ~ .page .sun { transform: translateX(-50%) translateY(120px); opacity: 0; }
+
+  /* Moon */
+  .moon {
+    position: absolute; top: 30px; left: 50%; transform: translateX(-50%) translateY(120px);
+    width: 60px; height: 60px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #e8edf7, #b8c4d8);
+    box-shadow: 0 0 20px rgba(200,215,240,0.5);
+    opacity: 0; transition: transform 0.6s ease, opacity 0.5s;
+  }
+  #theme-toggle:checked ~ .page .moon { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+  /* Stars */
+  .stars { position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s 0.2s; }
+  #theme-toggle:checked ~ .page .stars { opacity: 1; }
+  .star { position: absolute; background: #fff; border-radius: 50%; animation: twinkle 2s infinite alternate; }
+  @keyframes twinkle { from { opacity: 0.3; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+
+  /* Clouds */
+  .cloud { position: absolute; background: rgba(255,255,255,0.85); border-radius: 50px; transition: opacity 0.5s; }
+  #theme-toggle:checked ~ .page .cloud { opacity: 0; }
+  .c1 { width: 90px; height: 30px; bottom: 50px; left: 40px; }
+  .c1::before { content:''; position:absolute; width:50px; height:40px; background:inherit; border-radius:50%; top:-20px; left:15px; }
+  .c2 { width: 70px; height: 25px; bottom: 80px; right: 60px; }
+  .c2::before { content:''; position:absolute; width:40px; height:35px; background:inherit; border-radius:50%; top:-18px; left:12px; }
+
+  /* Ground line */
+  .ground { position: absolute; bottom: 0; left: 0; right: 0; height: 50px; background: linear-gradient(to top, #7ec850, #a3d977); transition: background 0.6s; border-radius: 0 0 20px 20px; }
+  #theme-toggle:checked ~ .page .ground { background: linear-gradient(to top, #0e1420, #141c30); }
+
+  /* ===== DEMO CARD ===== */
+  .demo-card {
+    background: rgba(255,255,255,0.7); backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.8);
+    border-radius: 20px; padding: 1.75rem 2rem; max-width: 440px; width: 100%;
+    transition: background 0.5s, border-color 0.5s;
+  }
+  #theme-toggle:checked ~ .page .demo-card {
+    background: rgba(15,20,40,0.7);
+    border-color: rgba(255,255,255,0.08);
+  }
+  .demo-card h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .demo-card p { font-size: 0.87rem; line-height: 1.7; opacity: 0.75; }
+  .card-row { display: flex; gap: 0.75rem; margin-top: 1rem; }
+  .card-chip { background: rgba(99,102,241,0.12); color: #6366f1; padding: 0.3rem 0.75rem; border-radius: 8px; font-size: 0.78rem; font-weight: 600; }
+  #theme-toggle:checked ~ .page .card-chip { background: rgba(165,180,252,0.15); color: #a5b4fc; }
+</style>
+</head>
+
+<input type="checkbox" id="theme-toggle">
+
+<div class="page">
+
+  <!-- Toggle control -->
+  <label class="toggle-label" for="theme-toggle">
+    <span>☀️ Day</span>
+    <div class="toggle-track">
+      <div class="toggle-thumb">☀️</div>
+    </div>
+    <span>🌙 Night</span>
+  </label>
+
+  <!-- Sky scene -->
+  <div class="sky">
+    <div class="sky-day"></div>
+    <div class="sky-night"></div>
+    <div class="stars">
+      <div class="star" style="width:3px;height:3px;top:15%;left:20%;animation-delay:0s"></div>
+      <div class="star" style="width:2px;height:2px;top:25%;left:40%;animation-delay:0.5s"></div>
+      <div class="star" style="width:3px;height:3px;top:10%;left:60%;animation-delay:1s"></div>
+      <div class="star" style="width:2px;height:2px;top:30%;left:75%;animation-delay:0.3s"></div>
+      <div class="star" style="width:4px;height:4px;top:20%;left:85%;animation-delay:0.8s"></div>
+      <div class="star" style="width:2px;height:2px;top:40%;left:15%;animation-delay:1.2s"></div>
+      <div class="star" style="width:3px;height:3px;top:12%;left:50%;animation-delay:0.6s"></div>
+    </div>
+    <div class="sun"></div>
+    <div class="moon"></div>
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="ground"></div>
+  </div>
+
+  <!-- Demo card affected by theme -->
+  <div class="demo-card">
+    <h2>Theme-Aware Card</h2>
+    <p>This card responds to the day/night toggle above. The entire page, sky scene, and UI elements shift between light and dark mode using only CSS — no JavaScript at all.</p>
+    <div class="card-row">
+      <span class="card-chip">Pure CSS</span>
+      <span class="card-chip">:checked Hack</span>
+      <span class="card-chip">No JS</span>
+    </div>
+  </div>
+
+</div>
+</html>

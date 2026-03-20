@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ Accordion</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh; background: #f8faff;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 4rem 1.5rem; font-family: 'Inter', sans-serif;
+  }
+  .faq-wrap { max-width: 680px; width: 100%; }
+  .faq-tag { display: inline-block; background: #eef2ff; color: #6366f1; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.75rem; border-radius: 20px; margin-bottom: 0.75rem; }
+  h1 { font-size: 2rem; font-weight: 800; color: #1e293b; margin-bottom: 0.4rem; letter-spacing: -0.03em; }
+  .subtitle { color: #64748b; font-size: 0.9rem; margin-bottom: 2.5rem; }
+
+  details {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  details:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+  details[open] {
+    border-color: #c7d2fe;
+    box-shadow: 0 4px 20px rgba(99,102,241,0.08);
+  }
+
+  summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 1.15rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #1e293b;
+    user-select: none;
+    transition: color 0.2s;
+  }
+  summary::-webkit-details-marker { display: none; }
+  details[open] summary { color: #6366f1; }
+
+  .sum-left { display: flex; align-items: center; gap: 0.75rem; }
+  .q-num { background: #f1f5f9; color: #94a3b8; font-size: 0.72rem; font-weight: 700; width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  details[open] .q-num { background: #eef2ff; color: #6366f1; }
+
+  .chevron-icon {
+    width: 24px; height: 24px; border-radius: 6px;
+    background: #f1f5f9; color: #94a3b8;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; flex-shrink: 0;
+    transition: transform 0.3s ease, background 0.2s, color 0.2s;
+  }
+  details[open] .chevron-icon { transform: rotate(180deg); background: #eef2ff; color: #6366f1; }
+
+  .answer {
+    padding: 0 1.25rem 1.25rem 4.25rem;
+    color: #475569;
+    font-size: 0.88rem;
+    line-height: 1.75;
+    animation: fade-in 0.25s ease;
+  }
+  @keyframes fade-in { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:translateY(0); } }
+
+  .answer ul { margin: 0.5rem 0 0 1rem; }
+  .answer li { margin-bottom: 0.25rem; }
+  .answer a { color: #6366f1; text-decoration: none; font-weight: 500; }
+  .answer a:hover { text-decoration: underline; }
+  .answer .highlight { background: #eef2ff; color: #6366f1; padding: 0.1rem 0.4rem; border-radius: 5px; font-family: monospace; font-size: 0.85em; }
+
+  /* category separator */
+  .cat-title { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #94a3b8; margin: 2rem 0 0.75rem; }
+</style>
+</head>
+<body>
+<div class="faq-wrap">
+  <div class="faq-tag">FAQ</div>
+  <h1>Frequently Asked Questions</h1>
+  <p class="subtitle">Everything you need to know. Can't find the answer? <a href="#" style="color:#6366f1;font-weight:600">Contact us.</a></p>
+
+  <div class="cat-title">Pricing & Plans</div>
+
+  <details>
+    <summary>
+      <div class="sum-left"><div class="q-num">01</div>Is there a free plan available?</div>
+      <div class="chevron-icon">▾</div>
+    </summary>
+    <div class="answer">Yes! Our <strong>Free tier</strong> gives you up to 3 projects, 5 GB of storage, and access to all core features — no credit card required. You can upgrade at any time as your needs grow.</div>
+  </details>
+
+  <details open>
+    <summary>
+      <div class="sum-left"><div class="q-num">02</div>Can I change my plan at any time?</div>
+      <div class="chevron-icon">▾</div>
+    </summary>
+    <div class="answer">Absolutely. You can upgrade or downgrade your plan from the <span class="highlight">Settings → Billing</span> page. Upgrades take effect immediately; downgrades are applied at the end of your current billing cycle. Unused credits are prorated automatically.</div>
+  </details>
+
+  <details>
+    <summary>
+      <div class="sum-left"><div class="q-num">03</div>What payment methods do you accept?</div>
+      <div class="chevron-icon">▾</div>
+    </summary>
+    <div class="answer">
+      We accept all major credit cards and debit cards:
+      <ul>
+        <li>Visa, Mastercard, American Express</li>
+        <li>UPI & Net Banking (India)</li>
+        <li>PayPal</li>
+        <li>Wire transfer for annual enterprise contracts</li>
+      </ul>
+    </div>
+  </details>
+
+  <div class="cat-title">Technical</div>
+
+  <details>
+    <summary>
+      <div class="sum-left"><div class="q-num">04</div>What tech stack does your platform use?</div>
+      <div class="chevron-icon">▾</div>
+    </summary>
+    <div class="answer">Our platform is built on a modern stack including <strong>React</strong>, <strong>Node.js</strong>, and <strong>PostgreSQL</strong> on the backend. We use edge CDN distribution globally and support webhooks, REST APIs, and GraphQL endpoints.</div>
+  </details>
+
+  <details>
+    <summary>
+      <div class="sum-left"><div class="q-num">05</div>Is my data secure and GDPR compliant?</div>
+      <div class="chevron-icon">▾</div>
+    </summary>
+    <div class="answer">Security is our top priority. We are <strong>SOC 2 Type II</strong> and <strong>GDPR compliant</strong>. All data is encrypted at rest (AES-256) and in transit (TLS 1.3). We offer data residency options in EU and US regions.</div>
+  </details>
+
+  <details>
+    <summary>
+      <div class="sum-left"><div class="q-num">06</div>Do you offer an API or SDK?</div>
+      <div class="chevron-icon">▾</div>
+    </summary>
+    <div class="answer">Yes — we provide a <a href="#">REST API</a> and official SDKs for JavaScript/TypeScript, Python, and Go. Our API uses standard OAuth 2.0 for authentication and returns JSON responses. Rate limits vary by plan.</div>
+  </details>
+
+  <div class="cat-title">Support</div>
+
+  <details>
+    <summary>
+      <div class="sum-left"><div class="q-num">07</div>What kind of support do you offer?</div>
+      <div class="chevron-icon">▾</div>
+    </summary>
+    <div class="answer">Free users get community forum support. Pro users get email support with a 24h SLA. Enterprise customers receive a dedicated Slack channel, SLA of 4h, and a named customer success manager.</div>
+  </details>
+
+</div>
+</body>
+</html>

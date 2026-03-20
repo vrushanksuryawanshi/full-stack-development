@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sticky Header Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --nav-h: 64px; }
+  body { font-family: 'Inter', sans-serif; color: #1e293b; }
+
+  /* ===== STICKY HEADER ===== */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    height: var(--nav-h);
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(226,232,240,0.8);
+    box-shadow: 0 1px 20px rgba(0,0,0,0.05);
+    transition: background 0.3s;
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+    height: 100%; display: flex; align-items: center; gap: 2rem;
+  }
+  .logo { font-weight: 800; font-size: 1.2rem; letter-spacing: -0.04em; color: #1e293b; }
+  .logo span { color: #6366f1; }
+  .nav-links { display: flex; align-items: center; gap: 0.25rem; }
+  .nav-link { color: #475569; font-size: 0.88rem; font-weight: 500; text-decoration: none; padding: 0.45rem 0.85rem; border-radius: 8px; transition: background 0.15s, color 0.15s; }
+  .nav-link:hover { background: #f1f5f9; color: #1e293b; }
+  .nav-link.active { color: #6366f1; background: #eef2ff; font-weight: 600; }
+  .nav-right { margin-left: auto; display: flex; gap: 0.75rem; align-items: center; }
+  .btn-ghost-sm { padding: 0.4rem 0.9rem; border-radius: 8px; font-size: 0.84rem; font-weight: 500; color: #475569; text-decoration: none; transition: background 0.15s; }
+  .btn-ghost-sm:hover { background: #f1f5f9; }
+  .btn-cta { padding: 0.45rem 1rem; border-radius: 8px; background: #6366f1; color: #fff; font-size: 0.84rem; font-weight: 600; text-decoration: none; transition: background 0.15s; }
+  .btn-cta:hover { background: #5153cc; }
+  .avatar { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, #6366f1, #a855f7); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; color: #fff; font-weight: 700; cursor: pointer; }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+    color: #fff; text-align: center; padding: 8rem 2rem;
+  }
+  .hero h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 1rem; }
+  .hero p { font-size: 1.1rem; opacity: 0.85; max-width: 480px; margin: 0 auto 2rem; }
+  .hero-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: #fff; color: #6366f1; font-weight: 700; font-size: 0.95rem; padding: 0.85rem 2rem; border-radius: 12px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; }
+  .hero-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+
+  /* ===== SECTIONS ===== */
+  section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
+  section h2 { font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+  section .sec-sub { color: #64748b; font-size: 0.95rem; margin-bottom: 2.5rem; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+  .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.5rem; transition: box-shadow 0.2s; }
+  .card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+  .card-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 1rem; }
+  .card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .card p { font-size: 0.85rem; color: #64748b; line-height: 1.6; }
+  .divider { border: none; border-top: 1px solid #f1f5f9; margin: 0; }
+  .scroll-hint { text-align: center; color: #94a3b8; font-size: 0.85rem; padding: 2rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <div class="logo">nexus<span>.</span></div>
+    <nav class="nav-links">
+      <a class="nav-link active" href="#">Home</a>
+      <a class="nav-link" href="#">Features</a>
+      <a class="nav-link" href="#">Pricing</a>
+      <a class="nav-link" href="#">Blog</a>
+      <a class="nav-link" href="#">Docs</a>
+    </nav>
+    <div class="nav-right">
+      <a class="btn-ghost-sm" href="#">Sign In</a>
+      <a class="btn-cta" href="#">Start Free →</a>
+      <div class="avatar">R</div>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>Build Faster.<br>Ship More.</h1>
+  <p>The developer platform that scales with your ambition. From side project to unicorn.</p>
+  <a class="hero-btn" href="#">Get Started for Free ↓</a>
+</div>
+
+<section id="features">
+  <h2>Why developers love Nexus</h2>
+  <p class="sec-sub">Scroll down — the header stays with you the whole way.</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-icon" style="background:#eef2ff">⚡</div><h3>Edge-First Architecture</h3><p>Deploy to 150+ global edge nodes. Your users always connect to the fastest location.</p></div>
+    <div class="card"><div class="card-icon" style="background:#f0fdf4">🔒</div><h3>Zero-Trust Security</h3><p>End-to-end encryption, SOC2 compliance, and automatic threat detection built-in.</p></div>
+    <div class="card"><div class="card-icon" style="background:#fdf4ff">🤖</div><h3>AI-Assisted Dev</h3><p>Integrated LLM tools for code review, documentation, and automated testing.</p></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section>
+  <h2>Trusted by 12,000+ teams</h2>
+  <p class="sec-sub">From startups to Fortune 500. The header is still there, right at the top.</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-icon" style="background:#fff7ed">📊</div><h3>Real-Time Analytics</h3><p>Monitor performance, errors, and user behavior with sub-second latency dashboards.</p></div>
+    <div class="card"><div class="card-icon" style="background:#f0f9ff">🔗</div><h3>500+ Integrations</h3><p>Connect GitHub, Slack, Jira, Stripe, and hundreds of other tools with one click.</p></div>
+    <div class="card"><div class="card-icon" style="background:#fff1f2">🎯</div><h3>Feature Flags</h3><p>Roll out changes gradually with percentage-based targeting and instant rollback.</p></div>
+  </div>
+</section>
+
+<div class="scroll-hint">↑ The sticky header remains fixed throughout — pure CSS, no JavaScript.</div>
+
+</body>
+</html>

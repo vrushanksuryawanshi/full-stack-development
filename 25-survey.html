@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Developer Survey 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f0f4ff;
+    --surface: #ffffff;
+    --accent: #6366f1;
+    --accent2: #a5b4fc;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --muted: #64748b;
+  }
+  body { background: var(--bg); font-family: 'Inter', sans-serif; min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; padding: 3rem 1rem; }
+  .survey-wrap { max-width: 640px; width: 100%; }
+  .survey-header { margin-bottom: 2rem; }
+  .tag { display: inline-block; background: var(--accent); color: #fff; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.75rem; border-radius: 20px; margin-bottom: 0.75rem; }
+  h1 { font-size: 2rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+  .survey-header p { color: var(--muted); font-size: 0.9rem; }
+  .progress-bar { background: var(--border); border-radius: 99px; height: 6px; margin-bottom: 2.5rem; overflow: hidden; }
+  .progress-fill { width: 40%; height: 100%; background: linear-gradient(90deg, var(--accent), #818cf8); border-radius: 99px; }
+  .question-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem; margin-bottom: 1.25rem; }
+  .q-label { font-weight: 600; color: var(--text); margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.95rem; }
+  .q-num { background: var(--accent); color: #fff; border-radius: 6px; font-size: 0.72rem; font-weight: 700; padding: 0.2rem 0.5rem; flex-shrink: 0; margin-top: 1px; }
+  /* --- RADIO CUSTOM --- */
+  .radio-group { display: flex; flex-direction: column; gap: 0.6rem; }
+  .radio-label { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; padding: 0.7rem 1rem; border: 2px solid var(--border); border-radius: 10px; transition: all 0.18s; color: var(--text); font-size: 0.88rem; }
+  .radio-label:hover { border-color: var(--accent2); background: #f5f3ff; }
+  input[type="radio"] { appearance: none; width: 18px; height: 18px; border: 2px solid #cbd5e1; border-radius: 50%; flex-shrink: 0; display: grid; place-items: center; transition: all 0.18s; cursor: pointer; }
+  input[type="radio"]::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); opacity: 0; transform: scale(0); transition: all 0.18s; }
+  input[type="radio"]:checked { border-color: var(--accent); background: #eef2ff; }
+  input[type="radio"]:checked::after { opacity: 1; transform: scale(1); }
+  input[type="radio"]:checked + .radio-text { color: var(--accent); font-weight: 500; }
+  .radio-label:has(input:checked) { border-color: var(--accent); background: #eef2ff; }
+  /* --- CHECKBOX CUSTOM --- */
+  .check-group { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+  .check-label { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; padding: 0.7rem 1rem; border: 2px solid var(--border); border-radius: 10px; transition: all 0.18s; color: var(--text); font-size: 0.85rem; }
+  .check-label:hover { border-color: var(--accent2); background: #f5f3ff; }
+  input[type="checkbox"] { appearance: none; width: 18px; height: 18px; border: 2px solid #cbd5e1; border-radius: 5px; flex-shrink: 0; display: grid; place-items: center; transition: all 0.18s; cursor: pointer; }
+  input[type="checkbox"]::after { content: '✓'; font-size: 12px; color: #fff; opacity: 0; transform: scale(0); transition: all 0.18s; }
+  input[type="checkbox"]:checked { border-color: var(--accent); background: var(--accent); }
+  input[type="checkbox"]:checked::after { opacity: 1; transform: scale(1); }
+  .check-label:has(input:checked) { border-color: var(--accent); background: #eef2ff; }
+  /* --- RANGE SLIDER --- */
+  .range-wrap { padding: 0.5rem 0; }
+  input[type="range"] { -webkit-appearance: none; width: 100%; height: 6px; border-radius: 99px; background: linear-gradient(90deg, var(--accent) 0%, var(--accent) 60%, var(--border) 60%); outline: none; cursor: pointer; }
+  input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); border: 3px solid #fff; box-shadow: 0 2px 8px rgba(99,102,241,0.4); }
+  .range-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted); margin-top: 0.5rem; }
+  /* --- TEXTAREA --- */
+  textarea { width: 100%; border: 2px solid var(--border); border-radius: 10px; padding: 0.8rem 1rem; font-family: 'Inter', sans-serif; font-size: 0.88rem; color: var(--text); resize: vertical; min-height: 90px; outline: none; transition: border 0.18s; }
+  textarea:focus { border-color: var(--accent); }
+  /* --- SUBMIT --- */
+  .submit-btn { display: block; width: 100%; background: linear-gradient(135deg, var(--accent), #818cf8); color: #fff; font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; border: none; border-radius: 12px; padding: 1rem; cursor: pointer; margin-top: 1.5rem; letter-spacing: 0.03em; transition: opacity 0.2s, transform 0.2s; }
+  .submit-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+</style>
+</head>
+<body>
+<div class="survey-wrap">
+  <div class="survey-header">
+    <div class="tag">Annual Survey</div>
+    <h1>Developer Pulse 2025</h1>
+    <p>Help us understand how developers work today. Takes ~3 minutes.</p>
+  </div>
+  <div class="progress-bar"><div class="progress-fill"></div></div>
+
+  <div class="question-card">
+    <div class="q-label"><span class="q-num">01</span> What best describes your current role?</div>
+    <div class="radio-group">
+      <label class="radio-label"><input type="radio" name="role"><span class="radio-text">Frontend Developer</span></label>
+      <label class="radio-label"><input type="radio" name="role"><span class="radio-text">Backend Developer</span></label>
+      <label class="radio-label"><input type="radio" name="role"><span class="radio-text">Full-Stack Developer</span></label>
+      <label class="radio-label"><input type="radio" name="role"><span class="radio-text">ML / AI Engineer</span></label>
+      <label class="radio-label"><input type="radio" name="role"><span class="radio-text">DevOps / Platform Engineer</span></label>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <div class="q-label"><span class="q-num">02</span> Which languages do you use regularly? (Select all that apply)</div>
+    <div class="check-group">
+      <label class="check-label"><input type="checkbox"><span>Python</span></label>
+      <label class="check-label"><input type="checkbox"><span>JavaScript</span></label>
+      <label class="check-label"><input type="checkbox"><span>TypeScript</span></label>
+      <label class="check-label"><input type="checkbox"><span>Rust</span></label>
+      <label class="check-label"><input type="checkbox"><span>Go</span></label>
+      <label class="check-label"><input type="checkbox"><span>Java</span></label>
+      <label class="check-label"><input type="checkbox"><span>C / C++</span></label>
+      <label class="check-label"><input type="checkbox"><span>Kotlin</span></label>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <div class="q-label"><span class="q-num">03</span> How do you prefer to work?</div>
+    <div class="radio-group">
+      <label class="radio-label"><input type="radio" name="work"><span class="radio-text">Fully Remote</span></label>
+      <label class="radio-label"><input type="radio" name="work"><span class="radio-text">Hybrid (office + remote)</span></label>
+      <label class="radio-label"><input type="radio" name="work"><span class="radio-text">Fully On-site</span></label>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <div class="q-label"><span class="q-num">04</span> How satisfied are you with your current tooling?</div>
+    <div class="range-wrap">
+      <input type="range" min="1" max="10" value="6">
+      <div class="range-labels"><span>Not at all</span><span>Neutral</span><span>Very satisfied</span></div>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <div class="q-label"><span class="q-num">05</span> Any feedback for the community?</div>
+    <textarea placeholder="Share your thoughts…"></textarea>
+  </div>
+
+  <button class="submit-btn">Submit Survey →</button>
+</div>
+</body>
+</html>

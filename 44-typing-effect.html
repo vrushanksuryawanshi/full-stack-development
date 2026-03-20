@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Typewriter Effect</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh; background: #0a0c12;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 5rem; padding: 4rem 2rem; font-family: 'Inter', sans-serif;
+  }
+  h2 { color: #333; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 500; margin-bottom: 1.5rem; text-align: center; }
+
+  /* ===== VARIANT 1: Classic terminal typewriter ===== */
+  .v1 { text-align: center; }
+  .type1 {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 2.2rem; color: #22c55e;
+    white-space: nowrap; overflow: hidden;
+    border-right: 3px solid #22c55e;
+    width: 0;
+    animation:
+      type1 3.5s steps(30, end) 0.5s forwards,
+      blink 0.75s step-end infinite;
+  }
+  @keyframes type1 { from { width: 0; } to { width: 22ch; } }
+  @keyframes blink { 0%,100% { border-color: #22c55e; } 50% { border-color: transparent; } }
+  .type1-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1rem; color: #4ade80;
+    white-space: nowrap; overflow: hidden;
+    width: 0;
+    animation: type1-sub 2s steps(24, end) 4.5s forwards;
+    opacity: 0; animation-fill-mode: both;
+  }
+  @keyframes type1-sub { from { width: 0; opacity: 1; } to { width: 24ch; opacity: 1; } }
+
+  /* ===== VARIANT 2: Heading reveal ===== */
+  .v2 { text-align: left; max-width: 600px; width: 100%; }
+  .type2-line { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem; }
+  .prompt { color: #6366f1; font-family: 'Fira Code', monospace; font-size: 1rem; flex-shrink: 0; }
+  .type2 {
+    font-family: 'Fira Code', monospace; font-size: 1rem; color: #e2e8f0;
+    white-space: nowrap; overflow: hidden; width: 0;
+    border-right: 2px solid #6366f1;
+  }
+  .type2-1 { animation: tw2-1 2s steps(28, end) 0.3s both, blink2 0.7s step-end 2.3s 3; }
+  .type2-2 { animation: tw2-2 2.5s steps(35, end) 2.8s both, blink2 0.7s step-end 5.3s 3; }
+  .type2-3 { animation: tw2-3 2s steps(22, end) 5.8s both, blink2 0.7s step-end 7.8s infinite; }
+  @keyframes tw2-1 { from { width:0; } to { width:28ch; } }
+  @keyframes tw2-2 { from { width:0; } to { width:35ch; } }
+  @keyframes tw2-3 { from { width:0; } to { width:22ch; } }
+  @keyframes blink2 { 0%,100%{border-color:#6366f1} 50%{border-color:transparent} }
+
+  /* ===== VARIANT 3: Big hero typewriter with loop illusion ===== */
+  .v3 { text-align: center; }
+  .hero-type {
+    font-family: 'Inter', sans-serif; font-size: 3rem; font-weight: 800;
+    color: #fff; letter-spacing: -0.04em;
+    display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; justify-content: center;
+  }
+  .static-word { color: #fff; }
+  .typed-word {
+    white-space: nowrap; overflow: hidden; width: 0;
+    border-right: 4px solid #f59e0b;
+    color: #f59e0b;
+    animation: bigtype 2s steps(12, end) 0.5s forwards, blink3 0.6s step-end infinite;
+  }
+  @keyframes bigtype { from { width:0; } to { width: 12ch; } }
+  @keyframes blink3 { 0%,100%{border-color:#f59e0b} 50%{border-color:transparent} }
+  .hero-sub { color: #444; font-size: 0.9rem; margin-top: 1rem; letter-spacing: 0.05em; font-family: 'Fira Code', monospace; }
+
+  /* ===== TERMINAL WINDOW FRAME ===== */
+  .terminal {
+    background: #0f1117; border: 1px solid #1e2235; border-radius: 12px;
+    overflow: hidden; max-width: 580px; width: 100%;
+  }
+  .term-bar { background: #1a1d27; padding: 0.6rem 1rem; display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid #1e2235; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dt-red { background: #ff5f57; }
+  .dt-yellow { background: #febc2e; }
+  .dt-green { background: #28c840; }
+  .term-title { color: #3a3f52; font-size: 0.78rem; font-family: 'Fira Code', monospace; margin-left: 0.5rem; }
+  .term-body { padding: 1.5rem; }
+</style>
+</head>
+<body>
+
+  <div class="v1">
+    <h2>Variant 1 — Terminal Green</h2>
+    <div class="type1">Hello, World! 🌍</div>
+    <div class="type1-sub">Welcome to the matrix...</div>
+  </div>
+
+  <div class="v2">
+    <h2>Variant 2 — Terminal Window</h2>
+    <div class="terminal">
+      <div class="term-bar">
+        <div class="dot dt-red"></div>
+        <div class="dot dt-yellow"></div>
+        <div class="dot dt-green"></div>
+        <div class="term-title">~/projects/nexus</div>
+      </div>
+      <div class="term-body">
+        <div class="type2-line">
+          <span class="prompt">$</span>
+          <span class="type2 type2-1">git clone nexus-ui.git</span>
+        </div>
+        <div class="type2-line">
+          <span class="prompt">$</span>
+          <span class="type2 type2-2">npm install && npm run dev</span>
+        </div>
+        <div class="type2-line">
+          <span class="prompt">$</span>
+          <span class="type2 type2-3">🚀 Server ready!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="v3">
+    <h2>Variant 3 — Big Hero</h2>
+    <div class="hero-type">
+      <span class="static-word">We build</span>
+      <span class="typed-word">the future</span>
+    </div>
+    <div class="hero-sub">Pure CSS · steps() animation · No JS</div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Modal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { min-height: 100vh; background: #f0f4ff; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; padding: 2rem; }
+  h2 { font-size: 0.72rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 500; margin-bottom: 1rem; }
+  .page { text-align: center; }
+  .page h1 { font-size: 2rem; font-weight: 800; color: #1e293b; margin-bottom: 0.5rem; letter-spacing: -0.03em; }
+  .page p { color: #64748b; font-size: 0.9rem; margin-bottom: 2.5rem; }
+  .btn-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  /* ===== OPEN BUTTONS ===== */
+  .open-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.7rem 1.4rem; border-radius: 11px;
+    font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 600;
+    text-decoration: none; transition: all 0.2s;
+  }
+  .btn-indigo { background: #6366f1; color: #fff; }
+  .btn-indigo:hover { background: #5153cc; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(99,102,241,0.3); }
+  .btn-red { background: #ef4444; color: #fff; }
+  .btn-red:hover { background: #dc2626; transform: translateY(-1px); }
+  .btn-outline { background: #fff; color: #1e293b; border: 2px solid #e2e8f0; }
+  .btn-outline:hover { border-color: #6366f1; color: #6366f1; }
+
+  /* ===== MODAL BACKDROP ===== */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(15,23,42,0);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1000; padding: 1rem;
+    visibility: hidden;
+    transition: background 0.3s, visibility 0.3s;
+  }
+  .modal-overlay:target { background: rgba(15,23,42,0.6); visibility: visible; backdrop-filter: blur(4px); }
+
+  /* ===== MODAL BOX ===== */
+  .modal-box {
+    background: #fff; border-radius: 20px; padding: 0;
+    max-width: 480px; width: 100%;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.25);
+    opacity: 0; transform: scale(0.92) translateY(20px);
+    transition: opacity 0.3s, transform 0.3s;
+    overflow: hidden;
+  }
+  .modal-overlay:target .modal-box { opacity: 1; transform: scale(1) translateY(0); }
+
+  .modal-header { padding: 1.5rem 1.5rem 0; display: flex; align-items: flex-start; justify-content: space-between; }
+  .modal-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
+  .icon-indigo { background: #eef2ff; }
+  .icon-red { background: #fff1f2; }
+  .icon-green { background: #f0fdf4; }
+  .close-btn { width: 32px; height: 32px; border-radius: 8px; background: #f1f5f9; color: #64748b; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1rem; transition: background 0.15s; line-height: 1; }
+  .close-btn:hover { background: #e2e8f0; }
+  .modal-body { padding: 1rem 1.5rem 1.5rem; }
+  .modal-title { font-size: 1.15rem; font-weight: 700; color: #1e293b; margin-bottom: 0.5rem; }
+  .modal-desc { font-size: 0.88rem; color: #64748b; line-height: 1.65; }
+  .modal-actions { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+  .modal-btn { flex: 1; padding: 0.7rem; border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 600; border: none; cursor: pointer; transition: all 0.15s; text-decoration: none; text-align: center; display: inline-flex; align-items: center; justify-content: center; }
+  .mb-primary { background: #6366f1; color: #fff; }
+  .mb-primary:hover { background: #5153cc; }
+  .mb-danger { background: #ef4444; color: #fff; }
+  .mb-danger:hover { background: #dc2626; }
+  .mb-success { background: #22c55e; color: #fff; }
+  .mb-success:hover { background: #16a34a; }
+  .mb-ghost { background: #f1f5f9; color: #475569; }
+  .mb-ghost:hover { background: #e2e8f0; }
+
+  /* Divider line */
+  .modal-divider { height: 1px; background: #f1f5f9; margin: 1rem 0; }
+
+  /* input inside modal */
+  .modal-input { width: 100%; border: 2px solid #e2e8f0; border-radius: 10px; padding: 0.65rem 0.85rem; font-family: 'Inter', sans-serif; font-size: 0.88rem; color: #1e293b; outline: none; margin-top: 0.75rem; transition: border 0.15s; }
+  .modal-input:focus { border-color: #6366f1; }
+</style>
+</head>
+<body>
+
+<!-- PAGE CONTENT -->
+<div class="page">
+  <h1>CSS-Only Modals</h1>
+  <p>No JavaScript. Powered entirely by the CSS <code style="background:#eef2ff;color:#6366f1;padding:0.1rem 0.4rem;border-radius:4px;font-size:0.88em">:target</code> pseudo-class.</p>
+  <div class="btn-row">
+    <a class="open-btn btn-indigo" href="#modal-info">ℹ Open Info Modal</a>
+    <a class="open-btn btn-red" href="#modal-confirm">⚠ Delete Confirm</a>
+    <a class="open-btn btn-outline" href="#modal-form">✏ Input Form</a>
+  </div>
+</div>
+
+<!-- MODAL 1: INFO -->
+<div class="modal-overlay" id="modal-info">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-icon icon-indigo">ℹ️</div>
+      <a href="#" class="close-btn">✕</a>
+    </div>
+    <div class="modal-body">
+      <div class="modal-title">How This Works</div>
+      <div class="modal-desc">This modal is triggered by the CSS <strong>:target</strong> pseudo-class. Clicking "Open" changes the URL hash to <code style="background:#f1f5f9;padding:0 0.3rem;border-radius:4px">#modal-id</code>, which activates the <code style="background:#f1f5f9;padding:0 0.3rem;border-radius:4px">:target</code> selector and makes the overlay visible. The close button simply links to <code style="background:#f1f5f9;padding:0 0.3rem;border-radius:4px">#</code>, removing the target.</div>
+      <div class="modal-divider"></div>
+      <div class="modal-actions">
+        <a href="#" class="modal-btn mb-primary">Got it!</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 2: CONFIRM DELETE -->
+<div class="modal-overlay" id="modal-confirm">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-icon icon-red">🗑️</div>
+      <a href="#" class="close-btn">✕</a>
+    </div>
+    <div class="modal-body">
+      <div class="modal-title">Delete Project?</div>
+      <div class="modal-desc">This action cannot be undone. All files, settings, and data associated with <strong>nexus-ui</strong> will be permanently removed from our servers.</div>
+      <div class="modal-actions">
+        <a href="#" class="modal-btn mb-ghost">Cancel</a>
+        <a href="#" class="modal-btn mb-danger">Yes, Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 3: FORM -->
+<div class="modal-overlay" id="modal-form">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-icon icon-green">✏️</div>
+      <a href="#" class="close-btn">✕</a>
+    </div>
+    <div class="modal-body">
+      <div class="modal-title">Rename Project</div>
+      <div class="modal-desc">Enter a new name for this project. It will be updated across all workspaces.</div>
+      <input class="modal-input" type="text" placeholder="e.g. nexus-ui-v2" value="nexus-ui">
+      <div class="modal-actions">
+        <a href="#" class="modal-btn mb-ghost">Cancel</a>
+        <a href="#" class="modal-btn mb-success">Save Name</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Floating Action Button</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { min-height: 100vh; background: #f0f4ff; font-family: 'Inter', sans-serif; padding: 3rem 2rem; }
+  .page-content { max-width: 720px; margin: 0 auto; }
+  h1 { font-size: 2rem; font-weight: 800; color: #1e293b; margin-bottom: 0.5rem; letter-spacing: -0.03em; }
+  .subtitle { color: #64748b; margin-bottom: 2rem; font-size: 0.9rem; }
+  .dummy-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+  .dummy-card h3 { font-size: 0.95rem; font-weight: 700; color: #1e293b; margin-bottom: 0.25rem; }
+  .dummy-card p { font-size: 0.84rem; color: #64748b; line-height: 1.6; }
+
+  /* ===== FAB CONTAINER ===== */
+  .fab-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    gap: 0.75rem;
+    z-index: 200;
+  }
+
+  /* ===== MAIN FAB BUTTON ===== */
+  .fab-main {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    color: #fff; font-size: 1.5rem;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; border: none;
+    box-shadow: 0 6px 20px rgba(99,102,241,0.4), 0 2px 8px rgba(0,0,0,0.15);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s;
+    position: relative; z-index: 2;
+    font-family: 'Inter', sans-serif;
+  }
+  .fab-main:hover { transform: scale(1.1) rotate(45deg); box-shadow: 0 10px 30px rgba(99,102,247,0.5); }
+
+  /* ===== SPEED DIAL ITEMS ===== */
+  .fab-items {
+    display: flex; flex-direction: column; gap: 0.6rem;
+    opacity: 0; pointer-events: none;
+    transform: translateY(10px) scale(0.95);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .fab-container:hover .fab-items {
+    opacity: 1; pointer-events: auto; transform: translateY(0) scale(1);
+  }
+
+  .fab-item {
+    display: flex; align-items: center; gap: 0.75rem; justify-content: flex-end;
+  }
+  .fab-item-label {
+    background: #1e293b; color: #fff; font-size: 0.78rem; font-weight: 600;
+    padding: 0.35rem 0.75rem; border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15); white-space: nowrap;
+    opacity: 0; transform: translateX(8px);
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .fab-container:hover .fab-item-label {
+    opacity: 1; transform: translateX(0);
+  }
+  .fab-container:hover .fab-item:nth-child(1) .fab-item-label { transition-delay: 0.05s; }
+  .fab-container:hover .fab-item:nth-child(2) .fab-item-label { transition-delay: 0.1s; }
+  .fab-container:hover .fab-item:nth-child(3) .fab-item-label { transition-delay: 0.15s; }
+
+  .fab-mini {
+    width: 46px; height: 46px; border-radius: 50%; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s;
+  }
+  .fab-mini:hover { transform: scale(1.15); box-shadow: 0 6px 18px rgba(0,0,0,0.2); }
+  .fm-write { background: #10b981; color: #fff; }
+  .fm-upload { background: #f59e0b; color: #fff; }
+  .fm-share { background: #ec4899; color: #fff; }
+
+  /* ===== SINGLE FAB (bottom-left demo) ===== */
+  .fab-single {
+    position: fixed; bottom: 2rem; left: 2rem;
+    width: 54px; height: 54px; border-radius: 14px;
+    background: #0f172a; color: #e2e8f0; font-size: 1.3rem;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; border: none;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    transition: transform 0.2s, box-shadow 0.2s;
+    z-index: 200;
+  }
+  .fab-single:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.3); }
+</style>
+</head>
+<body>
+<div class="page-content">
+  <h1>Floating Action Buttons</h1>
+  <p class="subtitle">Bottom-right: hover to expand speed dial. Bottom-left: single dark FAB.</p>
+
+  <div class="dummy-card"><h3>Recent Notes</h3><p>Meeting notes from the last standup — discuss Q2 roadmap and sprint planning for upcoming feature release.</p></div>
+  <div class="dummy-card"><h3>Design Review</h3><p>Reviewed the updated component library. Several improvements needed on the modal and tooltip components for accessibility.</p></div>
+  <div class="dummy-card"><h3>Engineering Sync</h3><p>Discussed backend API versioning strategy. Decision: maintain v1 and v2 in parallel for the next two quarters.</p></div>
+  <div class="dummy-card"><h3>Project Nexus</h3><p>All milestones for Q1 have been completed. Preparing launch communications and updating the public changelog.</p></div>
+</div>
+
+<!-- SPEED DIAL FAB (bottom-right) -->
+<div class="fab-container">
+  <button class="fab-main">+</button>
+  <div class="fab-items">
+    <div class="fab-item">
+      <div class="fab-item-label">Write Note</div>
+      <button class="fab-mini fm-write">✏️</button>
+    </div>
+    <div class="fab-item">
+      <div class="fab-item-label">Upload File</div>
+      <button class="fab-mini fm-upload">📎</button>
+    </div>
+    <div class="fab-item">
+      <div class="fab-item-label">Share</div>
+      <button class="fab-mini fm-share">📤</button>
+    </div>
+  </div>
+</div>
+
+<!-- SINGLE FAB (bottom-left) -->
+<button class="fab-single">💬</button>
+
+</body>
+</html>

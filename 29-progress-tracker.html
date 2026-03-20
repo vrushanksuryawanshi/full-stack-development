@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learning Path Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0c12;
+    --surface: #111420;
+    --border: #1e2235;
+    --done: #22c55e;
+    --active: #6366f1;
+    --locked: #2a2f45;
+    --text: #e2e8f0;
+    --muted: #5a6070;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; padding: 3rem 1.5rem; }
+  .header { max-width: 720px; margin: 0 auto 3rem; }
+  .header h1 { font-size: 1.9rem; font-weight: 800; margin-bottom: 0.25rem; }
+  .header p { color: var(--muted); font-size: 0.9rem; }
+  .stats { display: flex; gap: 1.5rem; margin-top: 1.25rem; flex-wrap: wrap; }
+  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem 1.25rem; }
+  .stat-val { font-size: 1.4rem; font-weight: 800; color: var(--text); }
+  .stat-lbl { font-size: 0.73rem; color: var(--muted); font-weight: 500; }
+  .stat-done .stat-val { color: var(--done); }
+  .stat-active .stat-val { color: var(--active); }
+
+  /* TRACK */
+  .track { max-width: 720px; margin: 0 auto; position: relative; }
+  .track-line { position: absolute; left: 28px; top: 0; bottom: 0; width: 2px; background: var(--border); z-index: 0; }
+  .track-line-fill { position: absolute; left: 28px; top: 0; width: 2px; background: linear-gradient(to bottom, var(--done), var(--active)); height: 62%; z-index: 1; }
+
+  .node { display: flex; gap: 1.5rem; align-items: flex-start; margin-bottom: 1.75rem; position: relative; z-index: 2; }
+
+  /* node dot */
+  .dot { width: 58px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .dot-circle {
+    width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; border: 2px solid; flex-shrink: 0;
+    position: relative; background: var(--bg);
+  }
+  .dot-circle.done { border-color: var(--done); background: rgba(34,197,94,0.1); }
+  .dot-circle.active { border-color: var(--active); background: rgba(99,102,241,0.1); box-shadow: 0 0 0 4px rgba(99,102,241,0.15); }
+  .dot-circle.locked { border-color: var(--locked); background: var(--surface); color: var(--muted); }
+
+  /* card */
+  .node-card { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.1rem 1.3rem; transition: border-color 0.2s; }
+  .node-card:hover { border-color: #2e3550; }
+  .node-card.active-card { border-color: rgba(99,102,241,0.4); }
+  .node-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem; }
+  .node-title { font-weight: 700; font-size: 0.97rem; }
+  .node-badge { font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.55rem; border-radius: 6px; }
+  .badge-done { background: rgba(34,197,94,0.15); color: var(--done); }
+  .badge-active { background: rgba(99,102,241,0.15); color: #818cf8; }
+  .badge-locked { background: rgba(42,47,69,0.5); color: var(--muted); }
+  .node-desc { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.75rem; }
+  .node-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .tag { background: rgba(30,34,53,0.8); border: 1px solid var(--border); border-radius: 5px; font-size: 0.7rem; color: #7a8aaa; padding: 0.2rem 0.5rem; }
+
+  /* progress within active node */
+  .sub-progress { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border); }
+  .sub-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.8rem; margin-bottom: 0.4rem; color: var(--muted); }
+  .sub-check { width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; flex-shrink: 0; }
+  .sub-done { background: rgba(34,197,94,0.15); color: var(--done); }
+  .sub-todo { background: rgba(42,47,69,0.5); color: var(--muted); }
+  .sub-item.done-sub { color: var(--text); }
+
+  /* milestone banner */
+  .milestone { display: flex; align-items: center; gap: 0.75rem; background: linear-gradient(135deg, #1a1d2e, #12152a); border: 1px solid rgba(245,197,66,0.2); border-radius: 14px; padding: 1rem 1.3rem; margin: 1.5rem 0 1.75rem 3.5rem; }
+  .ms-icon { font-size: 1.5rem; }
+  .ms-text .ms-title { font-weight: 700; font-size: 0.9rem; color: #f5c542; }
+  .ms-text .ms-sub { font-size: 0.77rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Your Learning Path 🚀</h1>
+  <p>Full-Stack AI Developer · Personalized Track</p>
+  <div class="stats">
+    <div class="stat stat-done"><div class="stat-val">8</div><div class="stat-lbl">Completed</div></div>
+    <div class="stat stat-active"><div class="stat-val">1</div><div class="stat-lbl">In Progress</div></div>
+    <div class="stat"><div class="stat-val">5</div><div class="stat-lbl">Remaining</div></div>
+    <div class="stat"><div class="stat-val">62%</div><div class="stat-lbl">Overall Progress</div></div>
+  </div>
+</div>
+
+<div class="track">
+  <div class="track-line"></div>
+  <div class="track-line-fill"></div>
+
+  <div class="node">
+    <div class="dot"><div class="dot-circle done">✓</div></div>
+    <div class="node-card">
+      <div class="node-top"><div class="node-title">Python Fundamentals</div><span class="node-badge badge-done">Completed</span></div>
+      <div class="node-desc">Variables, loops, functions, OOP, and file I/O.</div>
+      <div class="node-tags"><span class="tag">Python</span><span class="tag">OOP</span><span class="tag">Files</span></div>
+    </div>
+  </div>
+
+  <div class="node">
+    <div class="dot"><div class="dot-circle done">✓</div></div>
+    <div class="node-card">
+      <div class="node-top"><div class="node-title">Data Analysis with Pandas</div><span class="node-badge badge-done">Completed</span></div>
+      <div class="node-desc">DataFrames, merges, groupby, and matplotlib visualizations.</div>
+      <div class="node-tags"><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Matplotlib</span></div>
+    </div>
+  </div>
+
+  <div class="node">
+    <div class="dot"><div class="dot-circle done">✓</div></div>
+    <div class="node-card">
+      <div class="node-top"><div class="node-title">SQL & Databases</div><span class="node-badge badge-done">Completed</span></div>
+      <div class="node-desc">Relational design, JOINs, indexes, and PostgreSQL.</div>
+      <div class="node-tags"><span class="tag">SQL</span><span class="tag">PostgreSQL</span><span class="tag">Schema Design</span></div>
+    </div>
+  </div>
+
+  <div class="milestone">
+    <div class="ms-icon">🏆</div>
+    <div class="ms-text">
+      <div class="ms-title">Milestone: Data Fundamentals Complete</div>
+      <div class="ms-sub">Unlocked: Machine Learning track + Certificate earned</div>
+    </div>
+  </div>
+
+  <div class="node">
+    <div class="dot"><div class="dot-circle active">◉</div></div>
+    <div class="node-card active-card">
+      <div class="node-top"><div class="node-title">Machine Learning with Scikit-Learn</div><span class="node-badge badge-active">In Progress</span></div>
+      <div class="node-desc">Supervised & unsupervised learning, model evaluation, hyperparameter tuning.</div>
+      <div class="node-tags"><span class="tag">Scikit-Learn</span><span class="tag">Regression</span><span class="tag">Clustering</span></div>
+      <div class="sub-progress">
+        <div class="sub-item done-sub"><div class="sub-check sub-done">✓</div>Linear & Logistic Regression</div>
+        <div class="sub-item done-sub"><div class="sub-check sub-done">✓</div>Decision Trees & Random Forest</div>
+        <div class="sub-item done-sub"><div class="sub-check sub-done">✓</div>Model Evaluation Metrics</div>
+        <div class="sub-item"><div class="sub-check sub-todo">○</div>K-Means & DBSCAN Clustering</div>
+        <div class="sub-item"><div class="sub-check sub-todo">○</div>Pipeline & Hyperparameter Tuning</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="node">
+    <div class="dot"><div class="dot-circle locked">🔒</div></div>
+    <div class="node-card">
+      <div class="node-top"><div class="node-title">Deep Learning with PyTorch</div><span class="node-badge badge-locked">Locked</span></div>
+      <div class="node-desc">Neural networks, CNNs, transformers, training loops.</div>
+      <div class="node-tags"><span class="tag">PyTorch</span><span class="tag">CNN</span><span class="tag">Transformers</span></div>
+    </div>
+  </div>
+
+  <div class="node">
+    <div class="dot"><div class="dot-circle locked">🔒</div></div>
+    <div class="node-card">
+      <div class="node-top"><div class="node-title">LLMs & Prompt Engineering</div><span class="node-badge badge-locked">Locked</span></div>
+      <div class="node-desc">Fine-tuning, RAG, agents, and production deployment.</div>
+      <div class="node-tags"><span class="tag">LLMs</span><span class="tag">RAG</span><span class="tag">Agents</span></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

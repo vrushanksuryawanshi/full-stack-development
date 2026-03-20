@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hamburger Menu Animation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh; background: #0a0c12;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 4rem; font-family: 'Inter', sans-serif;
+  }
+  h2 { color: #444; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 500; margin-bottom: 1rem; text-align: center; }
+
+  /* ===== VARIANT 1: Classic hamburger → X ===== */
+  .burger-wrap { display: flex; flex-direction: column; align-items: center; }
+  .burger {
+    width: 48px; height: 48px; cursor: pointer;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    gap: 6px; padding: 8px; border-radius: 10px;
+    background: #1a1d27; border: 1px solid #2a2f45;
+    transition: background 0.2s;
+  }
+  .burger:hover { background: #1e2235; }
+  .burger:hover .line1 { transform: translateY(8px) rotate(45deg); }
+  .burger:hover .line2 { opacity: 0; transform: scaleX(0); }
+  .burger:hover .line3 { transform: translateY(-8px) rotate(-45deg); }
+  .bar { width: 24px; height: 2px; background: #e2e8f0; border-radius: 2px; transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.25s; transform-origin: center; }
+  .line2 { width: 18px; margin-left: 0; align-self: flex-start; }
+
+  /* ===== VARIANT 2: Wider centered bars ===== */
+  .burger-b {
+    width: 56px; height: 56px; cursor: pointer;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    gap: 7px; border-radius: 50%;
+    background: #6366f1;
+    transition: background 0.2s;
+  }
+  .burger-b:hover { background: #5153cc; }
+  .burger-b:hover .b-line1 { transform: translateY(9px) rotate(45deg); background: #fff; }
+  .burger-b:hover .b-line2 { opacity: 0; transform: scaleX(0); }
+  .burger-b:hover .b-line3 { transform: translateY(-9px) rotate(-45deg); background: #fff; }
+  .b-bar { width: 22px; height: 2px; background: rgba(255,255,255,0.85); border-radius: 2px; transition: transform 0.35s cubic-bezier(0.23,1,0.32,1), opacity 0.25s, background 0.2s; transform-origin: center; }
+
+  /* ===== VARIANT 3: Spin hamburger ===== */
+  .burger-c {
+    width: 52px; height: 52px; cursor: pointer;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    gap: 6px; border-radius: 12px;
+    background: transparent; border: 2px solid #22c55e;
+    transition: border-color 0.3s;
+  }
+  .burger-c:hover { border-color: #ef4444; }
+  .burger-c .inner { display: flex; flex-direction: column; gap: 6px; align-items: center; transition: transform 0.5s cubic-bezier(0.23,1,0.32,1); }
+  .burger-c:hover .inner { transform: rotate(90deg); }
+  .burger-c:hover .c-line1 { transform: translateY(8px) rotate(45deg); background: #ef4444; }
+  .burger-c:hover .c-line2 { opacity: 0; }
+  .burger-c:hover .c-line3 { transform: translateY(-8px) rotate(-45deg); background: #ef4444; }
+  .c-bar { width: 20px; height: 2px; background: #22c55e; border-radius: 2px; transition: transform 0.35s 0.05s cubic-bezier(0.23,1,0.32,1), opacity 0.2s, background 0.3s; transform-origin: center; }
+
+  /* ===== VARIANT 4: Morphing bars with squeeze ===== */
+  .burger-d {
+    width: 48px; height: 48px; cursor: pointer;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    gap: 5px;
+  }
+  .burger-d:hover .d1 { transform: rotate(45deg) translate(5px, 5px); background: #f59e0b; }
+  .burger-d:hover .d2 { transform: scaleX(0); opacity: 0; }
+  .burger-d:hover .d3 { transform: rotate(-45deg) translate(5px, -5px); background: #f59e0b; }
+  .d-bar { width: 26px; height: 2.5px; background: #e2e8f0; border-radius: 3px; transition: all 0.3s cubic-bezier(0.68,-0.55,0.265,1.55); transform-origin: left; }
+
+  /* labels */
+  .lbl { color: #444; font-size: 0.72rem; margin-top: 0.75rem; letter-spacing: 0.05em; }
+</style>
+</head>
+<body>
+
+  <div class="burger-wrap">
+    <h2>Variants — Hover to Animate</h2>
+    <div style="display:flex;gap:2.5rem;align-items:center">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.5rem">
+        <div class="burger"><div class="bar line1"></div><div class="bar line2"></div><div class="bar line3"></div></div>
+        <span class="lbl">Classic</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.5rem">
+        <div class="burger-b"><div class="b-bar b-line1"></div><div class="b-bar b-line2"></div><div class="b-bar b-line3"></div></div>
+        <span class="lbl">Circle</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.5rem">
+        <div class="burger-c"><div class="inner"><div class="c-bar c-line1"></div><div class="c-bar c-line2"></div><div class="c-bar c-line3"></div></div></div>
+        <span class="lbl">Spin</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.5rem">
+        <div class="burger-d"><div class="d-bar d1"></div><div class="d-bar d2"></div><div class="d-bar d3"></div></div>
+        <span class="lbl">Bounce</span>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

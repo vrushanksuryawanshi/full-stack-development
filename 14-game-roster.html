@@ -1,0 +1,86 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Game Character Roster</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0012;color:#fff;font-family:'Exo 2',sans-serif;padding:3rem 2rem;min-height:100vh}
+h1{text-align:center;font-size:2.5rem;font-weight:900;letter-spacing:0.1em;text-transform:uppercase;background:linear-gradient(135deg,#a78bfa,#ec4899,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:0.5rem}
+.sub{text-align:center;color:#6b7280;font-size:0.8rem;letter-spacing:0.2em;margin-bottom:3rem}
+.roster{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:center}
+.char{width:200px;background:linear-gradient(180deg,rgba(255,255,255,0.07) 0%,rgba(255,255,255,0.02) 100%);border:1px solid rgba(255,255,255,0.1);border-radius:1rem;padding:1.5rem;text-align:center;transition:transform 0.2s,border-color 0.2s;cursor:pointer;position:relative;overflow:hidden}
+.char::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity 0.2s}
+.char:hover{transform:translateY(-6px);border-color:rgba(255,255,255,0.3)}
+.char:hover::before{opacity:1}
+.c1::before{background:radial-gradient(circle at 50% 0%,rgba(167,139,250,0.2),transparent)}
+.c2::before{background:radial-gradient(circle at 50% 0%,rgba(236,72,153,0.2),transparent)}
+.c3::before{background:radial-gradient(circle at 50% 0%,rgba(245,158,11,0.2),transparent)}
+.c4::before{background:radial-gradient(circle at 50% 0%,rgba(16,185,129,0.2),transparent)}
+.c5::before{background:radial-gradient(circle at 50% 0%,rgba(59,130,246,0.2),transparent)}
+.avatar{font-size:4rem;margin-bottom:1rem;display:block}
+.char-name{font-size:1.1rem;font-weight:700;letter-spacing:0.05em}
+.char-class{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:#6b7280;margin-top:0.2rem;margin-bottom:1.25rem}
+.c1 .char-class{color:#a78bfa}
+.c2 .char-class{color:#ec4899}
+.c3 .char-class{color:#f59e0b}
+.c4 .char-class{color:#10b981}
+.c5 .char-class{color:#3b82f6}
+.stat-bar-row{margin-bottom:0.5rem;text-align:left}
+.stat-label{font-size:0.65rem;color:#9ca3af;display:flex;justify-content:space-between;margin-bottom:3px}
+.bar{height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden}
+.fill{height:100%;border-radius:2px}
+.c1 .fill{background:linear-gradient(90deg,#7c3aed,#a78bfa)}
+.c2 .fill{background:linear-gradient(90deg,#be185d,#ec4899)}
+.c3 .fill{background:linear-gradient(90deg,#b45309,#f59e0b)}
+.c4 .fill{background:linear-gradient(90deg,#047857,#10b981)}
+.c5 .fill{background:linear-gradient(90deg,#1d4ed8,#3b82f6)}
+.char-element{position:absolute;top:0.75rem;right:0.75rem;font-size:1.2rem}
+</style></head><body>
+<h1>Character Roster</h1>
+<div class="sub">SELECT YOUR WARRIOR</div>
+<div class="roster">
+  <div class="char c1">
+    <span class="char-element">⚡</span>
+    <span class="avatar">🧙</span>
+    <div class="char-name">Aura</div>
+    <div class="char-class">Arcane Mage</div>
+    <div class="stat-bar-row"><div class="stat-label"><span>HP</span><span>7200</span></div><div class="bar"><div class="fill" style="width:60%"></div></div></div>
+    <div class="stat-bar-row"><div class="stat-label"><span>ATK</span><span>9400</span></div><div class="bar"><div class="fill" style="width:85%"></div></div></div>
+    <div class="stat-bar-row"><div class="stat-label"><span>SPD</span><span>8100</span></div><div class="bar"><div class="fill" style="width:72%"></div></div></div>
+  </div>
+  <div class="char c2">
+    <span class="char-element">🌸</span>
+    <span class="avatar">🏹</span>
+    <div class="char-name">Sakura</div>
+    <div class="char-class">Wind Archer</div>
+    <div class="stat-bar-row"><div class="stat-label"><span>HP</span><span>6100</span></div><div class="bar"><div class="fill" style="width:52%"></div></div></div>
+    <div class="stat-bar-row"><div class="stat-label"><span>ATK</span><span>8800</span></div><div class="bar"><div class="fill" style="width:78%"></div></div></div>
+    <div class="stat-bar-row"><div class="stat-label"><span>SPD</span><span>9500</span></div><div class="bar"><div class="fill" style="width:95%"></div></div></div>
+  </div>
+  <div class="char c3">
+    <span class="char-element">🔥</span>
+    <span class="avatar">⚔️</span>
+    <div class="char-name">Blaze</div>
+    <div class="char-class">Fire Knight</div>
+    <div class="stat-bar-row"><div class="stat-label"><span>HP</span><span>11800</span></div><div class="bar"><div class="fill" style="width:98%"></div></div></div>
+    <div class="stat-bar-row"><div class="stat-label"><span>ATK</span><span>10200</span></div><div class="bar"><div class="fill" style="width:92%"></div></div></div>
+    <div class="stat-bar-row"><div class="stat-label"><span>SPD</span><span>5200</span></div><div class="bar"><div class="fill" style="width:42%"></div></div></div>
+  </div>
+  <div class="char c4">
+    <span class="char-element">🌿</span>
+    <span class="avatar">🧝</span>
+    <div class="char-name">Sylva</div>
+    <div class="char-class">Nature Druid</div>
+    <div class="stat-bar-row"><div class="stat-label"><span>HP</span><span>9000</span></div><div class="bar"><div class="fill" style="width:76%"></div></div></div>
+    <div class="stat-bar-row"><div class="stat-label"><span>ATK</span><span>7200</span></div><div class="bar"><div class="fill" style="width:60%"></div></div></div>
+    <div class="stat-bar-row"><div class="stat-label"><span>SPD</span><span>7800</span></div><div class="bar"><div class="fill" style="width:66%"></div></div></div>
+  </div>
+  <div class="char c5">
+    <span class="char-element">💧</span>
+    <span class="avatar">🔱</span>
+    <div class="char-name">Tidal</div>
+    <div class="char-class">Ocean Warrior</div>
+    <div class="stat-bar-row"><div class="stat-label"><span>HP</span><span>10200</span></div><div class="bar"><div class="fill" style="width:86%"></div></div></div>
+    <div class="stat-bar-row"><div class="stat-label"><span>ATK</span><span>8500</span></div><div class="bar"><div class="fill" style="width:74%"></div></div></div>
+    <div class="stat-bar-row"><div class="stat-label"><span>SPD</span><span>6800</span></div><div class="bar"><div class="fill" style="width:56%"></div></div></div>
+  </div>
+</div>
+</body></html>

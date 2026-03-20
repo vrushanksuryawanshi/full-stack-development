@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neon Sign</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Bebas+Neue&family=Righteous&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    background: #080810;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 4rem; padding: 3rem 2rem;
+  }
+
+  /* ===== BRICK WALL ===== */
+  .wall-bg {
+    position: fixed; inset: 0; z-index: 0;
+    background-color: #0c0c18;
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 39px,
+        rgba(255,255,255,0.03) 39px,
+        rgba(255,255,255,0.03) 40px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 79px,
+        rgba(255,255,255,0.02) 79px,
+        rgba(255,255,255,0.02) 80px
+      );
+  }
+
+  .signs { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 3rem; }
+
+  /* ===== SIGN 1: Classic OPEN ===== */
+  @keyframes flicker1 {
+    0%,18%,22%,25%,53%,57%,100% { text-shadow: 0 0 4px #fff, 0 0 11px #fff, 0 0 19px #fff, 0 0 40px #f09, 0 0 80px #f09, 0 0 90px #f09, 0 0 100px #f09, 0 0 150px #f09; opacity: 1; }
+    20%,24%,55% { text-shadow: none; opacity: 0.6; }
+  }
+  .neon-open {
+    font-family: 'Pacifico', cursive;
+    font-size: 5rem; color: #fff;
+    animation: flicker1 4s infinite alternate;
+    letter-spacing: 0.05em;
+  }
+
+  /* ===== SIGN 2: Multi-color ===== */
+  .sign2 { text-align: center; }
+  @keyframes glow-cyan {
+    0%,100% { text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #00e5ff, 0 0 82px #00e5ff, 0 0 92px #00e5ff, 0 0 102px #00e5ff; }
+    50% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #00e5ff, 0 0 40px #00e5ff; }
+  }
+  @keyframes glow-yellow {
+    0%,100% { text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #ffe600, 0 0 82px #ffe600, 0 0 92px #ffe600; }
+    50% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ffe600, 0 0 40px #ffe600; }
+  }
+  .neon-eat { font-family: 'Bebas Neue', cursive; font-size: 4.5rem; color: #fff; animation: glow-cyan 2s ease-in-out infinite alternate; letter-spacing: 0.15em; }
+  .neon-drink { font-family: 'Bebas Neue', cursive; font-size: 4.5rem; color: #fff; animation: glow-yellow 2s ease-in-out 1s infinite alternate; letter-spacing: 0.15em; margin-left: 0.75rem; }
+  .neon-amp { font-family: 'Pacifico', cursive; font-size: 3rem; color: rgba(255,255,255,0.4); margin: 0 0.5rem; }
+
+  /* ===== SIGN 3: Vegas Club ===== */
+  @keyframes glow-green {
+    0%,100% { text-shadow: 0 0 5px #fff, 0 0 15px #0f0, 0 0 40px #0f0, 0 0 80px #0f0, 0 0 100px #0f0; }
+    50% { text-shadow: 0 0 3px #fff, 0 0 8px #0f0, 0 0 20px #0f0; }
+  }
+  .sign3 {
+    border: 3px solid rgba(0,255,0,0.3);
+    border-radius: 16px; padding: 1.5rem 3rem;
+    box-shadow: 0 0 15px rgba(0,255,0,0.2), inset 0 0 15px rgba(0,255,0,0.05);
+    position: relative;
+  }
+  .sign3::before {
+    content: ''; position: absolute;
+    inset: 6px; border: 1px solid rgba(0,255,0,0.15); border-radius: 12px;
+  }
+  .neon-club { font-family: 'Righteous', cursive; font-size: 3.5rem; color: #0f0; animation: glow-green 1.5s ease-in-out infinite alternate; letter-spacing: 0.2em; text-transform: uppercase; }
+  .neon-sub { font-family: 'Righteous', cursive; font-size: 1.1rem; color: rgba(0,255,0,0.6); letter-spacing: 0.4em; text-transform: uppercase; text-align: center; margin-top: 0.25rem; text-shadow: 0 0 8px #0f0; }
+
+  /* ===== SIGN 4: Off/Broken bulb effect ===== */
+  @keyframes flicker-broken {
+    0%,9%,11%,14%,17%,100% { text-shadow: 0 0 5px #fff, 0 0 20px #ff6b6b, 0 0 60px #ff6b6b, 0 0 100px #ff0000; color: #fff; }
+    10%,12%,15%,16% { text-shadow: none; color: rgba(255,255,255,0.1); }
+  }
+  .neon-broken {
+    font-family: 'Bebas Neue', cursive; font-size: 3rem; color: #fff;
+    animation: flicker-broken 6s infinite;
+    letter-spacing: 0.3em;
+  }
+</style>
+</head>
+<body>
+<div class="wall-bg"></div>
+<div class="signs">
+
+  <div class="neon-open">OPEN</div>
+
+  <div class="sign2">
+    <span class="neon-eat">EAT</span>
+    <span class="neon-amp">&</span>
+    <span class="neon-drink">DRINK</span>
+  </div>
+
+  <div class="sign3">
+    <div class="neon-club">NEXUS</div>
+    <div class="neon-sub">Night Club</div>
+  </div>
+
+  <div class="neon-broken">VACANCY</div>
+
+</div>
+</body>
+</html>

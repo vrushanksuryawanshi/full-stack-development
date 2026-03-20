@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pagination UI</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { min-height: 100vh; background: #f8faff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3.5rem; font-family: 'Inter', sans-serif; padding: 3rem; }
+  h2 { font-size: 0.72rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 500; margin-bottom: 1rem; text-align: center; }
+
+  /* ===== STYLE 1: Standard Pill ===== */
+  .pag1 { display: flex; align-items: center; gap: 0.35rem; }
+  .page-btn {
+    min-width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.88rem; font-weight: 500; text-decoration: none; color: #64748b;
+    border: 1px solid #e2e8f0; background: #fff; cursor: pointer;
+    transition: all 0.15s; padding: 0 0.65rem;
+  }
+  .page-btn:hover { background: #f1f5f9; border-color: #cbd5e1; color: #1e293b; }
+  .page-btn.active { background: #6366f1; color: #fff; border-color: #6366f1; font-weight: 700; box-shadow: 0 4px 12px rgba(99,102,241,0.3); }
+  .page-btn.disabled { opacity: 0.4; cursor: not-allowed; }
+  .page-btn.disabled:hover { background: #fff; color: #64748b; border-color: #e2e8f0; }
+  .dots { color: #94a3b8; font-size: 0.9rem; padding: 0 0.2rem; }
+
+  /* ===== STYLE 2: Rounded Full ===== */
+  .pag2 { display: flex; align-items: center; gap: 0.3rem; }
+  .pb2 { min-width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 600; text-decoration: none; color: #475569; background: transparent; cursor: pointer; transition: all 0.15s; }
+  .pb2:hover { background: #eef2ff; color: #6366f1; }
+  .pb2.active { background: #6366f1; color: #fff; box-shadow: 0 3px 10px rgba(99,102,241,0.3); }
+  .pb2-nav { min-width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #e2e8f0; color: #64748b; cursor: pointer; transition: all 0.15s; text-decoration: none; font-size: 0.85rem; }
+  .pb2-nav:hover { border-color: #6366f1; color: #6366f1; background: #eef2ff; }
+
+  /* ===== STYLE 3: Dark minimal ===== */
+  .pag3 { display: flex; align-items: center; gap: 0.25rem; background: #1e293b; border-radius: 14px; padding: 0.5rem; }
+  .pb3 { min-width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.84rem; font-weight: 600; text-decoration: none; color: #475569; cursor: pointer; transition: all 0.15s; }
+  .pb3:hover { background: #2d3a4f; color: #94a3b8; }
+  .pb3.active { background: #6366f1; color: #fff; }
+  .pb3-sep { color: #2d3a4f; padding: 0 0.1rem; font-size: 0.85rem; }
+
+  /* ===== STYLE 4: with page info ===== */
+  .pag4-wrap { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; justify-content: center; }
+  .pag4 { display: flex; align-items: center; gap: 0.3rem; }
+  .pb4 { min-width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 500; text-decoration: none; color: #64748b; transition: all 0.15s; cursor: pointer; }
+  .pb4:hover { background: #f1f5f9; color: #1e293b; }
+  .pb4.active { background: #0f172a; color: #fff; font-weight: 700; }
+  .pb4-nav { min-width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; text-decoration: none; color: #64748b; border: 1px solid #e2e8f0; transition: all 0.15s; cursor: pointer; }
+  .pb4-nav:hover { border-color: #0f172a; color: #0f172a; }
+  .page-info { font-size: 0.84rem; color: #94a3b8; font-weight: 500; }
+  .page-info strong { color: #1e293b; }
+
+  /* ===== STYLE 5: Load-more style ===== */
+  .pag5 { display: flex; align-items: center; flex-direction: column; gap: 0.75rem; }
+  .page-count { font-size: 0.8rem; color: #94a3b8; }
+  .progress-line { width: 280px; height: 4px; background: #e2e8f0; border-radius: 99px; overflow: hidden; }
+  .progress-fill { width: 40%; height: 100%; background: linear-gradient(90deg, #6366f1, #a855f7); border-radius: 99px; }
+  .load-more { padding: 0.7rem 2rem; border-radius: 10px; background: #fff; border: 2px solid #e2e8f0; font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 600; color: #1e293b; cursor: pointer; transition: all 0.2s; }
+  .load-more:hover { border-color: #6366f1; color: #6366f1; transform: translateY(-1px); }
+</style>
+</head>
+<body>
+
+  <div>
+    <h2>Style 1 — Standard</h2>
+    <div class="pag1">
+      <a class="page-btn disabled" href="#">← Prev</a>
+      <a class="page-btn" href="#">1</a>
+      <a class="page-btn" href="#">2</a>
+      <a class="page-btn active" href="#">3</a>
+      <a class="page-btn" href="#">4</a>
+      <a class="page-btn" href="#">5</a>
+      <span class="dots">…</span>
+      <a class="page-btn" href="#">12</a>
+      <a class="page-btn" href="#">Next →</a>
+    </div>
+  </div>
+
+  <div>
+    <h2>Style 2 — Circular</h2>
+    <div class="pag2">
+      <a class="pb2-nav" href="#">‹</a>
+      <a class="pb2" href="#">1</a>
+      <a class="pb2" href="#">2</a>
+      <a class="pb2 active" href="#">3</a>
+      <a class="pb2" href="#">4</a>
+      <a class="pb2" href="#">5</a>
+      <span class="dots">…</span>
+      <a class="pb2" href="#">18</a>
+      <a class="pb2-nav" href="#">›</a>
+    </div>
+  </div>
+
+  <div>
+    <h2>Style 3 — Dark</h2>
+    <div class="pag3">
+      <a class="pb3" href="#">‹</a>
+      <span class="pb3-sep">|</span>
+      <a class="pb3" href="#">1</a>
+      <a class="pb3" href="#">2</a>
+      <a class="pb3 active" href="#">3</a>
+      <a class="pb3" href="#">4</a>
+      <a class="pb3" href="#">5</a>
+      <span class="pb3-sep">…</span>
+      <a class="pb3" href="#">9</a>
+      <span class="pb3-sep">|</span>
+      <a class="pb3" href="#">›</a>
+    </div>
+  </div>
+
+  <div>
+    <h2>Style 4 — With Page Info</h2>
+    <div class="pag4-wrap">
+      <span class="page-info">Showing <strong>21–30</strong> of <strong>124</strong> results</span>
+      <div class="pag4">
+        <a class="pb4-nav" href="#">←</a>
+        <a class="pb4" href="#">1</a>
+        <a class="pb4" href="#">2</a>
+        <a class="pb4 active" href="#">3</a>
+        <a class="pb4" href="#">4</a>
+        <a class="pb4" href="#">5</a>
+        <a class="pb4-nav" href="#">→</a>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h2>Style 5 — Load More</h2>
+    <div class="pag5">
+      <div class="page-count">Showing 40 of 100 articles</div>
+      <div class="progress-line"><div class="progress-fill"></div></div>
+      <button class="load-more">Load More →</button>
+    </div>
+  </div>
+
+</body>
+</html>

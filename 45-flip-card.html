@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Flip Cards</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { min-height: 100vh; background: #0a0c12; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; font-family: 'Inter', sans-serif; padding: 3rem 2rem; }
+  h1 { color: #e2e8f0; font-size: 1.6rem; font-weight: 800; margin-bottom: 0.25rem; }
+  p.sub { color: #475569; font-size: 0.88rem; margin-bottom: 2.5rem; }
+  .grid { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; }
+
+  /* ===== FLIP CARD BASE ===== */
+  .flip-card { width: 240px; height: 300px; perspective: 1000px; cursor: pointer; }
+  .flip-inner {
+    width: 100%; height: 100%; position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1);
+  }
+  .flip-card:hover .flip-inner { transform: rotateY(180deg); }
+  .flip-front, .flip-back {
+    position: absolute; inset: 0; border-radius: 20px;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 1.5rem; text-align: center;
+  }
+  .flip-back { transform: rotateY(180deg); }
+
+  /* ===== CARD 1: Skill card ===== */
+  .fc1 .flip-front { background: linear-gradient(135deg, #6366f1, #a855f7); }
+  .fc1 .flip-back { background: linear-gradient(135deg, #4338ca, #7c3aed); }
+  .fc1-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+  .fc1-title { color: #fff; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .fc1-sub { color: rgba(255,255,255,0.65); font-size: 0.82rem; }
+  .fc1-stars { color: #fbbf24; font-size: 1rem; margin-bottom: 0.75rem; }
+  .fc1-desc { color: rgba(255,255,255,0.8); font-size: 0.82rem; line-height: 1.6; }
+  .fc1-badge { margin-top: 0.75rem; background: rgba(255,255,255,0.15); color: #fff; font-size: 0.72rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 20px; }
+
+  /* ===== CARD 2: Profile card ===== */
+  .fc2 .flip-front { background: #111420; border: 1px solid #1e2235; }
+  .fc2 .flip-back { background: linear-gradient(135deg, #0f1117, #1a1d27); border: 1px solid #2d3a6e; }
+  .avatar { width: 72px; height: 72px; border-radius: 50%; border: 3px solid #6366f1; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 0.75rem; background: #1e2235; }
+  .fc2-name { color: #e2e8f0; font-weight: 700; font-size: 1rem; margin-bottom: 0.2rem; }
+  .fc2-role { color: #6366f1; font-size: 0.78rem; font-weight: 600; margin-bottom: 0.5rem; }
+  .fc2-loc { color: #475569; font-size: 0.78rem; }
+  .fc2-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; width: 100%; margin-bottom: 0.75rem; }
+  .fc2-stat { background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.2); border-radius: 8px; padding: 0.4rem; }
+  .fc2-stat-num { color: #e2e8f0; font-weight: 700; font-size: 1rem; }
+  .fc2-stat-lbl { color: #475569; font-size: 0.68rem; }
+  .fc2-btn { background: #6366f1; color: #fff; padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.82rem; font-weight: 600; text-decoration: none; }
+
+  /* ===== CARD 3: Product card ===== */
+  .fc3 .flip-front { background: linear-gradient(160deg, #0f1117, #141c2e); border: 1px solid #1e2235; justify-content: flex-start; padding: 0; overflow: hidden; }
+  .fc3-img { width: 100%; height: 140px; background: linear-gradient(135deg, #10b981, #06b6d4); display: flex; align-items: center; justify-content: center; font-size: 3rem; flex-shrink: 0; }
+  .fc3-info { padding: 1rem; text-align: left; width: 100%; }
+  .fc3-name { color: #e2e8f0; font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem; }
+  .fc3-price { color: #10b981; font-size: 1.2rem; font-weight: 800; }
+  .fc3-old { color: #475569; text-decoration: line-through; font-size: 0.82rem; margin-left: 0.4rem; }
+  .fc3 .flip-back { background: linear-gradient(160deg, #042f2e, #0c4a40); border: 1px solid rgba(16,185,129,0.3); }
+  .fc3-back-title { color: #10b981; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .fc3-features { list-style: none; text-align: left; width: 100%; }
+  .fc3-features li { color: #cbd5e1; font-size: 0.82rem; padding: 0.3rem 0; border-bottom: 1px solid rgba(16,185,129,0.1); display: flex; gap: 0.5rem; }
+  .fc3-features li::before { content: '✓'; color: #10b981; font-weight: 700; flex-shrink: 0; }
+  .add-btn { margin-top: 1rem; background: #10b981; color: #fff; padding: 0.55rem 1.5rem; border-radius: 9px; font-size: 0.84rem; font-weight: 700; text-decoration: none; }
+
+  /* ===== CARD 4: Quiz card ===== */
+  .fc4 .flip-front { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+  .fc4 .flip-back { background: linear-gradient(135deg, #d97706, #dc2626); }
+  .fc4-q { color: #fff; font-size: 1rem; font-weight: 700; line-height: 1.5; margin-top: 0.5rem; }
+  .fc4-hint { color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-top: 0.5rem; }
+  .fc4-a-label { color: rgba(255,255,255,0.7); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
+  .fc4-answer { color: #fff; font-size: 1.3rem; font-weight: 800; }
+  .fc4-explain { color: rgba(255,255,255,0.8); font-size: 0.8rem; line-height: 1.5; margin-top: 0.5rem; }
+
+  .hint-text { color: #1e2235; font-size: 0.8rem; text-align: center; }
+</style>
+</head>
+<body>
+<h1>3D Flip Cards</h1>
+<p class="sub">Hover any card to flip it</p>
+<div class="grid">
+
+  <!-- Skill Card -->
+  <div class="flip-card fc1">
+    <div class="flip-inner">
+      <div class="flip-front">
+        <div class="fc1-icon">⚛️</div>
+        <div class="fc1-title">React</div>
+        <div class="fc1-sub">Frontend Library</div>
+      </div>
+      <div class="flip-back">
+        <div class="fc1-stars">★★★★★</div>
+        <div class="fc1-title">Expert Level</div>
+        <div class="fc1-desc">5 years experience building scalable UIs with hooks, context, and performance optimization.</div>
+        <div class="fc1-badge">12 Projects</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Card -->
+  <div class="flip-card fc2">
+    <div class="flip-inner">
+      <div class="flip-front">
+        <div class="avatar">👩‍💻</div>
+        <div class="fc2-name">Priya Kapoor</div>
+        <div class="fc2-role">Senior Engineer</div>
+        <div class="fc2-loc">📍 Pune, India</div>
+      </div>
+      <div class="flip-back">
+        <div class="fc2-stats">
+          <div class="fc2-stat"><div class="fc2-stat-num">48</div><div class="fc2-stat-lbl">Projects</div></div>
+          <div class="fc2-stat"><div class="fc2-stat-num">1.2k</div><div class="fc2-stat-lbl">Commits</div></div>
+        </div>
+        <a class="fc2-btn" href="#">View Profile</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Card -->
+  <div class="flip-card fc3">
+    <div class="flip-inner">
+      <div class="flip-front">
+        <div class="fc3-img">🎧</div>
+        <div class="fc3-info">
+          <div class="fc3-name">ProAudio X1</div>
+          <div><span class="fc3-price">₹4,299</span><span class="fc3-old">₹6,999</span></div>
+        </div>
+      </div>
+      <div class="flip-back">
+        <div class="fc3-back-title">What's Included</div>
+        <ul class="fc3-features">
+          <li>40h battery life</li>
+          <li>Active noise cancellation</li>
+          <li>Hi-res audio codec</li>
+          <li>3-device multipoint</li>
+        </ul>
+        <a class="add-btn" href="#">Add to Cart</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quiz Card -->
+  <div class="flip-card fc4">
+    <div class="flip-inner">
+      <div class="flip-front">
+        <div style="font-size:2.5rem">❓</div>
+        <div class="fc4-q">What CSS property creates a 3D transformation context?</div>
+        <div class="fc4-hint">Hover to reveal →</div>
+      </div>
+      <div class="flip-back">
+        <div class="fc4-a-label">Answer</div>
+        <div class="fc4-answer">transform-style</div>
+        <div class="fc4-explain">Set to <code>preserve-3d</code> on the parent to allow children to exist in the same 3D space.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
